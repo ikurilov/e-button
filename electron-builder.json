@@ -20,13 +20,13 @@
     }
   ],
   "win": {
-    "icon": "dist/assets/icons",
+    "icon": "dist/electron-client/assets/icons",
     "target": [
       "portable"
     ]
   },
   "portable": {
-    "splashImage": "dist/assets/icons/electron.bmp"
+    "splashImage": "dist/electron-client/assets/icons/electron.bmp"
   },
   "mac": {
     "icon": "dist/assets/icons",
@@ -35,7 +35,7 @@
     ]
   },
   "linux": {
-    "icon": "dist/assets/icons",
+    "icon": "dist/electron-client/assets/icons",
     "target": [
       "deb"
     ]

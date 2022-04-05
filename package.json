@@ -26,6 +26,8 @@
   "private": true,
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
+    "start-client": "ng serve --project=p-client --port=4300",
+    "build-client": "ng build --project=p-client  -c production",
     "ng": "ng",
     "start": "npm-run-all -p electron:serve ng:serve",
     "ng:serve": "ng serve -c web -o",

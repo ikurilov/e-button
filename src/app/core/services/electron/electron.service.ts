@@ -37,14 +37,22 @@ export class ElectronService {
       // https://www.electronjs.org/docs/latest/api/ipc-renderer#ipcrendererinvokechannel-args
 
       const express = window.require('express');
+      const path = require('path');
 
       const app = express();
 
       let server = app.listen(3000);
 
+      app.use(express.static(path.join(path.dirname(__dirname), 'p-client/')));
+
       app.get('/', function (req, res) {
+        console.log(path.join(path.dirname(__dirname), 'p-client/index.html'));
+        res.sendFile(path.join(path.dirname(__dirname), 'p-client/index.html'));
+      });
+
+      app.get('/hi', function (req, res) {
         console.log('yeah');
-        res.send('Server!!!');
+        res.send('hi!!!');
 
       });
     }
