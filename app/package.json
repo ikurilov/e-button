@@ -1,0 +1,13 @@
+{
+  "name": "angular-electron",
+  "version": "10.5.1",
+  "main": "main.js",
+  "private": true,
+  "author": {
+    "name": "Yarik",
+    "email": "yaroslawkapsha@gmail.com"
+  },
+  "dependencies": {
+    "express": "4.17.3"
+  }
+}
