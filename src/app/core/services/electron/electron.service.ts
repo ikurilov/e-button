@@ -1,13 +1,18 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import * as childProcess from 'child_process';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
-import {ipcRenderer, webFrame} from 'electron';
-import * as childProcess from 'child_process';
+import {
+  ipcRenderer,
+  webFrame,
+} from 'electron';
 import * as fs from 'fs';
+import { Server } from 'socket.io';
+import { ServerSocketService } from './server-socket.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ElectronService {
   ipcRenderer: typeof ipcRenderer;
@@ -15,7 +20,9 @@ export class ElectronService {
   childProcess: typeof childProcess;
   fs: typeof fs;
 
-  constructor() {
+  constructor(
+    private serverSocketService: ServerSocketService,
+  ) {
     // Conditional imports
     if (this.isElectron) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
@@ -35,30 +42,35 @@ export class ElectronService {
       // If you want to use a NodeJS 3rd party deps in Renderer process,
       // ipcRenderer.invoke can serve many common use cases.
       // https://www.electronjs.org/docs/latest/api/ipc-renderer#ipcrendererinvokechannel-args
-
-      const express = window.require('express');
-      const path = require('path');
-
-      const app = express();
-
-      let server = app.listen(3000);
-
-      app.use(express.static(path.join(path.dirname(__dirname), 'p-client/')));
-
-      app.get('/', function (req, res) {
-        console.log(path.join(path.dirname(__dirname), 'p-client/index.html'));
-        res.sendFile(path.join(path.dirname(__dirname), 'p-client/index.html'));
-      });
-
-      app.get('/hi', function (req, res) {
-        console.log('yeah');
-        res.send('hi!!!');
-
-      });
+      this.startExpressServer();
     }
   }
 
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
+  }
+
+  startExpressServer() {
+    const express = window.require('express');
+    const path = require('path');
+
+    const app = express();
+
+    const server = app.listen(3000);
+
+    const io = new Server();
+    this.serverSocketService.startSocket(io);
+
+    app.use(express.static(path.join(path.dirname(__dirname), 'p-client/')));
+
+    app.get('/', function (req, res) {
+      console.log(path.join(path.dirname(__dirname), 'p-client/index.html'));
+      res.sendFile(path.join(path.dirname(__dirname), 'p-client/index.html'));
+    });
+
+    app.get('/hi', function (req, res) {
+      console.log('yeah');
+      res.send('hi!!!');
+    });
   }
 }

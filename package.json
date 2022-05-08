@@ -1,27 +1,12 @@
 {
   "name": "angular-electron",
   "version": "10.5.1",
-  "description": "Angular 13 with Electron 18 (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "description": "",
   "email": "yaroslawkapsha@gmail.com",
   "author": {
     "name": "Yarik",
     "email": "yaroslawkapsha@gmail.com"
   },
-  "keywords": [
-    "angular",
-    "angular 13",
-    "electron",
-    "electron 18",
-    "nodejs",
-    "typescript",
-    "playwright",
-    "eslint",
-    "sass",
-    "windows",
-    "mac",
-    "linux"
-  ],
   "main": "app/main.js",
   "private": true,
   "scripts": {
@@ -60,7 +45,9 @@
     "@angular/platform-browser-dynamic": "13.3.1",
     "@angular/router": "13.3.1",
     "express": "4.17.3",
+    "ngx-socket-io": "4.2.0",
     "rxjs": "7.5.5",
+    "socket.io": "4.5.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.5"
   },
