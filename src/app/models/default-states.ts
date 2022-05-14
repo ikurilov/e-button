@@ -9,6 +9,7 @@ export const defaultGameConfig: IGameConfig = {
   teams: [],
   forbidTeamChanging: false,
   wrongAnswerFreezeTimeSec: 0,
+  onlyOneAnswer: false,
 };
 
 export const defaultGameState: IGameState = {

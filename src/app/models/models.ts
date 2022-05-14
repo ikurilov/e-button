@@ -4,25 +4,25 @@ export interface IGameConfig {
   teams: Teams[];
   forbidTeamChanging: boolean;
   wrongAnswerFreezeTimeSec: number;
-
+  onlyOneAnswer: boolean;
 }
 
 export interface IGameState {
-  scores: { [index: string]: number };
+  scores: { [team: string]: number };
   questionNumber: number;
 }
 
 export interface IPhaseState {
   type: GamePhaseType;
   answering?: Teams;
-  alreadyAnswered?: { team: Teams, date: Date };
+  alreadyAnswered?: { [team: string]: Date };
 }
 
 export enum GamePhaseType {
   WAITING_FOR_START = 'WAITING_FOR_START',
   PAUSE = 'PAUSE',
   ASKING = 'ASKING',
-  ANSWERING = ''
+  ANSWERING = 'ANSWERING'
 }
 
 export interface IClientGameState {

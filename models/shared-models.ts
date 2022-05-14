@@ -1,3 +1,5 @@
+import { IClientGameState } from '../src/app/models/models';
+
 export const SOCKET_EVENT_NAME = 'message';
 
 export enum MessageType {
@@ -8,7 +10,9 @@ export enum MessageType {
   NEW_NAME = 'NEW_NAME',
   JOIN_TEAM = 'JOIN_TEAM',
   SMS = 'SMS',
-  CLIENT_GAME_STATE = 'CLIENT_GAME_STATE'
+  CLIENT_GAME_STATE = 'CLIENT_GAME_STATE',
+  ANSWER = 'ANSWER',
+  ANSWER_RESULT = 'ANSWER_RESULT',
 }
 
 export enum Teams {
@@ -58,6 +62,21 @@ export interface IMessageSMS extends IMessage {
   text: string;
 }
 
-export type ServerMessages = IMessageWhoAreYou | IMessageMyID | IMessagePing | IMessageSMS;
-export type ClientMessage = IMessageNewName | IMessageJoinTeam;
+export interface IMessageAnswer extends IMessage{
+  type: MessageType.ANSWER;
+  clientId: string;
+}
+
+export interface IMessageAnswerResult extends IMessage {
+  type: MessageType.ANSWER_RESULT,
+  result: boolean,
+}
+
+export interface IMessageClientGameState extends IMessage {
+  type: MessageType.CLIENT_GAME_STATE,
+  data: IClientGameState;
+}
+
+export type ServerMessages = IMessageWhoAreYou | IMessageMyID | IMessagePing | IMessageSMS | IMessageAnswerResult | IMessageClientGameState;
+export type ClientMessage = IMessageNewName | IMessageJoinTeam | IMessageAnswer;
 

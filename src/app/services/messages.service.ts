@@ -1,17 +1,9 @@
-import {
-  EventEmitter,
-  Injectable,
-} from '@angular/core';
+import { EventEmitter, Injectable, } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Socket } from 'socket.io';
-import {
-  ClientMessage,
-  IMessageMyID,
-  IMessagePong,
-  MessageType,
-  ServerMessages,
-} from '../../../models/shared-models';
+import { ClientMessage, IMessageMyID, IMessagePong, MessageType, ServerMessages, } from '../../../models/shared-models';
 import { ServerSocketService } from '../core/services/electron/server-socket.service';
+import { IClientGameState } from '../models/models';
 
 interface ISocketClient {
   socketInstance: Socket;
@@ -28,6 +20,7 @@ export class MessagesService {
   public readonly onClientGoOnline: EventEmitter<string> = new EventEmitter<string>(); // emits client id;
   public readonly onPingDefined: EventEmitter<{ id: string, pingMS: number }> = new EventEmitter<{ id: string; pingMS: number }>();
   public readonly onClientMessage: EventEmitter<ClientMessage> = new EventEmitter<ClientMessage>();
+
   private readonly clientConnections: BehaviorSubject<ISocketClient[]> = new BehaviorSubject<ISocketClient[]>([]);
   private readonly pingsObj: { [clientId: string]: Date } = {};
 
@@ -36,14 +29,42 @@ export class MessagesService {
   }
 
   public sendSMS(text: string, clientId: string) {
+    const socketInstance = this.clientConnections.value.find(client => client.id === clientId).socketInstance;
+    if (!socketInstance) {
+      return;
+    }
     this.sendMessage(
       {
         type: MessageType.SMS,
         date: new Date(),
         text,
       },
-      this.clientConnections.value.find(client => client.id === clientId).socketInstance,
+      socketInstance,
     );
+  }
+
+  public sendAnswerResult(result: boolean, clientId: string) {
+    const socketInstance = this.clientConnections.value.find(client => client.id === clientId).socketInstance;
+    if (!socketInstance) {
+      return;
+    }
+    this.sendMessage(
+      {
+        type: MessageType.ANSWER_RESULT,
+        date: new Date(),
+        result,
+      },
+      socketInstance,
+    );
+  }
+
+  public sendClientState(clientId: string, state: IClientGameState): void {
+    const socketInstance = this.clientConnections.value.find(client => client.id === clientId).socketInstance;
+    this.sendMessage({
+      type: MessageType.CLIENT_GAME_STATE,
+      data: state,
+      date: new Date()
+    }, socketInstance);
   }
 
   public sendPing(clientId): void {
