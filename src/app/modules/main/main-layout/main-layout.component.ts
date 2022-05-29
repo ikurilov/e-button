@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GameManagerService } from '../../../services/game-manager.service';
+import { ClientManagerService } from '../../../services/client-manager.service';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -7,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(public gs: GameManagerService,
+              public audio: AudioService,
+              public clientService: ClientManagerService) { }
 
   ngOnInit(): void {
   }

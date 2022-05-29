@@ -1,0 +1,156 @@
+$bubble-count: 25;
+$bubble-count-color: 200;
+$sway-type: "sway-left-to-right", "sway-right-to-left";
+
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+@function random_range_float($min, $max) {
+  $rand: random();
+  $random_range: $min + ($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+@function sample($list) {
+  @return nth($list, random(length($list)));
+}
+
+.bubbles {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.bubble {
+  position: absolute;
+  left: var(--bubble-left-offset);
+  bottom: -20%;
+  display: block;
+  width: var(--bubble-radius);
+  height: var(--bubble-radius);
+  border-radius: 50%;
+  animation: float-up var(--bubble-float-duration) var(--bubble-float-delay) ease-in infinite;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255 161 0 / 30%);
+    border-radius: inherit;
+    animation: var(--bubble-sway-type) var(--bubble-sway-duration) var(--bubble-sway-delay) ease-in-out alternate infinite;
+  }
+
+  @for $i from 0 through $bubble-count {
+    &:nth-child(#{$i}) {
+      --bubble-left-offset: #{random_range(0vw, 100vw)};
+      --bubble-radius: #{random_range(10vw, 30vw)};
+      --bubble-float-duration: #{random_range(10s, 120s)};
+      --bubble-sway-duration: #{random_range(12s, 20s)};
+      --bubble-float-delay: #{random_range(0s, 10s)};
+      --bubble-sway-delay: #{random_range(0s, 10s)};
+      --bubble-sway-type: #{sample($sway-type)};
+    }
+  }
+}
+
+.bubble-red {
+  position: absolute;
+  left: var(--bubble-left-offset);
+  bottom: -20%;
+  display: block;
+  width: var(--bubble-radius);
+  height: var(--bubble-radius);
+  border-radius: 50%;
+  animation: float-up var(--bubble-float-duration) var(--bubble-float-delay) ease-in 1;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 0, 0, 0.52);
+    border-radius: inherit;
+    animation: var(--bubble-sway-type) var(--bubble-sway-duration) var(--bubble-sway-delay) ease-in-out alternate infinite;
+  }
+
+  @for $i from 0 through $bubble-count-color {
+    &:nth-child(#{$i}) {
+      --bubble-left-offset: #{random_range_float(0vw, 100vw)};
+      --bubble-radius: #{random_range_float(4vw, 12vw)};
+      --bubble-float-duration: #{random_range_float(1s, 2s)};
+      --bubble-sway-duration: #{random_range_float(4s, 4s)};
+      --bubble-float-delay: #{random_range_float(0s, 1s)};
+      --bubble-sway-delay: #{random_range_float(0s, 0s)};
+      --bubble-sway-type: #{sample($sway-type)};
+    }
+  }
+}
+.bubble-green {
+  position: absolute;
+  left: var(--bubble-left-offset);
+  bottom: -20%;
+  display: block;
+  width: var(--bubble-radius);
+  height: var(--bubble-radius);
+  border-radius: 50%;
+  animation: float-up var(--bubble-float-duration) var(--bubble-float-delay) ease-in 1;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 255, 21, 0.32);
+    border-radius: inherit;
+    animation: var(--bubble-sway-type) var(--bubble-sway-duration) var(--bubble-sway-delay) ease-in-out alternate infinite;
+  }
+
+  @for $i from 0 through $bubble-count-color {
+    &:nth-child(#{$i}) {
+      --bubble-left-offset: #{random_range_float(0vw, 100vw)};
+      --bubble-radius: #{random_range_float(4vw, 12vw)};
+      --bubble-float-duration: #{random_range_float(1s, 2s)};
+      --bubble-sway-duration: #{random_range_float(4s, 4s)};
+      --bubble-float-delay: #{random_range_float(0s, 1s)};
+      --bubble-sway-delay: #{random_range_float(0s, 0s)};
+      --bubble-sway-type: #{sample($sway-type)};
+    }
+  }
+}
+
+@keyframes float-up {
+  to {
+    transform: translateY(-120vh);
+  }
+}
+
+@keyframes sway-left-to-right {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes sway-right-to-left {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}

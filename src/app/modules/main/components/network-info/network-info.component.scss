@@ -1,0 +1,22 @@
+.qr-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 27rem;
+
+  .ip-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      height: 1.8rem;
+      //display: flex;
+      padding: 0.2rem;
+      margin-right: 0.5rem;
+
+
+    }
+  }
+}

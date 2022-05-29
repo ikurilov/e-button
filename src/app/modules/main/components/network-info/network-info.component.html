@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">
+      Network
+    </div>
+  </div>
+  <ngb-accordion activeIds="ngb-panel-0" [closeOthers]="true">
+    <ngb-panel *ngFor="let ipBlock of ips" title="{{ipBlock.title}}">
+      <ng-template ngbPanelContent>
+        <div *ngFor="let ip of ipBlock.ip" class="qr-wrapper">
+          <qrcode [qrdata]="'http://' + ip + ':4300'" [width]="400" [errorCorrectionLevel]="'M'"></qrcode>
+          <div class="ip-wrapper">
+            <button class="btn btn-sm btn-secondary" (click)="copy('http://' + ip + ':4300')">copy</button>
+            <h5>{{'http://' + ip + ':4300'}}</h5></div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

@@ -15,17 +15,17 @@ export interface IGameState {
 export interface IPhaseState {
   type: GamePhaseType;
   answering?: Teams;
-  alreadyAnswered?: { [team: string]: Date };
+  alreadyAnswered: { [team: string]: Date };
 }
 
 export enum GamePhaseType {
-  WAITING_FOR_START = 'WAITING_FOR_START',
   PAUSE = 'PAUSE',
   ASKING = 'ASKING',
   ANSWERING = 'ANSWERING'
 }
 
 export interface IClientGameState {
+  freezeTime?: number,
   phaseType: GamePhaseType,
   teamsInGame: Teams[],
   answeringTeam: Teams,

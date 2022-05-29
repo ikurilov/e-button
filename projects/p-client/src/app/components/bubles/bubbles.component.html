@@ -1,0 +1,10 @@
+<div class="bubbles">
+  <div *ngFor="let bubble of bubbles" class="bubble"></div>
+</div>
+
+<div class="bubbles" *ngIf="wrong">
+  <div *ngFor="let bubble of bubblesLong" class="bubble-red"></div>
+</div>
+<div class="bubbles" *ngIf="right">
+  <div *ngFor="let bubble of bubblesLong" class="bubble-green"></div>
+</div>

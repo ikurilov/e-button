@@ -25,6 +25,7 @@ export class MessagesService {
   private readonly pingsObj: { [clientId: string]: Date } = {};
 
   constructor(private serverSocketService: ServerSocketService) {
+    this.clientConnections.subscribe(cli => console.log(cli))
     this.startSocketListeners();
   }
 
@@ -87,11 +88,13 @@ export class MessagesService {
         },
         socketInstance,
       );
+
     });
     this.serverSocketService.onClientDisconnect.subscribe((socketInstance) => {
       this.clientGoOffline(socketInstance);
     });
     this.serverSocketService.onNewMessage.subscribe(({ message, socketInstance }) => {
+      // console.log('new message', message);
       this.processMessage(message, socketInstance);
     });
   }
@@ -111,6 +114,7 @@ export class MessagesService {
         break;
       }
       case MessageType.NEW_NAME:
+      case MessageType.ANSWER:
       case MessageType.JOIN_TEAM: {
         this.forwardMessage(message);
         break;
@@ -137,13 +141,14 @@ export class MessagesService {
     this.onPlayerGoOffline.next(offlineClient.id);
   }
 
+
   private getPong(message: IMessagePong, socketInstance: Socket): void {
     if (!this.pingsObj[message.clientId]) {
       return;
     }
     const client = this.clientConnections.value.find(client => client.socketInstance === socketInstance);
     if (client) {
-      let pingMS = +(new Date()) - (+this.pingsObj[message.clientId]);
+      let pingMS = Math.ceil((+(new Date()) - (+this.pingsObj[message.clientId])) / 2);
       this.onPingDefined.emit({ id: message.clientId, pingMS });
     }
     this.pingsObj[message.clientId] = null;

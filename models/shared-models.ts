@@ -77,6 +77,6 @@ export interface IMessageClientGameState extends IMessage {
   data: IClientGameState;
 }
 
-export type ServerMessages = IMessageWhoAreYou | IMessageMyID | IMessagePing | IMessageSMS | IMessageAnswerResult | IMessageClientGameState;
-export type ClientMessage = IMessageNewName | IMessageJoinTeam | IMessageAnswer;
+export type ServerMessages = IMessageWhoAreYou  | IMessagePing | IMessageSMS | IMessageAnswerResult | IMessageClientGameState;
+export type ClientMessage = IMessageNewName | IMessageJoinTeam | IMessageAnswer | IMessagePong | IMessageMyID;
 

@@ -1,0 +1,65 @@
+<div class="wrapper">
+  <ng-container *ngIf="gameState.myTeam; else lobby">
+    <ng-container *ngIf="!answerResultRight && !answerResultWrong; else answerResult">
+      <ng-container [ngSwitch]="gameState.phaseType">
+        <ng-container *ngSwitchCase="GamePhaseType.PAUSE">
+
+          <div class="wrapper first-plan">
+            <div class=" wait circle rounding">
+              <img class="spin" src="assets/icons/hourglass-regular.svg" width="60" alt="">
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="GamePhaseType.ASKING">
+          <div class="wrapper first-plan">
+            <button class="btn circle btn-danger answer" (click)="answer()">PUSH</button>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="GamePhaseType.ANSWERING">
+          <ng-container *ngIf="gameState.answeringTeam === gameState.myTeam">
+            <div class="wrapper first-plan">
+              <div class="answering circle bounce">
+                <div class="m-1">answer</div>
+                <img src="assets/icons/comment-dots-regular.svg" width="30" alt="">
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="gameState.answeringTeam !== gameState.myTeam">
+            <div class="wrapper first-plan">
+              <div class=" answering-wait circle rounding">
+                <div class="d-flex flex-column">
+                  <div class="answering-wait-content">
+                    <div
+                      [ngClass]="{
+                    purple: gameState.answeringTeam === Teams.PURPLE,
+                    yellow: gameState.answeringTeam === Teams.YELLOW,
+                    cyan: gameState.answeringTeam === Teams.CYAN,
+                    amber: gameState.answeringTeam === Teams.AMBER }">
+                    </div>{{gameState.answeringTeam}}
+                  </div>
+
+                  <div class="">is answering</div>
+                </div>
+
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #answerResult>
+      <div class="wrapper first-plan">
+        <button *ngIf="answerResultRight" class="btn circle answer-right"><img src="assets/icons/cake-candles-solid.svg" width="60" alt=""></button>
+        <button *ngIf="answerResultWrong" class="btn circle answer-wrong"><img src="assets/icons/poo-solid.svg" width="60" alt=""></button>
+      </div>
+    </ng-template>
+
+
+  </ng-container>
+
+  <ng-template #lobby>
+    <div class="wrapper first-plan">
+      <button class="btn btn-primary p-3" (click)="changeTeam()"><h2 class="m-0">Choose a team</h2></button>
+    </div>
+  </ng-template>
+</div>

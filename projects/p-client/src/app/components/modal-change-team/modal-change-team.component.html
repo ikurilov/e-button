@@ -1,0 +1,18 @@
+<div class="card bg-warning">
+  <div class="card-header">
+    <div class="card-title">
+      <h3>Teams</h3>
+    </div>
+  </div>
+  <div class="card-body">
+    <ng-container *ngIf="(gameStateSub|async) as gameState">
+      <ng-container *ngIf="gameState.teamsInGame?.length; else empty">
+        <button *ngFor="let team of gameState.teamsInGame" class="btn btn-primary mt-3 w-100" (click)="selectTeam(team)"><b>{{team}}</b></button>
+      </ng-container>
+      <ng-template #empty>
+        Wait! Admin selecting available teams for game...
+      </ng-template>
+    </ng-container>
+
+  </div>
+</div>

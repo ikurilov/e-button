@@ -1,14 +1,10 @@
-import {
-  GamePhaseType,
-  IGameConfig,
-  IGameState,
-  IPhaseState,
-} from './models';
+import { GamePhaseType, IGameConfig, IGameState, IPhaseState, } from './models';
+import { Teams } from '../../../models/shared-models';
 
 export const defaultGameConfig: IGameConfig = {
-  teams: [],
+  teams: [Teams.PURPLE, Teams.YELLOW, Teams.CYAN],
   forbidTeamChanging: false,
-  wrongAnswerFreezeTimeSec: 0,
+  wrongAnswerFreezeTimeSec: 5,
   onlyOneAnswer: false,
 };
 
@@ -18,5 +14,6 @@ export const defaultGameState: IGameState = {
 };
 
 export const defaultPhaseState: IPhaseState = {
-  type: GamePhaseType.WAITING_FOR_START,
+  type: GamePhaseType.PAUSE,
+  alreadyAnswered: {}
 };

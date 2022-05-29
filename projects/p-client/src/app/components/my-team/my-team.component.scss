@@ -1,0 +1,43 @@
+@import "projects/p-client/src/styles/colors";
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+
+.purple, .cyan, .yellow, .amber{
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin-top: -0.4rem;
+  margin-right: 0.5rem;
+}
+
+.purple{
+ background-color: $purple-team;
+}
+
+.yellow{
+  background-color: $yellow-team;
+  border: 1px #353535 solid;
+}
+
+.cyan{
+  background-color: $cyan-team;
+  border: 1px #353535 solid;
+}
+
+.amber {
+  background-color: $amber-team;
+  border: 1px #353535 solid;
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

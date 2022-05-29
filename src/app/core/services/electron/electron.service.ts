@@ -3,12 +3,8 @@ import * as childProcess from 'child_process';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
-import {
-  ipcRenderer,
-  webFrame,
-} from 'electron';
+import { ipcRenderer, webFrame, } from 'electron';
 import * as fs from 'fs';
-import { Server } from 'socket.io';
 import { ServerSocketService } from './server-socket.service';
 
 @Injectable({
@@ -18,6 +14,7 @@ export class ElectronService {
   ipcRenderer: typeof ipcRenderer;
   webFrame: typeof webFrame;
   childProcess: typeof childProcess;
+  networkInterfaces;
   fs: typeof fs;
 
   constructor(
@@ -30,6 +27,7 @@ export class ElectronService {
 
       this.childProcess = window.require('child_process');
       this.fs = window.require('fs');
+      this.networkInterfaces = window.require('os').networkInterfaces;
 
       // Notes :
       // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
@@ -50,15 +48,41 @@ export class ElectronService {
     return !!(window && window.process && window.process.type);
   }
 
+  public getIp(): {title: string, ip: string[]}[] | null{
+    if (!this.networkInterfaces) {
+      return null;
+    }
+    const nets = this.networkInterfaces();
+    let result: {title: string, ip: string[]}[] = [];
+    Object.keys(nets).forEach(key => {
+      let tempRes = {title: key, ip: []}
+      nets[key].forEach( net => {
+        if (net.family === 'IPv4' && !net.internal) {
+          tempRes.ip.push(net.address);
+        }
+      });
+      if (tempRes.ip.length) {
+        result.push(tempRes);
+      }
+    })
+    return result;
+  }
+
+
   startExpressServer() {
     const express = window.require('express');
-    const path = require('path');
+    const path = window.require('path');
+    const cors = window.require('cors');
 
     const app = express();
 
+    app.use(cors({
+      origin: '*'
+    }));
+
     const server = app.listen(3000);
 
-    const io = new Server();
+    const io = window.require('socket.io')(server);
     this.serverSocketService.startSocket(io);
 
     app.use(express.static(path.join(path.dirname(__dirname), 'p-client/')));

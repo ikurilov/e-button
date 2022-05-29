@@ -1,8 +1,9 @@
 import { EventEmitter, Injectable, } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval } from 'rxjs';
 import { ClientMessage, IMessageAnswer, IMessageJoinTeam, MessageType, Teams, } from '../../../models/shared-models';
 import { MessagesService } from './messages.service';
 import { IClientGameState } from '../models/models';
+import { LoggerService, LogType } from './logger.service';
 
 export interface IClient {
   id: string;
@@ -20,16 +21,24 @@ export class ClientManagerService {
   public readonly clients: BehaviorSubject<IClient[]> = new BehaviorSubject<IClient[]>([]);
   public readonly onClientJoinTeam: EventEmitter<IMessageJoinTeam> = new EventEmitter<IMessageJoinTeam>();
   public readonly onClientAnswer: EventEmitter<IMessageAnswer> = new EventEmitter<IMessageAnswer>();
+  public readonly onNeedUpdate: EventEmitter<null | string> = new EventEmitter<null | string>();
 
-  constructor(private messagesService: MessagesService) {
+  constructor(private messagesService: MessagesService,
+              private logger: LoggerService) {
+    interval(1000).subscribe(() => this.measurePing());
+
+    // this.clients.subscribe(cli => console.log(cli))
     this.startMessageListeners();
   }
 
   public includeClientInTeam(clientId: string, team: Teams): void {
     const clients = [...this.clients.value];
-    clients.find(client => client.id === clientId).team = team;
+    let changedClient = clients.find(client => client.id === clientId)
+    changedClient.team = team;
     this.clients.next(clients);
+    this.onNeedUpdate.emit(clientId);
     this.sendSMS(`You joined ${team} team!`, clientId);
+    this.logger.write(LogType.JoinTeam, [changedClient.name, changedClient.team])
   }
 
   public measurePing(): void {
@@ -65,20 +74,26 @@ export class ClientManagerService {
     )
   }
 
-
   private startMessageListeners(): void {
     this.messagesService.onNewPlayer.subscribe((newPlayerEvent) => {
-      this.clients.next([...this.clients.value, { ...newPlayerEvent, online: true, pingMS: -1 }]);
+      this.clients.next([...this.clients.value, { ...newPlayerEvent, online: true, pingMS: 0 }]);
+      this.measurePing();
+      this.logger.write(LogType.NewPlayer, [newPlayerEvent.name]);
     });
     this.messagesService.onClientGoOnline.subscribe((id) => {
       const clients = [...this.clients.value];
-      clients.find(client => client.id === id).online = true;
+      let changedClient = clients.find(client => client.id === id)
+      changedClient.online = true;
+      this.onNeedUpdate.emit(id);
       this.clients.next(clients);
+      this.logger.write(LogType.GoOnline, [changedClient.name])
     });
     this.messagesService.onPlayerGoOffline.subscribe((id) => {
       const clients = [...this.clients.value];
-      clients.find(client => client.id === id).online = false;
+      let changedClient = clients.find(client => client.id === id)
+      changedClient.online = false;
       this.clients.next(clients);
+      this.logger.write(LogType.GoOffline, [changedClient.name])
     });
     this.messagesService.onPingDefined.subscribe(({ id, pingMS }) => {
       const clients = [...this.clients.value];
@@ -100,6 +115,7 @@ export class ClientManagerService {
         break;
       }
       case MessageType.JOIN_TEAM: {
+        this.onNeedUpdate.emit(clientMessage.clientId);
         this.onClientJoinTeam.emit(clientMessage);
         break;
       }
@@ -110,4 +126,13 @@ export class ClientManagerService {
     }
   }
 
+  public shuffleLobby(teamList: Teams[]): void {
+    const clients = [...this.clients.value];
+    const lobbyClients = clients.filter((client) => !client.team).sort(() => Math.random() - 0.5);
+    lobbyClients.forEach((client, index) => {
+      client.team = teamList[index % teamList.length]
+    })
+    this.clients.next(clients);
+    this.onNeedUpdate.emit();
+  }
 }

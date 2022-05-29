@@ -1,0 +1,36 @@
+/* Importing Bootstrap SCSS file. */
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
+@import "colors";
+
+
+body, html{
+  height: 100%;
+  font-family: 'Comfortaa', cursive;
+}
+
+.purple, .cyan, .yellow, .amber{
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin-top: -0.4rem;
+  margin-right: 0.5rem;
+}
+
+.purple{
+  background-color: $purple-team;
+}
+
+.yellow{
+  background-color: $yellow-team;
+  border: 1px #353535 solid;
+}
+
+.cyan{
+  background-color: $cyan-team;
+  border: 1px #353535 solid;
+}
+
+.amber {
+  background-color: $amber-team;
+  border: 1px #353535 solid;
+}

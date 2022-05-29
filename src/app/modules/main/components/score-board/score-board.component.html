@@ -1,0 +1,18 @@
+<div class="card h-100">
+  <div class="card-header">
+    <h5 class="card-title">
+      Scores
+    </h5>
+  </div>
+  <div class="card-body h-100">
+    <ng-container *ngIf="(scores | async) as scores">
+      <div class="score-row" *ngFor="let score of scores; let index = i">
+        <div class="team">{{score.team}} <span class="points"> {{score.points}}</span></div>
+        <div class="actions">
+            <button class="btn btn-sm btn-primary m-1" (click)="editScore(score.team, score.points)">edit</button>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

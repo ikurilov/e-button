@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   Server,
@@ -19,15 +19,19 @@ export class ServerSocketService {
   public readonly onClientDisconnect: Subject<Socket> = new Subject<Socket>();
   public readonly onNewMessage: Subject<{ message: ServerMessages, socketInstance: Socket }> = new Subject<{ message: ServerMessages, socketInstance: Socket }>();
 
-  constructor() {
+  constructor(private zone: NgZone) {
   }
 
   public startSocket(io: Server): void {
     io.on('connection', (socketInstance: Socket) => {
-      this.onNewConnection.next(socketInstance);
-      socketInstance.on(SOCKET_EVENT_NAME, (message: ServerMessages) => this.onNewMessage.next({ message, socketInstance }));
+      this.zone.run(() => this.onNewConnection.next(socketInstance));
+
+      socketInstance.on(SOCKET_EVENT_NAME, (message: ServerMessages) => {
+        this.zone.run(() => this.onNewMessage.next({ message, socketInstance }))
+
+      });
       socketInstance.on('disconnect', () => {
-        this.onClientDisconnect.next(socketInstance);
+        this.zone.run(() => this.onClientDisconnect.next(socketInstance));
       });
     });
   }

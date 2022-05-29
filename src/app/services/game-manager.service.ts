@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { IMessageAnswer, Teams } from '../../../models/shared-models';
 import { defaultGameConfig, defaultGameState, defaultPhaseState, } from '../models/default-states';
 import { GamePhaseType, IClientGameState, IGameConfig, IGameState, IPhaseState, } from '../models/models';
 import { ClientManagerService } from './client-manager.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalEditScoreComponent } from '../modules/main/components/modal-edit-score/modal-edit-score.component';
+import { LoggerService, LogType } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
+
+//Todo: log on change name and need update
 
 export class GameManagerService {
 
@@ -15,16 +20,29 @@ export class GameManagerService {
   public readonly gameStateSub: BehaviorSubject<IGameState> = new BehaviorSubject<IGameState>(defaultGameState);
   public readonly phaseSub: BehaviorSubject<IPhaseState> = new BehaviorSubject<IPhaseState>(defaultPhaseState);
 
-  constructor(private clientManagerService: ClientManagerService) {
+  public readonly onAnswer: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor(private clientManagerService: ClientManagerService,
+              private modal: NgbModal,
+              private logger: LoggerService) {
     this.startMessagesListeners();
     combineLatest([
       this.phaseSub,
-      this.gameStateSub,
       this.gameConfigSub,
-    ]).subscribe(([phase, state, config]) => {
-      let cli: Partial<IClientGameState> = GameManagerService.gameStateToClient(phase, state, config);
+    ]).subscribe(([phase, config]) => {
+      let cli: Partial<IClientGameState> = GameManagerService.gameStateToClient(phase, config);
       this.clientManagerService.sendClientState(cli);
-    })
+    });
+    this.clientManagerService.onNeedUpdate.subscribe(
+      () => {
+        this.clientManagerService.sendClientState(
+          GameManagerService.gameStateToClient(
+            this.phaseSub.value,
+            this.gameConfigSub.value
+          )
+        )
+      }
+    )
   }
 
   public includePlayerInTeam(clientId: string, team: Teams): void {
@@ -33,25 +51,6 @@ export class GameManagerService {
 
   public applyGameConfig(config: IGameConfig): void {
     this.gameConfigSub.next(config);
-  }
-
-  public rateTheAnswer(right: boolean, endRound: boolean, points?: number): void {
-    if (points) {
-      this.addPoints(points * (right ? 1 : -1), this.phaseSub.value.answering);
-    }
-    const newPhase: IPhaseState = { ...this.phaseSub.value };
-    const answeringTeam: Teams = newPhase.answering;
-    newPhase.alreadyAnswered[answeringTeam] = new Date();
-    newPhase.answering = null;
-    newPhase.type = endRound ? GamePhaseType.PAUSE : newPhase.type;
-    this.phaseSub.next(newPhase);
-    this.clientManagerService.sendAnswerResult(right, answeringTeam);
-  }
-
-  public addPoints(points, team: Teams): void {
-    const newState: IGameState = { ...this.gameStateSub.value };
-    newState.scores[team] = newState.scores[team] || 0 + points;
-    this.gameStateSub.next(newState);
   }
 
 
@@ -70,12 +69,19 @@ export class GameManagerService {
 
   private takeAnswer(message: IMessageAnswer): void {
     if (!this.checkAbilityToAnswer(message.clientId)) {
+      if (this.phaseSub.value.type === GamePhaseType.ANSWERING) {
+        console.log((new Date()).getMilliseconds(), (new Date(message.date)).getMilliseconds(), message.date)
+        this.logger.write(LogType.LateForAnswer, [
+          this.clientManagerService.clients.value.find(client => client.id === message.clientId).name
+        ])
+      }
       return;
     }
     const nextPhase: IPhaseState = { ...this.phaseSub.value }
     nextPhase.type = GamePhaseType.ANSWERING;
     nextPhase.answering = this.clientManagerService.getClientTeam(message.clientId);
     this.phaseSub.next(nextPhase);
+    this.logger.write(LogType.PlayerAnswer, [this.clientManagerService.clients.value.find(client => client.id === message.clientId).name])
     // отправить что сейчас отвечает
   }
 
@@ -92,23 +98,77 @@ export class GameManagerService {
 
     // check if it is allowed to answer only once and if the command answered
     if (this.gameConfigSub.value.onlyOneAnswer) {
-      return !!this.phaseSub.value.alreadyAnswered[answeringTeam];
+      return !this.phaseSub.value.alreadyAnswered[answeringTeam];
     }
 
     //  check if the command answered before the freeze time end;
     if (!!this.phaseSub.value.alreadyAnswered[answeringTeam] && this.gameConfigSub.value.wrongAnswerFreezeTimeSec > 0) {
+      console.log('freeze Time', (+(new Date()) - +this.phaseSub.value.alreadyAnswered[answeringTeam]) / 1000 > this.gameConfigSub.value.wrongAnswerFreezeTimeSec)
       return (+(new Date()) - +this.phaseSub.value.alreadyAnswered[answeringTeam]) / 1000 > this.gameConfigSub.value.wrongAnswerFreezeTimeSec
     }
 
     return true;
   }
 
-  private static gameStateToClient(phase: IPhaseState, state: IGameState, config: IGameConfig): Partial<IClientGameState> {
+  private static gameStateToClient(phase: IPhaseState, config: IGameConfig): Partial<IClientGameState> {
     return {
       phaseType: phase.type,
       teamsInGame: config.teams,
       answeringTeam: phase.answering,
+      freezeTime: config.wrongAnswerFreezeTimeSec,
     }
   }
 
+  public startQuestion(): void {
+    let newPhase: IPhaseState = { ...this.phaseSub.value };
+    newPhase.type = GamePhaseType.ASKING;
+    this.phaseSub.next(newPhase);
+  }
+
+  public skipQuestion(): void {
+    let newPhase: IPhaseState = { ...this.phaseSub.value };
+    newPhase.alreadyAnswered = {};
+    newPhase.type = GamePhaseType.PAUSE;
+    this.phaseSub.next(newPhase);
+  }
+
+  public answerResult(right: boolean, continueQuestion: boolean, points: number): void {
+    let config: IGameConfig = this.gameConfigSub.value;
+    let newPhase: IPhaseState = { ...this.phaseSub.value };
+    let newGameState: IGameState = { ...this.gameStateSub.value };
+    newGameState.scores[newPhase.answering] = (newGameState.scores[newPhase.answering] || 0) + points;
+    newPhase.alreadyAnswered[newPhase.answering] = new Date();
+
+    if (!continueQuestion || config.onlyOneAnswer && Object.keys(newPhase.alreadyAnswered).length === config.teams.length) {
+      newPhase.type = GamePhaseType.PAUSE;
+      newPhase.alreadyAnswered = {};
+    } else {
+      newPhase.type = GamePhaseType.ASKING;
+    }
+    this.clientManagerService.sendAnswerResult(right, newPhase.answering);
+    newPhase.answering = null;
+    this.gameStateSub.next(newGameState);
+    this.phaseSub.next(newPhase);
+    console.log('========', right);
+    this.onAnswer.emit(right);
+    this.logger.write(LogType.AnswerResult, [right ? 'right' : 'wrong', points.toString()]);
+  }
+
+  public shuffleLobby(): void {
+    this.clientManagerService.shuffleLobby(this.gameConfigSub.value.teams);
+  }
+
+  public editScore(team: Teams, points: number) {
+    const mdl = this.modal.open(ModalEditScoreComponent);
+    mdl.componentInstance.team = team;
+    mdl.componentInstance.points = points;
+    mdl.result.then((res) => {
+      if (res) {
+        let newGameState: IGameState = { ...this.gameStateSub.value };
+        newGameState.scores[team] = res.points;
+        this.gameStateSub.next(newGameState);
+      }
+    }, () => {
+    })
+  }
 }

@@ -1,0 +1,40 @@
+@import "projects/p-client/src/styles/colors";
+.main-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .header{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #0071c1;
+    color: #eeedff;
+    border-bottom: 1px #002c53 solid;
+    z-index: 3;
+    .name-wrapper{
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
+    .icon-wrapper{
+      padding-right: 1rem;
+      padding-left: 1rem;
+      position: fixed;
+      right: 0;
+      opacity: 0.4;
+      img{
+        color: white;
+      }
+
+    }
+  }
+  .body-container{
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,233,153,1) 0%, rgba(255,180,87,1) 100%);
+  }
+}
+
+

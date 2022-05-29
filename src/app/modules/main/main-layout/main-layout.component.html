@@ -1,1 +1,44 @@
-<p>main-layout works!</p>
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <li [ngbNavItem]="1" class="h-100">
+    <a ngbNavLink>Game</a>
+    <ng-template ngbNavContent>
+      <div class="main-container">
+        <div class="col-7">
+          <div class="component-wrapper phase">
+            <app-phase-control></app-phase-control>
+          </div>
+          <div class="component-wrapper log">
+            <app-log-display></app-log-display>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="component-wrapper score">
+            <app-score-board></app-score-board>
+          </div>
+          <div class="component-wrapper teams">
+            <app-teams-control [players]="clientService.clients | async" (onShuffleLobby)="gs.shuffleLobby()"></app-teams-control>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <a ngbNavLink>Options</a>
+    <ng-template ngbNavContent>
+      <div class="main-container">
+        <div class="col-5">
+          <div class="component-wrapper">
+            <app-game-options></app-game-options>
+          </div>
+        </div>
+        <div class="col-7">
+          <div class="component-wrapper">
+            <app-network-info></app-network-info>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+
+<div [ngbNavOutlet]="nav"></div>

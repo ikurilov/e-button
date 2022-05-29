@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <div
+    [ngClass]="{
+     purple: team === Teams.PURPLE,
+     yellow: team === Teams.YELLOW,
+     cyan: team === Teams.CYAN,
+     amber: team === Teams.AMBER
+     }">
+
+  </div>
+  <div>{{team || 'Lobby'}}</div>
+</div>

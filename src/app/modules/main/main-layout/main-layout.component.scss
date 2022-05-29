@@ -1,0 +1,27 @@
+:host{
+
+}
+.main-container {
+  display: flex;
+  height: 100%;
+
+  .component-wrapper {
+    padding: 0.2rem;
+  }
+
+  .phase {
+    height: 15rem;
+  }
+
+  .log {
+    height: calc(100% - 15rem);
+  }
+  .score{
+    height: 12rem;
+  }
+
+  .teams{
+    height: calc(100% - 12rem);
+  }
+}
+

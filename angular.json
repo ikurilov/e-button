@@ -35,7 +35,7 @@
               "src/server"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [],
             "customWebpackConfig": {
@@ -211,7 +211,7 @@
               "projects/p-client/src/assets"
             ],
             "styles": [
-              "projects/p-client/src/styles.scss"
+              "projects/p-client/src/styles/styles.scss"
             ],
             "scripts": []
           },
