@@ -8,10 +8,10 @@
     <ngb-panel *ngFor="let ipBlock of ips" title="{{ipBlock.title}}">
       <ng-template ngbPanelContent>
         <div *ngFor="let ip of ipBlock.ip" class="qr-wrapper">
-          <qrcode [qrdata]="'http://' + ip + ':4300'" [width]="400" [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode [qrdata]="'http://' + ip + ':3000'" [width]="400" [errorCorrectionLevel]="'M'"></qrcode>
           <div class="ip-wrapper">
             <button class="btn btn-sm btn-secondary" (click)="copy('http://' + ip + ':4300')">copy</button>
-            <h5>{{'http://' + ip + ':4300'}}</h5></div>
+            <h5>{{'http://' + ip + ':3000'}}</h5></div>
         </div>
       </ng-template>
     </ngb-panel>

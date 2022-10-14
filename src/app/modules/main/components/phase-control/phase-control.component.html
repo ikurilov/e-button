@@ -21,11 +21,15 @@
         <div class="row">
           <div class="col-6 d-flex flex-column">
             <button class="btn btn-success mt-2" (click)="answerResult(true,false, 10)">+10</button>
+            <button class="btn btn-success mt-2" (click)="answerResult(true,false, 10)">+15</button>
             <button class="btn btn-success mt-2" (click)="answerResult(true,true, 5)">+5</button>
+            <button class="btn btn-success mt-2" (click)="answerResult(true,true, 3)">+3</button>
             <button class="btn btn-success mt-2" (click)="answerResult(true,true, 1)">+1</button>
           </div>
           <div class="col-6 d-flex flex-column">
             <button class="btn btn-danger mt-2" (click)="answerResult(false,true, 0)">0</button>
+            <button class="btn btn-danger mt-2" (click)="answerResult(false,true, -5)">-1</button>
+            <button class="btn btn-danger mt-2" (click)="answerResult(false,true, -5)">-3</button>
             <button class="btn btn-danger mt-2" (click)="answerResult(false,true, -5)">-5</button>
             <button class="btn btn-danger mt-2" (click)="answerResult(false,true, -10)">-10</button>
           </div>
