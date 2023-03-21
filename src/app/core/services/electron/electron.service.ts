@@ -97,4 +97,74 @@ export class ElectronService {
       res.send('hi!!!');
     });
   }
+
+  // import express from 'express';
+  // import path from 'path';
+  // import fs from 'fs';
+  //
+  // const app = express();
+  // const port = 3000;
+  //
+  // // Serve static files from the "public" directory
+  // app.use(express.static(path.join(__dirname, 'public')));
+  //
+  // // Define the route for the image URL and file anywhere on the computer
+  // app.get('/image/:filePath', (req, res) => {
+  //   const filePath = req.params.filePath;
+  //
+  //   // Check if the file exists in the "public" directory
+  //   const publicFilePath = path.join(__dirname, 'public', filePath);
+  //   if (fs.existsSync(publicFilePath)) {
+  //     const imageUrl = `http://localhost:${port}/${filePath}`;
+  //     res.send(imageUrl);
+  //     return;
+  //   }
+  //
+  //   // Check if the file exists anywhere on the computer
+  //   const fileStream = fs.createReadStream(filePath);
+  //
+  //   fileStream.on('error', (error) => {
+  //     res.status(404).send('Image not found');
+  //   });
+  //
+  //   fileStream.pipe(res);
+  // });
+  //
+  // app.listen(port, () => {
+  //   console.log(`App listening on port ${port}...`);
+  // });
+
+
+  //import express from 'express';
+  // import path from 'path';
+  // import fs from 'fs';
+  //
+  // const app = express();
+  // const port = 3000;
+  //
+  // // Serve static files from the "public" directory
+  // app.use(express.static(path.join(__dirname, 'public')));
+  //
+  // // Define the route for the image URL in the "public" directory
+  // app.get('/image/:filePath', (req, res) => {
+  //   const filePath = req.params.filePath;
+  //   const imageUrl = `http://localhost:${port}/${filePath}`;
+  //   res.send(imageUrl);
+  // });
+  //
+  // // Define the route for the image file anywhere on the computer
+  // app.get('/image-local/:filePath', (req, res) => {
+  //   const filePath = req.params.filePath;
+  //   const fileStream = fs.createReadStream(filePath);
+  //
+  //   fileStream.on('error', (error) => {
+  //     res.status(404).send('Image not found');
+  //   });
+  //
+  //   fileStream.pipe(res);
+  // });
+  //
+  // app.listen(port, () => {
+  //   console.log(`App listening on port ${port}...`);
+  // });
 }

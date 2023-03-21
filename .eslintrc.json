@@ -2,7 +2,6 @@
   "root": true,
   "ignorePatterns": [
     "app/**/*",
-    // ignore nodeJs files
     "dist/**/*",
     "release/**/*"
   ],
@@ -45,8 +44,15 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {
-      }
+      "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking"
+      ]
     }
   ]
 }
