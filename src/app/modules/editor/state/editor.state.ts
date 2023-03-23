@@ -1,24 +1,23 @@
 export interface EditorState {
   folderPath: string;
-  Name: string;
+  name: string;
   slides: Slide[];
+  currentSlideIndex?: number;
 }
 
-export type Slide = QuestionWithImageSlide | InfoSlide | StartSlide | BreakSlide | ResultSlide;
+export type Slide = QuestionWithImageSlide | InfoSlide | BreakSlide;
 
 export enum SlideType {
   questionWithImage = 'questionWithImage',
   info = 'info',
-  start = 'start',
   break = 'break',
-  result = 'result',
 }
 
 export interface QuestionWithImageSlide {
   type: SlideType.questionWithImage;
   points: number;
   toxic: boolean;
-  imagePath: string;
+  imageCoded: string;
   text?: string;
   patches: {
     leftInPercent: number;
@@ -27,7 +26,6 @@ export interface QuestionWithImageSlide {
     heightInPercent: number;
     text?: string;
   }[];
-
 }
 
 export interface InfoSlide {
@@ -35,22 +33,12 @@ export interface InfoSlide {
   paragraphs: string[];
 }
 
-export interface StartSlide {
-  type: SlideType.start;
-}
-
 export interface BreakSlide {
   type: SlideType.break;
 }
 
-export interface ResultSlide {
-  type: SlideType.result;
-}
-
 export const initialEditorState: EditorState = {
   folderPath: '',
-  Name: '',
-  slides: []
-}
-
-
+  name: 'new meme game!',
+  slides: [],
+};

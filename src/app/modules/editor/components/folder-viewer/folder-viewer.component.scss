@@ -1,0 +1,32 @@
+.hidden{
+  display: none;
+}
+.image-container{
+  display: flex;
+  height: 70vh;
+  width: 100%;
+  overflow-y: scroll;
+  gap: 1rem
+}
+
+.image-item{
+  width: 10rem;
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  img{
+    max-width: 10rem;
+    max-height: 10rem;
+    &:hover{
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
+  .image-title{
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+}

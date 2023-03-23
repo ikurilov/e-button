@@ -1,0 +1,36 @@
+<div class="editor-layout">
+  <ng-container *ngIf="!(isInited | async)">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Укажите папку с игрой</h5>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="gameFolder"
+            placeholder="Папка с игрой"
+            [(ngModel)]="gameFolder"
+          />
+          <button class="btn btn-success mt-2" (click)="startEditing()">
+            го
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isInited | async">
+    <div class="header-block">
+      <app-editor-header-panel></app-editor-header-panel>
+      <app-folder-viewer></app-folder-viewer>
+    </div>
+    <div class="main-block">
+      <div class="w-20">
+        <app-slides-line></app-slides-line>
+      </div>
+      <div class="w-80">
+        <app-slide-editor></app-slide-editor>
+      </div>
+    </div>
+  </ng-container>
+</div>

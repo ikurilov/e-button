@@ -5,6 +5,7 @@ import * as childProcess from 'child_process';
 // the resulting javascript file will look as if you never imported the module at all.
 import { ipcRenderer, webFrame, } from 'electron';
 import * as fs from 'fs';
+import * as path from 'path';
 import { ServerSocketService } from './server-socket.service';
 
 @Injectable({
@@ -16,6 +17,7 @@ export class ElectronService {
   childProcess: typeof childProcess;
   networkInterfaces;
   fs: typeof fs;
+  path: typeof path;
 
   constructor(
     private serverSocketService: ServerSocketService,
@@ -28,6 +30,7 @@ export class ElectronService {
       this.childProcess = window.require('child_process');
       this.fs = window.require('fs');
       this.networkInterfaces = window.require('os').networkInterfaces;
+      this.path = window.require('path');
 
       // Notes :
       // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
