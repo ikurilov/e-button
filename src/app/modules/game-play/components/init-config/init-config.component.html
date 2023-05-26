@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+<div [formArrayName]="'teams'">
+  <div *ngFor="let team of allTeams; let i = index" class="team-option">
+    <input type="checkbox" [formControlName]="i" class="form-check-input" id="team-{{i}}}"
+           aria-describedby="freeze-help">
+    <label for="team-{{i}}" class="form-check-label teams-label">
+      <div [ngClass]="{
+                    purple: team === teamColors.PURPLE,
+                    yellow: team === teamColors.YELLOW,
+                    cyan: team === teamColors.CYAN,
+                    amber: team === teamColors.AMBER
+                            }" class="circle"></div>
+      <div class="name">{{ team }}</div>
+    </label>
+  </div>
+</div>
+</form>
+<button class="btn btn-success" (click)="submit()">Го</button>
+<button class="btn btn-secondary" (click)="back()">Назад</button>

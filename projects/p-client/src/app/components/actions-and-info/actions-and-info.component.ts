@@ -2,14 +2,22 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output
 } from '@angular/core';
-import { GamePhaseType, IClientGameState } from '../../../../../../src/app/models/models';
-import { Teams } from '../../../../../../models/shared-models';
-import { PlayManagerService } from '../../services/play-manager.service';
+import { Store } from '@ngrx/store';
+import { Subject, Subscription, throttleTime } from 'rxjs';
+import { pClientActions } from '../../state/p-client.actions';
+import {
+  selectAnsweringResult,
+  selectAnsweringTeam,
+  selectIsMyTeamAnswering,
+  selectMyTeam,
+  selectPClientPhase,
+  selectThrottle,
+} from '../../state/p-client.selectors';
+import { PClientService } from '../../state/p-client.service';
+import { PClientPhase } from '../../state/p-client.state';
+import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
 
 const ANSWER_RESULT_DURATION = 3000;
 
@@ -17,46 +25,53 @@ const ANSWER_RESULT_DURATION = 3000;
   selector: 'app-actions-and-info',
   templateUrl: './actions-and-info.component.html',
   styleUrls: ['./actions-and-info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionsAndInfoComponent implements OnInit {
+  Teams = TeamColors;
+  public myTeam = this.store.select(selectMyTeam);
+  public phase = this.store.select(selectPClientPhase);
+  public isMyTeamAnswering = this.store.select(selectIsMyTeamAnswering);
 
-  GamePhaseType = GamePhaseType;
-  Teams = Teams;
+  public answeringTeam = this.store.select(selectAnsweringTeam);
 
-  @Input() gameState!: IClientGameState;
-  @Output() onPush: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onChangeTeam: EventEmitter<void> = new EventEmitter<void>();
-  public answerResultRight: boolean;
-  public answerResultWrong: boolean;
+  public answeringResult = this.store.select(selectAnsweringResult);
 
-  constructor(private gs: PlayManagerService, private cdr: ChangeDetectorRef) {
-    this.gs.onAnswerResult.subscribe(res => {
-      if (res) {
-        this.answerResultRight = true;
-        setTimeout(() => {
-          this.answerResultRight = false;
-          this.cdr.detectChanges();
-        }, ANSWER_RESULT_DURATION);
-      } else {
-        this.answerResultWrong = true
-        setTimeout(() => {
-          this.answerResultWrong = false;
-          this.cdr.detectChanges();
-        }, ANSWER_RESULT_DURATION < this.gameState.freezeTime * 1000 ? this.gameState.freezeTime * 1000 : ANSWER_RESULT_DURATION);
+  public throttle = this.store.select(selectThrottle);
+
+  private pushSub: Subject<void> = new Subject<void>();
+
+  private pushSubscription: Subscription | null = null;
+
+  public phases = PClientPhase;
+
+  constructor(
+    private store: Store,
+    private cdr: ChangeDetectorRef,
+    private pClientService: PClientService,
+  ) {
+    // todo: freeze time
+    this.throttle.subscribe((throttleMS) => {
+      if (this.pushSubscription) {
+        this.pushSubscription.unsubscribe();
       }
-
-    })
+      this.pushSubscription = this.pushSub
+        .pipe(throttleTime(throttleMS))
+        .subscribe(() => {
+          this.store.dispatch(pClientActions.pushAnswer());
+        });
+    });
   }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   public answer(): void {
-    this.onPush.emit();
+    this.pushSub.next();
   }
 
   public changeTeam(): void {
-    this.onChangeTeam.emit();
+    this.pClientService.changeTeam().then((team) => {
+      this.store.dispatch(pClientActions.changeTeam({ team }));
+    });
   }
 }

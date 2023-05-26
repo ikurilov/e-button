@@ -3,6 +3,9 @@
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "./colors";
+
+@import "shared/styles/shared-style.scss";
+
 $purple-team: #6610F2FF;
 $yellow-team: #FFC107FF;
 $cyan-team: #0DCAF0FF;
@@ -16,7 +19,6 @@ body, html {
   width: 1.0rem;
   height: 1.0rem;
   border-radius: 50%;
-  margin-top: -0.4rem;
   margin-right: 0.5rem;
 }
 .purple{

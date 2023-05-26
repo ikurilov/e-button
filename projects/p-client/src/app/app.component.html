@@ -1,4 +1,4 @@
-<ng-container *ngIf="(ps.gameStateSub | async) as gameState else loading">
+<ng-container *ngIf="(selectPlayerState | async) as gameState else loading">
   <div class="main-container">
     <div class="header">
       <div class="name-wrapper" (click)="changeName(gameState.myName)">{{gameState.myName || 'E-button'}}</div>
@@ -6,12 +6,13 @@
     </div>
     <div class="body-container">
       <app-bubbles></app-bubbles>
-      <app-my-team [team]="gameState.myTeam"></app-my-team>
-      <app-actions-and-info [gameState]="gameState" (onPush)="answer()" (onChangeTeam)="changeTeam()"></app-actions-and-info>
+      <app-my-team></app-my-team>
+      <app-actions-and-info></app-actions-and-info>
 
     </div>
   </div>
 </ng-container>
-<ng-template #loading>Loading...</ng-template>
+<ng-template #loading>Loading... Reload page if nothing happens
+</ng-template>
 
 

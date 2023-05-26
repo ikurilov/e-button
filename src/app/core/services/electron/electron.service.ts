@@ -3,10 +3,12 @@ import * as childProcess from 'child_process';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
-import { ipcRenderer, webFrame, } from 'electron';
+import { ipcRenderer, webFrame } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ServerSocketService } from './server-socket.service';
+import { RemoteSocketService } from './remote-socket.service';
+import { PlayerEntitySocketService } from './player-entity-socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,8 @@ export class ElectronService {
 
   constructor(
     private serverSocketService: ServerSocketService,
+    private remoteSocketService: RemoteSocketService,
+    private playerEntityService: PlayerEntitySocketService,
   ) {
     // Conditional imports
     if (this.isElectron) {
@@ -44,6 +48,7 @@ export class ElectronService {
       // ipcRenderer.invoke can serve many common use cases.
       // https://www.electronjs.org/docs/latest/api/ipc-renderer#ipcrendererinvokechannel-args
       this.startExpressServer();
+      this.startScreenServer();
     }
   }
 
@@ -51,15 +56,15 @@ export class ElectronService {
     return !!(window && window.process && window.process.type);
   }
 
-  public getIp(): {title: string, ip: string[]}[] | null{
+  public getIp(): { title: string; ip: string[] }[] | null {
     if (!this.networkInterfaces) {
       return null;
     }
     const nets = this.networkInterfaces();
-    let result: {title: string, ip: string[]}[] = [];
-    Object.keys(nets).forEach(key => {
-      let tempRes = {title: key, ip: []}
-      nets[key].forEach( net => {
+    let result: { title: string; ip: string[] }[] = [];
+    Object.keys(nets).forEach((key) => {
+      let tempRes = { title: key, ip: [] };
+      nets[key].forEach((net) => {
         if (net.family === 'IPv4' && !net.internal) {
           tempRes.ip.push(net.address);
         }
@@ -67,10 +72,9 @@ export class ElectronService {
       if (tempRes.ip.length) {
         result.push(tempRes);
       }
-    })
+    });
     return result;
   }
-
 
   startExpressServer() {
     const express = window.require('express');
@@ -79,14 +83,16 @@ export class ElectronService {
 
     const app = express();
 
-    app.use(cors({
-      origin: '*'
-    }));
+    app.use(
+      cors({
+        origin: '*',
+      }),
+    );
 
     const server = app.listen(3000);
 
     const io = window.require('socket.io')(server);
-    this.serverSocketService.startSocket(io);
+    this.playerEntityService.startSocket(io);
 
     app.use(express.static(path.join(path.dirname(__dirname), 'p-client/')));
 
@@ -98,6 +104,37 @@ export class ElectronService {
     app.get('/hi', function (req, res) {
       console.log('yeah');
       res.send('hi!!!');
+    });
+  }
+
+  startScreenServer() {
+    const express = window.require('express');
+    const path = window.require('path');
+    const cors = window.require('cors');
+
+    const app = express();
+
+    app.use(
+      cors({
+        origin: '*',
+      }),
+    );
+
+    const server = app.listen(3001);
+
+    const io = window.require('socket.io')(server);
+    this.remoteSocketService.startSocket(io);
+
+    app.use(express.static(path.join(path.dirname(__dirname), 'remoute/')));
+
+    app.get('/', function (req, res) {
+      console.log(path.join(path.dirname(__dirname), 'remoute/index.html'));
+      res.sendFile(path.join(path.dirname(__dirname), 'remoute/index.html'));
+    });
+
+    app.get('/hi', function (req, res) {
+      console.log('yeah');
+      res.send('hi, i am screen!!!');
     });
   }
 
@@ -136,7 +173,6 @@ export class ElectronService {
   // app.listen(port, () => {
   //   console.log(`App listening on port ${port}...`);
   // });
-
 
   //import express from 'express';
   // import path from 'path';

@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.floating-wrapper {
+  animation: float 2s ease-in-out infinite;
+}
+
+.animated-color {
+  font-size: 8rem;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: color 15s ease infinite;
+}
+
+@keyframes color {
+  0% {
+    background-color: #f72585;
+  }
+  10% {
+    background-color: #b5179e;
+  }
+  20% {
+    background-color: #7209b7;
+  }
+  30% {
+    background-color: #560bad;
+  }
+  40% {
+    background-color: #480ca8;
+  }
+  50% {
+    background-color: #3a0ca3;
+  }
+  60% {
+    background-color: #3f37c9;
+  }
+  70% {
+    background-color: #4361ee;
+  }
+  80% {
+    background-color: #4895ef;
+  }
+  90% {
+    background-color: #4cc9f0;
+  }
+  100% {
+    background-color: #f72585;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

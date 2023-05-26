@@ -36,4 +36,12 @@ export class FolderViewerComponent implements OnInit {
     this.store.dispatch(editorActions.addslidewithimage({ imageCoded: i.url }));
     this.isHidden = true;
   }
+
+  addFromAllImages() {
+    this.listOfFiles.forEach((i) => {
+      this.store.dispatch(
+        editorActions.addslidewithimage({ imageCoded: i.url }),
+      );
+    });
+  }
 }

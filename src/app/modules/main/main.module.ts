@@ -14,7 +14,6 @@ import { ScoreBoardComponent } from './components/score-board/score-board.compon
 import { ModalEditScoreComponent } from './components/modal-edit-score/modal-edit-score.component';
 import { LogDisplayComponent } from './components/log-display/log-display.component';
 
-
 @NgModule({
   declarations: [
     MainLayoutComponent,
@@ -24,8 +23,9 @@ import { LogDisplayComponent } from './components/log-display/log-display.compon
     TeamsControlComponent,
     ScoreBoardComponent,
     ModalEditScoreComponent,
-    LogDisplayComponent
+    LogDisplayComponent,
   ],
+  exports: [ScoreBoardComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
@@ -33,7 +33,7 @@ import { LogDisplayComponent } from './components/log-display/log-display.compon
     QRCodeModule,
     NgbAccordionModule,
     NgbNavModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
 })
-export class MainModule { }
+export class MainModule {}

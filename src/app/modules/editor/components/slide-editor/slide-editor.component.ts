@@ -27,6 +27,10 @@ import { editorActions } from '../../state/editor.actions';
 })
 export class SlideEditorComponent implements OnInit {
   selectedPatchIndex: number | null = null;
+
+  newSlidePoints: number = 0;
+  newSlideIsToxic: boolean = false;
+  newInfoRows: string = '[]';
   private editorState: Observable<EditorState> =
     this.store.select(selectEditor);
   currentSlide = this.editorState.pipe(
@@ -60,7 +64,63 @@ export class SlideEditorComponent implements OnInit {
 
   @ViewChild('imageContainer', { read: ElementRef }) imageContainer: ElementRef;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentSlide.pipe().subscribe((slide) => {
+      if (slide && slide.type === SlideType.questionWithImage) {
+        this.newSlidePoints = slide.points;
+        this.newSlideIsToxic = slide.toxic;
+      }
+      if (slide && slide.type === SlideType.info) {
+        this.newInfoRows = JSON.stringify(slide.paragraphs);
+      }
+    });
+  }
+
+  setNewSlidePoints() {
+    this.editorState.pipe(take(1)).subscribe((editor) => {
+      if (editor.currentSlideIndex !== null) {
+        const slide = editor.slides[editor.currentSlideIndex];
+        if (slide.type === SlideType.questionWithImage) {
+          const updatedSlide = { ...slide, points: this.newSlidePoints };
+          this.updateSlide(editor.currentSlideIndex, updatedSlide);
+        }
+      }
+    });
+  }
+
+  setNewSlideToxic() {
+    this.editorState.pipe(take(1)).subscribe((editor) => {
+      if (editor.currentSlideIndex !== null) {
+        const slide = editor.slides[editor.currentSlideIndex];
+        if (slide.type === SlideType.questionWithImage) {
+          const updatedSlide = { ...slide, toxic: this.newSlideIsToxic };
+          this.updateSlide(editor.currentSlideIndex, updatedSlide);
+        }
+      }
+    });
+  }
+
+  setNewInfoRows() {
+    this.editorState.pipe(take(1)).subscribe((editor) => {
+      if (editor.currentSlideIndex !== null) {
+        const slide = editor.slides[editor.currentSlideIndex];
+        let a = [];
+        try {
+          a = JSON.parse(this.newInfoRows);
+        } catch (e) {
+          alert('Invalid JSON');
+          return;
+        }
+        if (slide.type === SlideType.info) {
+          const updatedSlide = {
+            ...slide,
+            paragraphs: a,
+          };
+          this.updateSlide(editor.currentSlideIndex, updatedSlide);
+        }
+      }
+    });
+  }
 
   createPatchElement() {
     const patch = {
@@ -91,8 +151,10 @@ export class SlideEditorComponent implements OnInit {
       if (editor.currentSlideIndex !== null) {
         const slide = editor.slides[editor.currentSlideIndex];
         if (slide.type === SlideType.questionWithImage) {
-          slide.patches.splice(i, 1);
-          this.updateSlide(editor.currentSlideIndex, slide);
+          let newPatches = [...slide.patches];
+          newPatches.splice(i, 1);
+          const updatedSlide = { ...slide, patches: newPatches };
+          this.updateSlide(editor.currentSlideIndex, updatedSlide);
         }
       }
     });
@@ -219,10 +281,12 @@ export class SlideEditorComponent implements OnInit {
     }
     this.isMoving = false;
     this.isResizing = false;
-    this.renderer.removeStyle(this.shadowPatch.nativeElement, 'left');
-    this.renderer.removeStyle(this.shadowPatch.nativeElement, 'top');
-    this.renderer.removeStyle(this.shadowPatch.nativeElement, 'width');
-    this.renderer.removeStyle(this.shadowPatch.nativeElement, 'height');
+    if (this.shadowPatch?.nativeElement) {
+      this.renderer.removeStyle(this.shadowPatch.nativeElement, 'left');
+      this.renderer.removeStyle(this.shadowPatch.nativeElement, 'top');
+      this.renderer.removeStyle(this.shadowPatch.nativeElement, 'width');
+      this.renderer.removeStyle(this.shadowPatch.nativeElement, 'height');
+    }
   }
 
   private updatedPatchPosition: {

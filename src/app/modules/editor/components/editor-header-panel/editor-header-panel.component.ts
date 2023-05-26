@@ -6,6 +6,7 @@ import { EditorState } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { map } from 'rxjs/operators';
 import { editorActions } from '../../state/editor.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editor-header-panel',
@@ -17,11 +18,19 @@ export class EditorHeaderPanelComponent implements OnInit {
     this.store.select(selectEditor);
 
   public title = this.editorState.pipe(map((editor) => editor.name));
-  constructor(private editorService: EditorService, private store: Store) {}
+  constructor(
+    private editorService: EditorService,
+    private store: Store,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {}
 
   save() {
     this.store.dispatch(editorActions.savetofile());
+  }
+
+  start() {
+    this.router.navigate(['/game']);
   }
 }

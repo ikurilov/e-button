@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Teams } from '../../../../../../models/shared-models';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
+import { selectMyTeam } from '../../state/p-client.selectors';
 
 @Component({
   selector: 'app-my-team',
@@ -8,13 +10,13 @@ import { Teams } from '../../../../../../models/shared-models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyTeamComponent implements OnInit {
-  Teams = Teams;
-  @Input() team?: Teams;
+  Teams = TeamColors;
 
-  constructor() { }
+  public team = this.store.select(selectMyTeam);
 
-  ngOnInit(): void {
-  }
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {}
 
   checkTeam() {
     return true;

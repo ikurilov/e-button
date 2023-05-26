@@ -1,12 +1,5 @@
-/* Importing Bootstrap SCSS file. */
-@import '../../../../node_modules/bootstrap/scss/bootstrap';
-@import "colors";
+@import "shared/styles/shared-style.scss";
 
-
-body, html{
-  height: 100%;
-  font-family: 'Comfortaa', cursive;
-}
 
 .purple, .cyan, .yellow, .amber{
   width: 1.5rem;

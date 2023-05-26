@@ -1,4 +1,4 @@
-import { GamePhaseType, IGameConfig, IGameState, IPhaseState, } from './models';
+import { GamePhaseType, IGameConfig, IGameState, IPhaseState } from './models';
 import { Teams } from '../../../models/shared-models';
 
 export const defaultGameConfig: IGameConfig = {
@@ -15,5 +15,5 @@ export const defaultGameState: IGameState = {
 
 export const defaultPhaseState: IPhaseState = {
   type: GamePhaseType.PAUSE,
-  alreadyAnswered: {}
+  alreadyAnswered: {},
 };

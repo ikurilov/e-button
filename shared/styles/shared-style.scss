@@ -1,0 +1,20 @@
+@import 'bootstrap/scss/bootstrap';/* You can add global styles to this file, and also import other style files */
+@import "initialize-css/dist/initialize";
+
+$purple-team: #6610F2FF;
+$yellow-team: #FFC107FF;
+$cyan-team: #0DCAF0FF;
+$amber-team: #FD7E14FF;
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}

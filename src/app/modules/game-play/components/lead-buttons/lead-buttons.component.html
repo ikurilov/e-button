@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-body">
+    <ng-container *ngIf="selectPhase | async as phase">
+      <button class="btn btn-primary m-1" (click)="prevSlide()">Назад</button>
+      <button class="btn btn-primary m-1" (click)="nextSlide()">
+        Следующий
+      </button>
+      <br>
+
+      <ng-container *ngIf="phase === phases.QUESTION_TITLE || phase === phases.QUESTION_VERDICT || phase === phases.QUESTION_ASK" >
+        <button class="btn btn-primary m-1" (click)="askQ()">
+          Задать вопрос
+        </button>
+        <button class="btn btn-primary m-1" (click)="showAnswer()">
+          Показать ответ
+        </button>
+      </ng-container>
+      <ng-container *ngIf="phase === phases.QUESTION_LISTENING">
+        <div class="row">
+          <div class="col-6 d-flex flex-column">
+            <button
+              class="btn btn-success mt-2"
+              (click)="answerResult(true, 10)"
+            >
+              +10
+            </button>
+            <button
+              class="btn btn-success mt-2"
+              (click)="answerResult(true, 5)"
+            >
+              +5
+            </button>
+            <button
+              class="btn btn-success mt-2"
+              (click)="answerResult(true, 3)"
+            >
+              +3
+            </button>
+            <button
+              class="btn btn-success mt-2"
+              (click)="answerResult(true, 1)"
+            >
+              +1
+            </button>
+          </div>
+          <div class="col-6 d-flex flex-column">
+            <button
+              class="btn btn-danger mt-2"
+              (click)="answerResult(false, 0)"
+            >
+              0
+            </button>
+            <button
+              class="btn btn-danger mt-2"
+              (click)="answerResult(false, -5)"
+            >
+              -1
+            </button>
+            <button
+              class="btn btn-danger mt-2"
+              (click)="answerResult(false, -5)"
+            >
+              -3
+            </button>
+            <button
+              class="btn btn-danger mt-2"
+              (click)="answerResult(false, -5)"
+            >
+              -5
+            </button>
+            <button
+              class="btn btn-danger mt-2"
+              (click)="answerResult(false, -10)"
+            >
+              -10
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

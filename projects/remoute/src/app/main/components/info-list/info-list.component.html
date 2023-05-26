@@ -1,0 +1,10 @@
+<div class="card" *ngIf="selectInfoList | async as infoList">
+  <div class="card-header"><h3>Ознакомьтесь:</h3></div>
+  <div class="card-body">
+    <ul>
+      <li *ngFor="let i of infoList">
+        {{ i }}
+      </li>
+    </ul>
+  </div>
+</div>

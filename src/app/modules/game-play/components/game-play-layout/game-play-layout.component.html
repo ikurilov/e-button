@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    <ng-container *ngIf="!(selectConfig | async)">
+      <app-init-config></app-init-config>
+    </ng-container>
+    <ng-container>
+      <div class="row h-100" *ngIf="(selectConfig | async)">
+        <div class="col-6">
+          <app-curent-slide></app-curent-slide>
+          <br>
+          <app-lead-buttons></app-lead-buttons>
+        </div>
+        <div class="col-6">
+          <app-score-control></app-score-control>
+          <br>
+          <app-team-board></app-team-board>
+          <br>
+          <app-fight-list></app-fight-list>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

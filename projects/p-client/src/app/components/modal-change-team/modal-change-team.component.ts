@@ -1,24 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Teams } from '../../../../../../models/shared-models';
+
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IClientGameState } from '../../../../../../src/app/models/models';
-import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
+import { selectTeamsInGame } from '../../state/p-client.selectors';
 
 @Component({
   selector: 'app-modal-change-team',
   templateUrl: './modal-change-team.component.html',
-  styleUrls: ['./modal-change-team.component.scss']
+  styleUrls: ['./modal-change-team.component.scss'],
 })
 export class ModalChangeTeamComponent implements OnInit {
+  public availableTeams = this.store.select(selectTeamsInGame);
+  constructor(private modalInstance: NgbActiveModal, private store: Store) {}
 
-  @Input() gameStateSub: BehaviorSubject<IClientGameState>;
+  ngOnInit(): void {}
 
-  constructor(private modalInstance: NgbActiveModal) { }
-
-  ngOnInit(): void {
-  }
-
-  selectTeam(team: Teams) {
+  selectTeam(team: TeamColors) {
     this.modalInstance.close(team);
   }
 }

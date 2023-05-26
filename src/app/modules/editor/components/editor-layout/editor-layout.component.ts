@@ -5,7 +5,6 @@ import { EditorState } from '../../state/editor.state';
 import { editorActions } from '../../state/editor.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { EditorModule } from '../../editor.module';
 
 @Component({
   selector: 'app-editor-layout',
@@ -25,11 +24,7 @@ export class EditorLayoutComponent implements OnInit {
 
   constructor(private store: Store) {}
 
-  ngOnInit(): void {
-    this.store.select(selectEditor).subscribe((editor) => {
-      console.log('editor', editor);
-    });
-  }
+  ngOnInit(): void {}
 
   initFolder(path: string) {
     this.store.dispatch(editorActions.setfolder({ path }));

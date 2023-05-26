@@ -1,0 +1,82 @@
+<div class="card h-100" *ngIf="selectImageQuestion | async as iq">
+  <ng-container [ngSwitch]="iq.phase">
+    <ng-container *ngSwitchCase="questionPhases.TITLE">
+      <div class="card-header">
+        <h3>Приготовтесь!!!</h3>
+      </div>
+    </ng-container>
+<!--    <ng-container *ngSwitchCase="questionPhases.ASK">-->
+<!--      <div class="card-header">-->
+<!--        <h3>Вопрос {{ iq.number }} {{ iq.answeringTeam || 'жми!' }}</h3>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+    <ng-container *ngSwitchCase="questionPhases.RESULTS">
+      <div
+        class="card-header"
+        [ngClass]="{
+          'bg-danger': iq.answerResult === 'WRONG',
+          'bg-success': iq.answerResult === 'CORRECT'
+        }"
+      >
+        <h3>Вопрос {{ iq.number }}</h3>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionPhases.ANSWER">
+      <div class="card-header">
+        <h3>Ответ {{ iq.number }}</h3>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="">
+    <ng-container [ngSwitch]="iq.phase">
+      <ng-container *ngSwitchCase="questionPhases.TITLE">
+        <div class="centered">
+          <div *ngIf="iq.toxic" class="alert alert-danger mb-2" role="alert">
+            Токсичный вопрос!
+          </div>
+          <div class="alert alert-primary" role="alert">
+            <h3>Вопрос №{{ iq.number }}</h3>
+            <h3>Стоимость: {{ iq.points }}</h3>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="questionPhases.ASK">
+        <div class="">
+          <div class="image-container ratio-box">
+            <img [src]="iq.imageCoded" class="image" [alt]="" />
+            <div
+              class="patch"
+              *ngFor="let patch of iq.patches; let i = index"
+              [style.left.%]="patch.leftInPercent"
+              [style.top.%]="patch.topInPercent"
+              [style.width.%]="patch.widthInPercent"
+              [style.height.%]="patch.heightInPercent"
+            ></div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="questionPhases.RESULTS">
+        <div class="centered">
+          <div class="image-container ratio-box">
+            <img [src]="iq.imageCoded" class="image" [alt]="" />
+            <div
+              class="patch"
+              *ngFor="let patch of iq.patches; let i = index"
+              [style.left.%]="patch.leftInPercent"
+              [style.top.%]="patch.topInPercent"
+              [style.width.%]="patch.widthInPercent"
+              [style.height.%]="patch.heightInPercent"
+            ></div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="questionPhases.ANSWER">
+        <div class="centered">
+          <div class="image-container ratio-box">
+            <img [src]="iq.imageCoded" class="image" [alt]="" />
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

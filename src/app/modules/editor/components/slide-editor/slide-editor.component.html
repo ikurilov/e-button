@@ -2,8 +2,13 @@
   <div class="canvas" *ngIf="currentSlide | async as slide">
     <ng-container [ngSwitch]="slide.type">
       <ng-container *ngSwitchCase="slideTypes.questionWithImage">
-        <div class="image-container ratio-box" #imageContainer (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">
-        <img class="image" [src]="slide.imageCoded" alt="img" />
+        <div
+          class="image-container ratio-box"
+          #imageContainer
+          (mouseup)="onMouseUp($event)"
+          (mousemove)="onMouseMove($event)"
+        >
+          <img class="image" [src]="slide.imageCoded" alt="img" />
 
           <div
             class="patch"
@@ -12,7 +17,6 @@
             [style.top.%]="patch.topInPercent"
             [style.width.%]="patch.widthInPercent"
             [style.height.%]="patch.heightInPercent"
-
           >
             <div
               class="patch-move"
@@ -23,71 +27,118 @@
               (mousedown)="onResizeMouseDown($event, patch, i)"
             ></div>
           </div>
-          <div class="shadow-patch" *ngIf="isMoving || isResizing" #shadowPatch></div>
-
+          <div
+            class="shadow-patch"
+            *ngIf="isMoving || isResizing"
+            #shadowPatch
+          ></div>
+        </div>
+      </ng-container>
+      <ng-container  *ngSwitchCase="slideTypes.info">
+        <div class="mb-3">
+          <label class="form-label">ВВеди вот так: ["Текст 1"]</label>
+          <textarea class="form-control" [(ngModel)]="newInfoRows" rows="20"></textarea>
+          <button class="btn btn-success w-100" (click)="setNewInfoRows()">Сохранить</button>
         </div>
       </ng-container>
     </ng-container>
   </div>
 
-    <div class="card tools">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div>Создать слайд</div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-secondary" (click)="createSlide(slideTypes.info)">Info</button>
-            <button type="button" class="btn btn-secondary" (click)="createSlide(slideTypes.break)">break</button>
-          </div>
-        </li>
-        <li class="list-group-item" *ngIf="currentSlide | async as slide">
-          <div>Текущий слайд</div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-secondary" (click)="moveSlide('up')">Вверх</button>
-            <button type="button" class="btn btn-secondary" (click)="moveSlide('down')">Вниз</button>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-danger" (click)="deleteSlide()">Удалить</button>
-          </div>
-        </li>
-<!--        <ng-container *ngIf="currentSlide | async as slide">-->
-<!--          <li-->
-<!--            class="list-group-item"-->
-<!--            *ngIf="slide.type === slideTypes.questionWithImage"-->
-<!--          >-->
-<!--            <div>Патчи</div>-->
-<!--            <button class="btn btn-success w-100" (click)="addPatch()">-->
-<!--              Добавить-->
-<!--            </button>-->
-<!--            <button-->
-<!--              *ngFor="let patch of slide.patches; let i = index"-->
-<!--              class="btn btn-danger w-100 mt-2"-->
-<!--              (click)="deletePatch(i)"-->
-<!--            >-->
-<!--              Удалить-->
-<!--            </button>-->
-<!--          </li>-->
-<!--        </ng-container>-->
-        <ng-container *ngIf="currentSlide | async as slide">
-          <li
-            class="list-group-item"
-            *ngIf="slide.type === slideTypes.questionWithImage"
+  <div class="card tools">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div>Создать слайд</div>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="createSlide(slideTypes.info)"
           >
-            <div>Патчи</div>
-            <button class="btn btn-success w-100" (click)="addPatch()">
-              Добавить
+            Info
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="createSlide(slideTypes.break)"
+          >
+            break
+          </button>
+        </div>
+      </li>
+      <li class="list-group-item" *ngIf="currentSlide | async as slide">
+        <div>Текущий слайд</div>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="moveSlide('up')"
+          >
+            Вверх
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="moveSlide('down')"
+          >
+            Вниз
+          </button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger" (click)="deleteSlide()">
+            Удалить
+          </button>
+        </div>
+      </li>
+      <ng-container *ngIf="currentSlide | async as slide">
+        <li
+          class="list-group-item"
+          *ngIf="slide.type === slideTypes.questionWithImage"
+        >
+          <div>Очки</div>
+          <div class="form-group d-flex">
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="newSlidePoints"
+            />
+            <button class="btn btn-success" (click)="setNewSlidePoints()">
+              Установить
             </button>
-            <button
-              *ngFor="let patch of slide.patches; let i = index"
-              class="btn btn-danger w-100 mt-2"
-              (click)="deletePatch(i)"
-            >
-              Удалить
+          </div>
+          <div class="form-group d-flex mt-2">
+            <div class="w-25">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [(ngModel)]="newSlideIsToxic"
+              />
+            </div>
+            <button class="btn btn-success" (click)="setNewSlideToxic()">
+              set toxic
             </button>
-          </li>
-        </ng-container>
-      </ul>
-    </div>
-    <!-- ... -->
+          </div>
 
-
+        </li>
+      </ng-container>
+      <ng-container *ngIf="currentSlide | async as slide">
+        <li
+          class="list-group-item"
+          *ngIf="slide.type === slideTypes.questionWithImage"
+        >
+          <div>Патчи</div>
+          <button class="btn btn-success w-100" (click)="addPatch()">
+            Добавить
+          </button>
+          <button
+            *ngFor="let patch of slide.patches; let i = index"
+            class="btn btn-danger w-100 mt-2"
+            (click)="deletePatch(i)"
+          >
+            Удалить
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <!-- ... -->
 </div>

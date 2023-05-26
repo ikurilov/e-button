@@ -74,7 +74,6 @@ export class EditorService {
 
   getFilesRecursive(folderPath: string): { filename: string; path: string }[] {
     let files: { filename: string; path: string }[] = [];
-    debugger;
 
     const filesInFolder = this.electronService.fs.readdirSync(folderPath);
 

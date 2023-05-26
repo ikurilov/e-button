@@ -5,9 +5,9 @@
     </div>
   </div>
   <div class="card-body">
-    <ng-container *ngIf="(gameStateSub|async) as gameState">
-      <ng-container *ngIf="gameState.teamsInGame?.length; else empty">
-        <button *ngFor="let team of gameState.teamsInGame" class="btn btn-primary mt-3 w-100" (click)="selectTeam(team)"><b>{{team}}</b></button>
+    <ng-container *ngIf="(availableTeams|async) as availableTeams">
+      <ng-container *ngIf="availableTeams?.length; else empty">
+        <button *ngFor="let team of availableTeams" class="btn btn-primary mt-3 w-100" (click)="selectTeam(team)"><b>{{team}}</b></button>
       </ng-container>
       <ng-template #empty>
         Wait! Admin selecting available teams for game...

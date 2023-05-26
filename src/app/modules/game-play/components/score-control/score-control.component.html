@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">
+      <h6>Score</h6>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="score-row" *ngFor="let i of displayScore | async">
+      <div
+        [ngClass]="{
+          purple: i.team === teamColors.PURPLE,
+          yellow: i.team === teamColors.YELLOW,
+          cyan: i.team === teamColors.CYAN,
+          amber: i.team === teamColors.AMBER
+        }"
+        class="circle"
+      ></div>
+      <div class="team-title">{{ i.team }}</div>
+      <div class="score">
+        <b>{{ i.score }}</b>
+      </div>
+      <div class="btn-group btn-group-sm">
+        <button class="btn btn-sm btn-outline-success"><b> + </b></button>
+        <button class="btn btn-sm btn-outline-danger"><b> - </b></button>
+      </div>
+    </div>
+  </div>
+</div>

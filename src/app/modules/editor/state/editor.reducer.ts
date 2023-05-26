@@ -69,11 +69,11 @@ export const editorReducer = createReducer(
     return { ...state, currentSlideIndex: null, slides: slides };
   }),
   on(editorActions.moveslide, (state, { slideIndex, newIndex }) => {
-    const slides = state.slides;
+    const slides = [...state.slides];
     const slide = slides[slideIndex];
     slides.splice(slideIndex, 1);
     slides.splice(newIndex, 0, slide);
-    return { ...state, slides: slides };
+    return { ...state, slides: slides, currentSlideIndex: newIndex };
   }),
   on(editorActions.setcurrentslide, (state, { index }) => {
     return { ...state, currentSlideIndex: index };
