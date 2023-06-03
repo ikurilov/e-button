@@ -1,19 +1,26 @@
-<div class="card">
+<div class="card bg-dark h-100">
   <div class="card-header">
-    <div class="d-flex">
-      <div class="btn-group">
-        <button class="btn btn-sm btn-primary" (click)="refresh()">refresh</button>
-        <button class="btn btn-sm btn-primary" (click)="isHidden=!isHidden"> {{isHidden ? 'expand ' : 'hide '}}files</button>
-        <button class="btn btn-warning" (click)="addFromAllImages()">Сделать Слайды из всех фалов вьера. НЕЛЬЗЯ ОТМЕНИТЬ</button>
-      </div>
-    </div>
+    <h5 class="text-light">{{folderPath | async}}\...</h5>
   </div>
-  <div class="card-body" *ngIf="!isHidden">
-    <div class="image-container">
-      <div class="image-item" *ngFor="let i of listOfFiles" >
-        <img [src]="i.url" [alt]="i.fileName" (click)="addSlideWithImage(i)">
-        <div class="image-title" >{{i.fileName}}</div>
-      </div>
+  <div class="card-body">
+    <div class="file-container">
+      <ng-container *ngFor="let fileObj of listOfFiles">
+        <div
+          *ngIf="fileObj.type === 'image'"
+          class="file-item card p-1 bg-dark"
+        >
+          <img [src]="fileObj.url" [alt]="fileObj.fileName" />
+          <div class="card-title text-light">{{ fileObj.fileName }}</div>
+          <div class="btn-group btn-group-sm w-100">
+<!--            TODO: добавить disabled-->
+            <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage(fileObj)">созд</button>
+            <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide(fileObj)"> доб</button>
+          </div>
+        </div>
+        <div *ngIf="fileObj.type === 'audio'">
+          <!--TODO-->
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

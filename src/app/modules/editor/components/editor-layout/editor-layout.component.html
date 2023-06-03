@@ -1,35 +1,95 @@
-<div class="editor-layout">
+<div class="editor-layout bg-secondary">
   <ng-container *ngIf="!(isInited | async)">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Укажите папку с игрой</h5>
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="gameFolder"
-            placeholder="Папка с игрой"
-            [(ngModel)]="gameFolder"
-          />
-          <button class="btn btn-success mt-2" (click)="startEditing()">
-            го
-          </button>
+    <div class="init-container">
+      <div class="card w-100 bg-dark text-light">
+        <div class="card-body">
+          <h5 class="card-title">Укажите папку с игрой</h5>
+          <div class="mt-4 form-group">
+            <div class="input-group">
+              <span class="input-group-text bg-dark text-secondary"
+                ><i class="fa fa-folder"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control bg-secondary text-white"
+                id="gameFolder"
+                placeholder="Папка с игрой"
+                [(ngModel)]="gameFolder"
+              />
+            </div>
+            <button
+              class="btn btn-outline-primary mt-4"
+              (click)="startEditing()"
+            >
+              Открыть игру
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </ng-container>
 
   <ng-container *ngIf="isInited | async">
-    <div class="header-block">
-      <app-editor-header-panel></app-editor-header-panel>
-      <app-folder-viewer></app-folder-viewer>
-    </div>
-    <div class="main-block">
-      <div class="w-20">
-        <app-slides-line></app-slides-line>
-      </div>
-      <div class="w-80">
-        <app-slide-editor></app-slide-editor>
+    <div class="editor-container">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="nav-content">
+          <div class="title-input">
+            <input
+              type="text"
+              class="form-control form-control-sm bg-dark border-success text-light"
+              Placeholder="Название игры"
+              [(ngModel)]="gameName"
+            />
+            <button class="btn btn-sm btn-outline-success">
+              <i class="fa fa-save"></i>
+            </button>
+          </div>
+
+          <div class="btn-group">
+            <button
+              (click)="changeViewMode('file')"
+              [ngClass]="{
+                'btn-warning': mode === 'file',
+                'btn-outline-warning': mode !== 'file'
+              }"
+              class="btn btn-sm btn-warning"
+            >
+              <i class="fa fa-folder"></i>
+              файлы
+            </button>
+            <button
+              (click)="changeViewMode('slide')"
+              [ngClass]="{
+                'btn-warning': mode === 'slide',
+                'btn-outline-warning': mode !== 'slide'
+              }"
+              class="btn btn-sm btn-outline-warning"
+            >
+              <i class="fa fa-image"></i>
+              слайды
+            </button>
+          </div>
+
+          <div class="right-block">
+            <button class="btn btn-sm btn-outline-danger">
+              <i class="fa fa-rocket"></i>
+              Старт
+            </button>
+          </div>
+        </div>
+      </nav>
+      <div class="main">
+        <div class="left-block">
+          <app-slides-line></app-slides-line>
+        </div>
+        <div class="right-block">
+          <app-slide-editor
+            [ngClass]="{ hidden: mode !== 'slide' }"
+          ></app-slide-editor>
+          <app-folder-viewer
+            [ngClass]="{ hidden: mode !== 'file' }"
+          ></app-folder-viewer>
+        </div>
       </div>
     </div>
   </ng-container>

@@ -15,6 +15,25 @@ $amber-team: #FD7E14FF;
 body, html {
   height: 100%;
 }
+::-webkit-scrollbar-track
+{
+  border-radius: 50%;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 4px;
+  background-color: #F5F5F5;
+  border-radius: 50%;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 4px;
+  background-color: #747474;
+}
+
 .purple, .cyan, .yellow, .amber{
   width: 1.0rem;
   height: 1.0rem;

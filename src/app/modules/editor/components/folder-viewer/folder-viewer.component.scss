@@ -1,28 +1,45 @@
 .hidden{
   display: none;
 }
-.image-container{
+.file-container{
   display: flex;
-  height: 70vh;
-  width: 100%;
-  overflow-y: scroll;
-  gap: 1rem
+  height: 100%;
+  overflow-y: auto;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  gap: 0.7rem;
+}
+
+.file-item{
+  width: 12rem;
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  img{
+    max-width: 100%;
+    max-height: 100%  ;
+
+  }
 }
 
 .image-item{
-  width: 10rem;
+  width: 12rem;
   height: 12rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  //&:hover{
+  //  cursor: pointer;
+  //  transform: scale(1.1);
+  //}
   img{
-    max-width: 10rem;
-    max-height: 10rem;
-    &:hover{
-      cursor: pointer;
-      transform: scale(1.1);
-    }
+    max-width: 100%;
+    max-height: 100%  ;
+
   }
   .image-title{
     font-size: 0.8rem;

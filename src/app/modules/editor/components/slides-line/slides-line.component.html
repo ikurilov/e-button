@@ -1,20 +1,25 @@
-<div class="slides" *ngIf="getTypedSlides(slides | async) as slides">
-  <ng-container *ngFor="let slide of slides; let i = index">
-    <div class="slide-container" (click)="setCurrentSlide(i)">
-      <div class="slide-index">{{ i + 1 }}</div>
-      <ng-container [ngSwitch]="slide.type">
-        <ng-container *ngSwitchCase="slideTypes.questionWithImage">
-          <div class="slide">
-            <img [src]="slide.imageCoded" [alt]="'img'" />
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="slideTypes.break">
-          <h5>Break</h5>
-        </ng-container>
-        <ng-container *ngSwitchCase="slideTypes.info">
-          <h5>Info</h5>
-        </ng-container>
+<div class="card bg-dark h-100 w-100">
+  <div class="card-body h-100">
+    <div class="slides" *ngIf="getTypedSlides(slides | async) as slides">
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <div class="slide-container" (click)="setCurrentSlide(i)">
+          <div class="slide-index">{{ i + 1 }}</div>
+          <ng-container [ngSwitch]="slide.type">
+            <ng-container *ngSwitchCase="slideTypes.questionWithImage">
+              <div class="slide">
+                <img [src]="slide.imageCoded" [alt]="'img'" />
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.break">
+              <h5>Break</h5>
+            </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.info">
+              <h5>Info</h5>
+            </ng-container>
+          </ng-container>
+        </div>
       </ng-container>
     </div>
-  </ng-container>
+  </div>
 </div>
+

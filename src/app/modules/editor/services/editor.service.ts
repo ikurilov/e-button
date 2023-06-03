@@ -9,46 +9,68 @@ const memeFileName = 'meme-bebe.json';
   providedIn: 'root',
 })
 export class EditorService {
+  private audioFileTypes = ['mp3', 'wav', 'ogg'];
+  private imageFileTypes = ['jpg', 'jpeg', 'png'];
   constructor(private electronService: ElectronService) {}
 
-  getImagesFromDir(directoryPath: string): { fileName: string; url: string }[] {
+  getFilesFromDir(
+    directoryPath: string,
+  ): { fileName: string; url: string; type: 'audio' | 'image' }[] {
     const fs = this.electronService.fs;
     const path = this.electronService.path;
 
-    function readImagesRecursively(dirPath: string): string[] {
+    let readFilesRecursively = (
+      dirPath: string,
+    ): { path: string; type: 'image' | 'audio' }[] => {
       const files = fs.readdirSync(dirPath);
-      const allFiles: string[] = [];
+      const allFiles: { path: string; type: 'image' | 'audio' }[] = [];
 
       files.forEach((file) => {
         const filePath = path.join(dirPath, file);
         const fileStats = fs.statSync(filePath);
 
         if (fileStats.isDirectory()) {
-          allFiles.push(...readImagesRecursively(filePath));
+          allFiles.push(...readFilesRecursively(filePath));
         } else if (
-          file.endsWith('.jpg') ||
-          file.endsWith('.jpeg') ||
-          file.endsWith('.png')
+          this.imageFileTypes.some((fileType) => file.endsWith(fileType))
         ) {
-          allFiles.push(filePath);
+          allFiles.push({ path: filePath, type: 'image' });
+        } else if (
+          this.audioFileTypes.some((fileType) => file.endsWith(fileType))
+        ) {
+          allFiles.push({ path: filePath, type: 'audio' });
         }
       });
 
       return allFiles;
-    }
+    };
 
-    const imagePaths = readImagesRecursively(directoryPath);
+    const filesList: { path: string; type: 'image' | 'audio' }[] =
+      readFilesRecursively(directoryPath);
 
-    return imagePaths.map((filePath) => {
-      const fileName = path.basename(filePath);
+    return filesList.map((fileObj) => {
+      const fileName = path.basename(fileObj.path);
       const fileExtension = path.extname(fileName).slice(1);
 
-      return {
-        fileName: fileName,
-        url: `data:image/${fileExtension};base64,${fs
-          .readFileSync(filePath)
-          .toString('base64')}`,
-      };
+      if (fileObj.type === 'audio') {
+        return {
+          type: 'audio',
+          fileName: fileName,
+          url: `data:audio/${fileExtension};base64,${fs
+            .readFileSync(fileObj.path)
+            .toString('base64')}`,
+        };
+      }
+
+      if (fileObj.type === 'image') {
+        return {
+          type: 'image',
+          fileName: fileName,
+          url: `data:image/${fileExtension};base64,${fs
+            .readFileSync(fileObj.path)
+            .toString('base64')}`,
+        };
+      }
     });
   }
 

@@ -13,6 +13,7 @@ import { editorReducer } from './state/editor.reducer';
 import { EditorEffects } from './state/editor.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { EditorHeaderPanelComponent } from './components/editor-header-panel/editor-header-panel.component';
+import { EditorToolbarComponent } from './components/slide-editor/components/editor-toolbar/editor-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { EditorHeaderPanelComponent } from './components/editor-header-panel/edi
     SlidesLineComponent,
     SlideEditorComponent,
     EditorHeaderPanelComponent,
+    EditorToolbarComponent,
   ],
   imports: [
     CommonModule,

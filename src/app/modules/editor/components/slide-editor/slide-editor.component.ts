@@ -140,7 +140,7 @@ export class SlideEditorComponent implements OnInit {
         if (slide.type === SlideType.questionWithImage) {
           const updatedPatches = [...slide.patches, this.createPatchElement()];
           const updatedSlide = { ...slide, patches: updatedPatches };
-          this.updateSlide(editor.currentSlideIndex, updatedSlide);
+          // this.updateSlide(editor.currentSlideIndex, updatedSlide);
         }
       }
     });
@@ -269,14 +269,14 @@ export class SlideEditorComponent implements OnInit {
       this.selectedPatchIndex !== null &&
       this.updatedPatchPosition
     ) {
-      this.updateCurrentPatch(this.updatedPatchPosition);
+      // this.updateCurrentPatch(this.updatedPatchPosition);
       this.updatedPatchPosition = null;
     } else if (
       this.isResizing &&
       this.selectedPatchIndex !== null &&
       this.updatedPatchSize
     ) {
-      this.updateCurrentPatch(this.updatedPatchSize);
+      // this.updateCurrentPatch(this.updatedPatchSize);
       this.updatedPatchSize = null;
     }
     this.isMoving = false;

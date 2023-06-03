@@ -35,7 +35,8 @@
               "src/server"
             ],
             "styles": [
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "shared/styles/fa/css/all.css"
             ],
             "scripts": [],
             "customWebpackConfig": {

@@ -15,49 +15,49 @@ export const editorReducer = createReducer(
     ...state,
     title: title,
   })),
-  on(editorActions.addslide, (state, { slideType }) => {
-    switch (slideType) {
-      case SlideType.questionWithImage:
-        return {
-          ...state,
-          slides: [
-            ...state.slides,
-            {
-              type: SlideType.questionWithImage,
-              imageCoded: '',
-              points: 10,
-              toxic: false,
-              patches: [],
-            },
-          ],
-        };
-      case SlideType.info:
-        return {
-          ...state,
-          slides: [...state.slides, { type: SlideType.info, paragraphs: [] }],
-        };
-      case SlideType.break:
-        return {
-          ...state,
-          slides: [...state.slides, { type: SlideType.break }],
-        };
-    }
-  }),
-  on(editorActions.addslidewithimage, (state, { imageCoded }) => {
-    return {
-      ...state,
-      slides: [
-        ...state.slides,
-        {
-          type: SlideType.questionWithImage,
-          imageCoded: imageCoded,
-          points: 10,
-          toxic: false,
-          patches: [],
-        },
-      ],
-    };
-  }),
+  // on(editorActions.addslide, (state, { slideType }) => {
+  //   switch (slideType) {
+  //     case SlideType.questionWithImage:
+  //       return {
+  //         ...state,
+  //         slides: [
+  //           ...state.slides,
+  //           {
+  //             type: SlideType.questionWithImage,
+  //             imageCoded: '',
+  //             points: 10,
+  //             toxic: false,
+  //             patches: [],
+  //           },
+  //         ],
+  //       };
+  //     case SlideType.info:
+  //       return {
+  //         ...state,
+  //         slides: [...state.slides, { type: SlideType.info, paragraphs: [] }],
+  //       };
+  //     case SlideType.break:
+  //       return {
+  //         ...state,
+  //         slides: [...state.slides, { type: SlideType.break }],
+  //       };
+  //   }
+  // }),
+  // on(editorActions.addslidewithimage, (state, { imageCoded }) => {
+  //   return {
+  //     ...state,
+  //     slides: [
+  //       ...state.slides,
+  //       {
+  //         type: SlideType.questionWithImage,
+  //         imageCoded: imageCoded,
+  //         points: 10,
+  //         toxic: false,
+  //         patches: [],
+  //       },
+  //     ],
+  //   };
+  // }),
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];
     slides[slideIndex] = slide;

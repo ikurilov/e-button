@@ -21,17 +21,24 @@ export class EditorLayoutComponent implements OnInit {
     this.store.select(selectEditor);
   gameFolder: string =
     'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\Тестовая игры';
+  public gameName: any;
+  public mode: 'file' | 'slide' = 'slide';
 
   constructor(private store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.startEditing();
+  }
 
   initFolder(path: string) {
     this.store.dispatch(editorActions.setfolder({ path }));
   }
 
   startEditing() {
-    console.log(this.gameFolder);
     this.initFolder(this.gameFolder);
+  }
+
+  public changeViewMode(mode: 'file' | 'slide') {
+    this.mode = mode;
   }
 }
