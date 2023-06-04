@@ -15,49 +15,77 @@ export const editorReducer = createReducer(
     ...state,
     title: title,
   })),
-  // on(editorActions.addslide, (state, { slideType }) => {
-  //   switch (slideType) {
-  //     case SlideType.questionWithImage:
-  //       return {
-  //         ...state,
-  //         slides: [
-  //           ...state.slides,
-  //           {
-  //             type: SlideType.questionWithImage,
-  //             imageCoded: '',
-  //             points: 10,
-  //             toxic: false,
-  //             patches: [],
-  //           },
-  //         ],
-  //       };
-  //     case SlideType.info:
-  //       return {
-  //         ...state,
-  //         slides: [...state.slides, { type: SlideType.info, paragraphs: [] }],
-  //       };
-  //     case SlideType.break:
-  //       return {
-  //         ...state,
-  //         slides: [...state.slides, { type: SlideType.break }],
-  //       };
-  //   }
-  // }),
-  // on(editorActions.addslidewithimage, (state, { imageCoded }) => {
-  //   return {
-  //     ...state,
-  //     slides: [
-  //       ...state.slides,
-  //       {
-  //         type: SlideType.questionWithImage,
-  //         imageCoded: imageCoded,
-  //         points: 10,
-  //         toxic: false,
-  //         patches: [],
-  //       },
-  //     ],
-  //   };
-  // }),
+  on(editorActions.addslide, (state, { slideType }) => {
+    switch (slideType) {
+      // todo: add other slide types
+      case SlideType.questionWithImage:
+        return {
+          ...state,
+          slides: [
+            ...state.slides,
+            {
+              type: SlideType.questionWithImage,
+              images: [],
+              points: 10,
+              toxic: false,
+              patches: [],
+            },
+          ],
+        };
+      case SlideType.info:
+        return {
+          ...state,
+          slides: [...state.slides, { type: SlideType.info, content: '' }],
+        };
+      case SlideType.break:
+        return {
+          ...state,
+          slides: [...state.slides, { type: SlideType.break }],
+        };
+      case SlideType.round:
+        return {
+          ...state,
+          slides: [
+            ...state.slides,
+            {
+              type: SlideType.round,
+              number:
+                state.slides.filter((s) => s.type === SlideType.round).length +
+                1,
+            },
+          ],
+        };
+      case SlideType.result:
+        return {
+          ...state,
+          slides: [...state.slides, { type: SlideType.result }],
+        };
+    }
+  }),
+
+  on(editorActions.addslidewithimage, (state, { imageCoded }) => {
+    return {
+      ...state,
+      slides: [
+        ...state.slides,
+        {
+          type: SlideType.questionWithImage,
+          images: [
+            {
+              position: { left: 5, top: 5, width: 50, height: 50 },
+              takenFrom: '',
+              W2HRatio: 1,
+              imageSource: imageCoded,
+            },
+          ],
+          points: 10,
+          toxic: false,
+          patches: [],
+        },
+      ],
+    };
+  }),
+
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];
     slides[slideIndex] = slide;

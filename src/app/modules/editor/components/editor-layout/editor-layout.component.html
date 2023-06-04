@@ -40,7 +40,7 @@
               Placeholder="Название игры"
               [(ngModel)]="gameName"
             />
-            <button class="btn btn-sm btn-outline-success">
+            <button class="btn btn-sm btn-outline-success" (click)="save()">
               <i class="fa fa-save"></i>
             </button>
           </div>
@@ -71,7 +71,7 @@
           </div>
 
           <div class="right-block">
-            <button class="btn btn-sm btn-outline-danger">
+            <button class="btn btn-sm btn-outline-danger" (click)="start()">
               <i class="fa fa-rocket"></i>
               Старт
             </button>

@@ -1,8 +1,121 @@
 <div class="card card-body h-100 w-100 bg-dark border-warning text-light">
   <div class="card-title">Создать слайд</div>
+  <div class="create-slide mb-4 pt-2">
+    <button
+      type="button"
+      class="btn btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.questionWithImage)"
+    >
+      <i class="fas fa-image"></i>
+    </button>
+
+    <button
+      type="button"
+      [disabled]="true"
+      class="btn btn-sm btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.questionWithAudio)"
+    >
+      <i class="fas fa-music"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.info)"
+    >
+      <i class="fas fa-info"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.break)"
+    >
+      <i class="fas fa-pause"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.round)"
+    >
+      <i class="fas fa-exclamation-triangle"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-warning"
+      name="button"
+      (click)="addSlide(slideTypes.result)"
+    >
+      <i class="fas fa-medal"></i>
+    </button>
+  </div>
+
   <div class="card-title">Текущий слайд</div>
+  <div class="mb-4 pt-2">
+    <button
+      type="button"
+      class="btn btn-sm btn-warning me-1"
+      name="button"
+      (click)="moveSlideUp()"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-warning me-1"
+      name="button"
+      (click)="moveSlideDown()"
+    >
+      <i class="fas fa-arrow-down"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-danger ms-5 me-1"
+      name="button"
+      (click)="removeSlide()"
+    >
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
   <div class="card-title">Очки</div>
-
-
+  <div class="mb-4 pt-2 d-flex">
+    <div class="input-group">
+      <span class="input-group-text border-primary bg-dark text-light"
+        >Вопрос</span
+      >
+      <input
+        type="number"
+        class="form-control border-primary bg-dark text-light"
+        placeholder="0"
+        aria-describedby="basic-addon1"
+        [formControl]="pointControl"
+      />
+    </div>
+    <button
+      type="button"
+      class="btn btn-sm btn-warning ms-2"
+      name="button"
+      (click)="toxic()"
+    >
+      <i class="fas fa-skull-crossbones"></i>
+    </button>
+  </div>
+  <button
+    type="button"
+    class="btn btn-sm btn-primary"
+    name="button"
+    (click)="addPatch()"
+  >
+    <i class="fas fa-mask"></i>
+  </button>
 
 </div>

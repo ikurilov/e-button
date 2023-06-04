@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EditorState, initialEditorState } from '../state/editor.state';
 import { ElectronService } from '../../../core/services';
-import { Store } from '@ngrx/store';
 
 const memeFileName = 'meme-bebe.json';
 
@@ -134,6 +133,7 @@ export class EditorService {
     let files = this.getFiles(path);
     let file = files.find((f) => f.filename === memeFileName);
     if (file) {
+      // todo:  unix path
       return this.loadFromFile(path + '\\' + memeFileName);
     }
     let newEditor: EditorState = {

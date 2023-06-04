@@ -5,13 +5,21 @@ export interface EditorState {
   currentSlideIndex?: number;
 }
 
-export type Slide = QuestionWithImageSlide | InfoSlide | BreakSlide;
+export type Slide =
+  | QuestionWithImageSlide
+  | InfoSlide
+  | BreakSlide
+  | QuestionWithAudioSlide
+  | RoundSlide
+  | ResultSlide;
 
 export enum SlideType {
   questionWithImage = 'questionWithImage',
   info = 'info',
   break = 'break',
   questionWithAudio = 'questionWithAudio',
+  round = 'round',
+  result = 'result',
 }
 
 export interface AbsolutePosition {
@@ -28,10 +36,12 @@ export interface QuestionSlide {
 
 export type QuestionWithImageSlide = QuestionSlide & {
   type: SlideType.questionWithImage;
-  imageCoded: string;
   images: {
     position: AbsolutePosition;
-    W2HRatio: number;
+    takenFrom: string;
+    W2HRatio?: number;
+    showOnly?: 'question' | 'answer';
+    imageSource: string;
   }[];
   text?: string;
   patches: {
@@ -61,11 +71,21 @@ export type QuestionWithAudioSlide = QuestionSlide & {
 
 export interface InfoSlide {
   type: SlideType.info;
-  paragraphs: string[];
+  content: string;
 }
 
 export interface BreakSlide {
   type: SlideType.break;
+}
+
+export interface RoundSlide {
+  type: SlideType.round;
+  name?: string;
+  number: number;
+}
+
+export interface ResultSlide {
+  type: SlideType.result;
 }
 
 export const initialEditorState: EditorState = {

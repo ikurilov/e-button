@@ -1,47 +1,23 @@
 <div class="card bg-dark h-100">
   <div class="card-body">
-    <div class="editor">
-      <div class="canvas" *ngIf="currentSlide | async as slide">
-        <ng-container [ngSwitch]="slide.type">
-          <ng-container *ngSwitchCase="slideTypes.questionWithImage">
-            <div
-              class="image-container ratio-box"
-              #imageContainer
-              (mouseup)="onMouseUp($event)"
-              (mousemove)="onMouseMove($event)"
-            >
-              <img class="image" [src]="slide.imageCoded" alt="img" />
 
-              <div
-                class="patch"
-                *ngFor="let patch of slide.patches; let i = index"
-                [style.left.%]="patch.leftInPercent"
-                [style.top.%]="patch.topInPercent"
-                [style.width.%]="patch.widthInPercent"
-                [style.height.%]="patch.heightInPercent"
-              >
-                <div
-                  class="patch-move"
-                  (mousedown)="onMoveMouseDown($event, patch, i)"
-                ></div>
-                <div
-                  class="patch-change-size"
-                  (mousedown)="onResizeMouseDown($event, patch, i)"
-                ></div>
+    <div class="editor">
+      <div class="canvas">
+        <ng-container *ngIf="currentSlide | async as slide">
+          <ng-container [ngSwitch]="slide.type">
+            <ng-container *ngSwitchCase="slideTypes.questionWithImage">
+              <app-ratio-box-viewer
+                [slide]="getCastedSlide(slide)"
+                (slideChange)="saveSlide($event)"
+              ></app-ratio-box-viewer>
+            </ng-container>
+            <ng-container  *ngSwitchCase="slideTypes.info">
+              <div class="mb-3">
+                <label class="form-label">ВВеди вот так: ["Текст 1"]</label>
+                <textarea class="form-control" [(ngModel)]="newInfoRows" rows="20"></textarea>
+                <!--              <button class="btn btn-success w-100" (click)="setNewInfoRows()">Сохранить</button>-->
               </div>
-              <div
-                class="shadow-patch"
-                *ngIf="isMoving || isResizing"
-                #shadowPatch
-              ></div>
-            </div>
-          </ng-container>
-          <ng-container  *ngSwitchCase="slideTypes.info">
-            <div class="mb-3">
-              <label class="form-label">ВВеди вот так: ["Текст 1"]</label>
-              <textarea class="form-control" [(ngModel)]="newInfoRows" rows="20"></textarea>
-              <button class="btn btn-success w-100" (click)="setNewInfoRows()">Сохранить</button>
-            </div>
+            </ng-container>
           </ng-container>
         </ng-container>
       </div>

@@ -16,9 +16,7 @@ import { map } from 'rxjs/operators';
 export class FolderViewerComponent implements OnInit {
   public folderPath = this.store.select(selectEditor).pipe(
     map((editor) => {
-      if (editor?.slides.length) {
-        return editor?.folderPath;
-      }
+      return editor?.folderPath;
     }),
   );
 
@@ -66,7 +64,7 @@ export class FolderViewerComponent implements OnInit {
   createSlideWithImage(fileObj: {
     fileName: string;
     url: string;
-    type: 'image' | 'audio';
+    type: 'image' | 'audio'; // image only
   }) {
     this.store.dispatch(
       editorActions.addslidewithimage({ imageCoded: fileObj.url }),

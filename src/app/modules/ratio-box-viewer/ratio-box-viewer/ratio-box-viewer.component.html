@@ -1,0 +1,51 @@
+<div
+  class="canvas"
+  (mouseup)="onMouseUp($event)"
+  (mousemove)="onMouseMove($event)"
+  #canvas
+>
+  <div
+    class="image-container border-secondary"
+    *ngFor="let img of slide.images; let i = index"
+    [style.left.%]="img.position.left"
+    [style.top.%]="img.position.top"
+    [style.width.%]="img.position.width"
+    [style.height.%]="img.position.height"
+  >
+    <img class="image-q" [src]="img.imageSource" alt="img" />
+    <div
+      class="image-move bg-warning"
+      (mousedown)="onMoveMouseDownOnImage($event, img, i)"
+    >
+      <i class="fa fa-arrows"></i>
+    </div>
+    <div
+      class="image-change-size bg-warning"
+      (mousedown)="onResizeMouseDownOnImage($event, img, i)"
+    >
+      <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+    </div>
+  </div>
+
+  <div
+    class="patch"
+    *ngFor="let patch of slide.patches; let i = index"
+    [style.left.%]="patch.position.left"
+    [style.top.%]="patch.position.top"
+    [style.width.%]="patch.position.width"
+    [style.height.%]="patch.position.height"
+  >
+    <div
+      class="patch-move"
+      (mousedown)="onMoveMouseDownOnPatch($event, patch, i)"
+    ></div>
+    <div
+      class="patch-change-size"
+      (mousedown)="onResizeMouseDownOnPatch($event, patch, i)"
+    >
+      <i class="fa fa-arrow-up-right-and-arrow-down-left-from-center"></i>
+    </div>
+  </div>
+  <div class="shadow-patch" *ngIf="isPatchResizing || isPatchMoving " #shadowPatch></div>
+  <div class="shadow-patch" *ngIf=" isImageMoving || isImageResizing" #shadowImage></div>
+</div>
