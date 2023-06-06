@@ -4,23 +4,37 @@
   </div>
   <div class="card-body">
     <div class="file-container">
-      <ng-container *ngFor="let fileObj of listOfFiles">
-        <div
-          *ngIf="fileObj.type === 'image'"
-          class="file-item card p-1 bg-dark"
-        >
-          <img [src]="fileObj.url" [alt]="fileObj.fileName" />
-          <div class="card-title text-light">{{ fileObj.fileName }}</div>
+<!--      <ng-container *ngFor="let fileObj of filteredFiles | async">-->
+<!--        <div-->
+<!--          *ngIf="fileObj.type === 'image'"-->
+<!--          class="file-item card p-1 bg-dark"-->
+<!--          [ngClass]="{ 'file-item&#45;&#45;used': fileObj.isUsed }"-->
+<!--        >-->
+<!--          <img [src]="fileObj.url" [alt]="fileObj.fileName" />-->
+
+<!--          <div class="card-title text-light">{{ fileObj.fileName }}</div>-->
+<!--          <div class="btn-group btn-group-sm w-100">-->
+<!--&lt;!&ndash;            TODO: добавить disabled&ndash;&gt;-->
+<!--            <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage(fileObj)">созд</button>-->
+<!--            <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide(fileObj)"> доб</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="fileObj.type === 'audio'">-->
+<!--          &lt;!&ndash;TODO&ndash;&gt;-->
+<!--        </div>-->
+<!--      </ng-container>-->
+
+      <div class="item" *ngFor="let fileObj of filteredFiles | async">
+        <div class="polaroid" [ngClass]="{ 'used': fileObj.isUsed }">
+          <img [src]="fileObj.url" [alt]="fileObj.fileName" width="200" height="200">
+          <div class="caption">{{ fileObj.fileName }}</div>
           <div class="btn-group btn-group-sm w-100">
-<!--            TODO: добавить disabled-->
             <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage(fileObj)">созд</button>
             <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide(fileObj)"> доб</button>
           </div>
         </div>
-        <div *ngIf="fileObj.type === 'audio'">
-          <!--TODO-->
-        </div>
-      </ng-container>
+      </div>
+
     </div>
   </div>
 </div>

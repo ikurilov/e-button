@@ -4,6 +4,14 @@ import { ElectronService } from '../../../core/services';
 
 const memeFileName = 'meme-bebe.json';
 
+export interface FileListItem {
+  fileName: string;
+  url: string;
+  type: 'audio' | 'image';
+  path: string;
+  isUsed?: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,11 +22,11 @@ export class EditorService {
 
   getFilesFromDir(
     directoryPath: string,
-  ): { fileName: string; url: string; type: 'audio' | 'image' }[] {
+  ): FileListItem[] {
     const fs = this.electronService.fs;
     const path = this.electronService.path;
 
-    let readFilesRecursively = (
+    const readFilesRecursively = (
       dirPath: string,
     ): { path: string; type: 'image' | 'audio' }[] => {
       const files = fs.readdirSync(dirPath);
@@ -54,7 +62,8 @@ export class EditorService {
       if (fileObj.type === 'audio') {
         return {
           type: 'audio',
-          fileName: fileName,
+          fileName,
+          path: fileObj.path,
           url: `data:audio/${fileExtension};base64,${fs
             .readFileSync(fileObj.path)
             .toString('base64')}`,
@@ -64,7 +73,8 @@ export class EditorService {
       if (fileObj.type === 'image') {
         return {
           type: 'image',
-          fileName: fileName,
+          fileName,
+          path: fileObj.path,
           url: `data:image/${fileExtension};base64,${fs
             .readFileSync(fileObj.path)
             .toString('base64')}`,
