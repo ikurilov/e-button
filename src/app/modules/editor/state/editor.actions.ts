@@ -7,7 +7,7 @@ export const editorActions = createActionGroup({
     setFolder: props<{ path: string }>(),
     setTitle: props<{ title: string }>(),
     addSlide: props<{ slideType: SlideType }>(),
-    addSlideWithImage: props<{ imageCoded: string }>(),
+    addSlideWithImage: props<{ imageCoded: string; takenFrom: string }>(),
     addImageToSlide: props<{ imageCoded: string }>(),
     updateSlide: props<{ slideIndex: number; slide: Slide }>(),
     deleteSlide: props<{ slideIndex: number }>(),

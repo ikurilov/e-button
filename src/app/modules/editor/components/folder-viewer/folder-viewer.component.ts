@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { EditorService } from '../../services/editor.service';
+import { EditorService, FileListItem } from '../../services/editor.service';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
-import { EditorState } from '../../state/editor.state';
+import { EditorState, QuestionWithImageSlide } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { editorActions } from '../../state/editor.actions';
 import { map } from 'rxjs/operators';
@@ -20,11 +20,7 @@ export class FolderViewerComponent implements OnInit {
     }),
   );
 
-  public listOfFiles: {
-    fileName: string;
-    url: string;
-    type: 'image' | 'audio';
-  }[] = [];
+  public listOfFiles: FileListItem[] = [];
 
   currentSlide = this.store.select(selectEditor).pipe(
     map((editor) => {
@@ -37,10 +33,28 @@ export class FolderViewerComponent implements OnInit {
   private editorState: Observable<EditorState> =
     this.store.select(selectEditor);
 
-  constructor(private editorService: EditorService, private store: Store) {}
+  constructor(
+    private editorService: EditorService,
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
     this.refresh();
+  }
+
+  public get filteredFiles(): Observable<FileListItem[]> {
+    return this.editorState.pipe(map((editorState) => {
+      const slidesImagesPaths = editorState.slides
+        .map((slide) => (slide as QuestionWithImageSlide).images)
+        .flat()
+        .map((image) => image.takenFrom);
+      const allFilesPaths = this.listOfFiles
+        .map((fileObj) => ({ ...fileObj, isUsed: slidesImagesPaths.includes(fileObj.path) }));
+
+      return allFilesPaths
+        .sort((a, b) =>
+        (a.isUsed === b.isUsed ? 0 : a.isUsed ? 1 : -1));
+    }));
   }
 
   refresh() {
@@ -49,9 +63,9 @@ export class FolderViewerComponent implements OnInit {
     });
   }
 
-  addSlideWithImage(i: { fileName: string; url: string }) {
-    this.store.dispatch(editorActions.addslidewithimage({ imageCoded: i.url }));
-  }
+  // addSlideWithImage(i: { fileName: string; url: string }) {
+  //   this.store.dispatch(editorActions.addslidewithimage({ imageCoded: i.url }));
+  // }
 
   // addFromAllImages() {
   //   this.listOfFiles.forEach((i) => {
@@ -61,21 +75,13 @@ export class FolderViewerComponent implements OnInit {
   //   });
   // }
 
-  createSlideWithImage(fileObj: {
-    fileName: string;
-    url: string;
-    type: 'image' | 'audio'; // image only
-  }) {
+  createSlideWithImage(fileObj: FileListItem) {
     this.store.dispatch(
-      editorActions.addslidewithimage({ imageCoded: fileObj.url }),
+      editorActions.addslidewithimage({ imageCoded: fileObj.url, takenFrom: fileObj.path }),
     );
   }
 
-  addImageToSlide(fileObj: {
-    fileName: string;
-    url: string;
-    type: 'image' | 'audio';
-  }) {
+  addImageToSlide(fileObj: FileListItem) {
     this.store.dispatch(
       editorActions.addimagetoslide({ imageCoded: fileObj.url }),
     );
