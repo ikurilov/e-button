@@ -33,6 +33,10 @@ export class SlidesLineComponent implements OnInit {
     return async as Slide[];
   }
 
+  getCastedSlide(slide: Slide): QuestionWithImageSlide {
+    return slide as QuestionWithImageSlide;
+  }
+
   setCurrentSlide(i: number) {
     this.store.dispatch(editorActions.setcurrentslide({ index: i }));
   }

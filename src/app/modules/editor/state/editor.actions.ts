@@ -6,6 +6,7 @@ export const editorActions = createActionGroup({
   events: {
     setFolder: props<{ path: string }>(),
     setTitle: props<{ title: string }>(),
+    setViewMode: props<{ viewMode: 'question' | 'answer' | 'edit' }>(),
     addSlide: props<{ slideType: SlideType }>(),
     addSlideWithImage: props<{ imageCoded: string }>(),
     addImageToSlide: props<{ imageCoded: string }>(),

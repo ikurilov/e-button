@@ -6,9 +6,10 @@
           <div class="slide-index">{{ i + 1 }}</div>
           <ng-container [ngSwitch]="slide.type">
             <ng-container *ngSwitchCase="slideTypes.questionWithImage">
-              <div class="slide">
-                <img [src]="slide.imageCoded" [alt]="'img'" />
-              </div>
+              <app-ratio-box-viewer
+                [slide]="getCastedSlide(slide)"
+                [previewMode]="'question'"
+              ></app-ratio-box-viewer>
             </ng-container>
             <ng-container *ngSwitchCase="slideTypes.break">
               <h5>Break</h5>
@@ -22,4 +23,3 @@
     </div>
   </div>
 </div>
-

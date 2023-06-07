@@ -3,6 +3,7 @@ export interface EditorState {
   name: string;
   slides: Slide[];
   currentSlideIndex?: number;
+  viewMode: 'question' | 'answer' | 'edit';
 }
 
 export type Slide =
@@ -92,4 +93,5 @@ export const initialEditorState: EditorState = {
   folderPath: '',
   name: 'new meme game!',
   slides: [],
+  viewMode: 'edit',
 };

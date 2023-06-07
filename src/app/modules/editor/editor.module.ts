@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { EditorHeaderPanelComponent } from './components/editor-header-panel/editor-header-panel.component';
 import { EditorToolbarComponent } from './components/slide-editor/components/editor-toolbar/editor-toolbar.component';
 import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.modul
     EffectsModule.forFeature([EditorEffects]),
     RatioBoxViewerModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
 })
 export class EditorModule {}

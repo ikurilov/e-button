@@ -7,6 +7,7 @@
           <ng-container [ngSwitch]="slide.type">
             <ng-container *ngSwitchCase="slideTypes.questionWithImage">
               <app-ratio-box-viewer
+                [previewMode]="(editorState | async).viewMode"
                 [slide]="getCastedSlide(slide)"
                 (slideChange)="saveSlide($event)"
               ></app-ratio-box-viewer>

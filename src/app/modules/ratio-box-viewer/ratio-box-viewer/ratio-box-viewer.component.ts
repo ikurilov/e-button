@@ -53,7 +53,7 @@ type Image = QuestionWithImageSlide['images'][0];
 export class RatioBoxViewerComponent implements OnInit {
   @Input() slide: QuestionWithImageSlide;
   @Input() isPreview: boolean = false;
-  @Input() previewMode: 'question' | 'answer' | 'both' = 'both';
+  @Input() previewMode: 'question' | 'answer' | 'edit';
   @Output() slideChange: EventEmitter<QuestionWithImageSlide> =
     new EventEmitter<QuestionWithImageSlide>();
 
@@ -244,6 +244,16 @@ export class RatioBoxViewerComponent implements OnInit {
         'top',
         this.updatedPatchPosition.top + '%',
       );
+      this.renderer.setStyle(
+        this.shadowPatch.nativeElement,
+        'width',
+        this.initialElementSize.widthInPercent + '%',
+      );
+      this.renderer.setStyle(
+        this.shadowPatch.nativeElement,
+        'height',
+        this.initialElementSize.heightInPercent + '%',
+      );
     } else if (this.isPatchResizing && this.selectedPatchIndex !== -1) {
       const deltaWidth =
         ((event.clientX - this.initialMousePosition.x) /
@@ -273,12 +283,12 @@ export class RatioBoxViewerComponent implements OnInit {
       this.renderer.setStyle(
         this.shadowPatch.nativeElement,
         'left',
-        this.updatedPatchPosition.left + '%',
+        this.initialElementPosition.leftInPercent + '%',
       );
       this.renderer.setStyle(
         this.shadowPatch.nativeElement,
         'top',
-        this.updatedPatchPosition.top + '%',
+        this.initialElementPosition.topInPercent + '%',
       );
     } else if (this.isImageMoving && this.selectedImageIndex !== -1) {
       const deltaX =
@@ -350,5 +360,21 @@ export class RatioBoxViewerComponent implements OnInit {
         this.initialElementPosition.topInPercent + '%',
       );
     }
+  }
+
+  public onDeleteImage($event: MouseEvent, i: number) {
+    $event.stopPropagation();
+    this.slideChange.emit({
+      ...this.slide,
+      images: this.slide.images.filter((_, index) => index !== i),
+    });
+  }
+
+  onDeletePatch($event: MouseEvent, i: number) {
+    $event.stopPropagation();
+    this.slideChange.emit({
+      ...this.slide,
+      patches: this.slide.patches.filter((_, index) => index !== i),
+    });
   }
 }

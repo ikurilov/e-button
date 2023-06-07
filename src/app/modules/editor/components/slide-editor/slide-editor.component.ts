@@ -14,7 +14,7 @@ import {
   SlideType,
 } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
-import { EditorService } from '../../services/editor.service';
+
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { editorActions } from '../../state/editor.actions';
@@ -31,8 +31,7 @@ export class SlideEditorComponent implements OnInit {
   newSlidePoints: number = 0;
   newSlideIsToxic: boolean = false;
   newInfoRows: string = '[]';
-  private editorState: Observable<EditorState> =
-    this.store.select(selectEditor);
+  public editorState: Observable<EditorState> = this.store.select(selectEditor);
   currentSlide = this.editorState.pipe(
     map((editor) => {
       if (typeof editor.currentSlideIndex !== 'number') {

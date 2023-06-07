@@ -106,4 +106,7 @@ export const editorReducer = createReducer(
   on(editorActions.setcurrentslide, (state, { index }) => {
     return { ...state, currentSlideIndex: index };
   }),
+  on(editorActions.setviewmode, (state, { viewMode }) => {
+    return { ...state, viewMode };
+  }),
 );

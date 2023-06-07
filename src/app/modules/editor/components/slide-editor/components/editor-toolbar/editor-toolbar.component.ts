@@ -4,7 +4,11 @@ import { Store } from '@ngrx/store';
 import { editorActions } from '../../../../state/editor.actions';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, take } from 'rxjs';
-import { selectEditor } from '../../../../state/editor.selectors';
+import {
+  selectCurrentSlide,
+  selectCurrentSlideStats,
+  selectEditor,
+} from '../../../../state/editor.selectors';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,25 +21,13 @@ export class EditorToolbarComponent implements OnInit {
   slideTypes = SlideType;
   pointControl = new FormControl(10, [Validators.min(0)]);
 
-  private selectEditor: Observable<EditorState> =
+  public selectEditor: Observable<EditorState> =
     this.store.select(selectEditor);
 
-  public currentSlide = this.selectEditor.pipe(
-    map((editor) => {
-      if (typeof editor.currentSlideIndex !== 'number') {
-        return null;
-      }
-      return {
-        slide:
-          editor.slides[
-            editor.currentSlideIndex >= editor.slides.length
-              ? editor.slides.length - 1
-              : editor.currentSlideIndex
-          ],
-        slideIndex: editor.currentSlideIndex,
-      };
-    }),
-  );
+  public currentSlide = this.store.select(selectCurrentSlide);
+
+  public selectCurrentSlideStats = this.store.select(selectCurrentSlideStats);
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {}
@@ -77,5 +69,9 @@ export class EditorToolbarComponent implements OnInit {
         );
       }
     });
+  }
+
+  setViewMode(viewMode: 'question' | 'answer' | 'edit') {
+    this.store.dispatch(editorActions.setviewmode({ viewMode }));
   }
 }

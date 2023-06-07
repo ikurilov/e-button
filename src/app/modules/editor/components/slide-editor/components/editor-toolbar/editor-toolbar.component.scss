@@ -3,10 +3,27 @@
   width: 20rem;
 }
 
+.stats-container {
+  height: 6rem;
+}
+
+.view-mode{
+  .btn {
+    width: 2.5rem;
+    font-size: 1rem;
+  }
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .create-slide {
   display: flex;
   gap: 0.25rem;
-  .btn{
+  .btn {
     width: 2.5rem;
     font-size: 1rem;
   }
