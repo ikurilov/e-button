@@ -8,7 +8,7 @@ export const editorActions = createActionGroup({
     setTitle: props<{ title: string }>(),
     setViewMode: props<{ viewMode: 'question' | 'answer' | 'edit' }>(),
     addSlide: props<{ slideType: SlideType }>(),
-    addSlideWithImage: props<{ imageCoded: string }>(),
+    addSlideWithImage: props<{ imageCoded: string; takenFrom: string }>(),
     addImageToSlide: props<{ imageCoded: string }>(),
     updateSlide: props<{ slideIndex: number; slide: Slide }>(),
     deleteSlide: props<{ slideIndex: number }>(),

@@ -63,7 +63,7 @@ export const editorReducer = createReducer(
     }
   }),
 
-  on(editorActions.addslidewithimage, (state, { imageCoded }) => {
+  on(editorActions.addslidewithimage, (state, { imageCoded, takenFrom }) => {
     return {
       ...state,
       slides: [
@@ -73,7 +73,7 @@ export const editorReducer = createReducer(
           images: [
             {
               position: { left: 5, top: 5, width: 50, height: 50 },
-              takenFrom: '',
+              takenFrom,
               W2HRatio: 1,
               imageSource: imageCoded,
             },
