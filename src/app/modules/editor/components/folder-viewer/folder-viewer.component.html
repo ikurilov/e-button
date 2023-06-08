@@ -4,37 +4,20 @@
   </div>
   <div class="card-body">
     <div class="file-container">
-<!--      <ng-container *ngFor="let fileObj of filteredFiles | async">-->
-<!--        <div-->
-<!--          *ngIf="fileObj.type === 'image'"-->
-<!--          class="file-item card p-1 bg-dark"-->
-<!--          [ngClass]="{ 'file-item&#45;&#45;used': fileObj.isUsed }"-->
-<!--        >-->
-<!--          <img [src]="fileObj.url" [alt]="fileObj.fileName" />-->
-
-<!--          <div class="card-title text-light">{{ fileObj.fileName }}</div>-->
-<!--          <div class="btn-group btn-group-sm w-100">-->
-<!--&lt;!&ndash;            TODO: добавить disabled&ndash;&gt;-->
-<!--            <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage(fileObj)">созд</button>-->
-<!--            <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide(fileObj)"> доб</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="fileObj.type === 'audio'">-->
-<!--          &lt;!&ndash;TODO&ndash;&gt;-->
-<!--        </div>-->
-<!--      </ng-container>-->
-
       <div class="item" *ngFor="let fileObj of filteredFiles | async">
-        <div class="polaroid" [ngClass]="{ 'used': fileObj.isUsed }">
-          <img [src]="fileObj.url" [alt]="fileObj.fileName" width="200" height="200">
-          <div class="caption">{{ fileObj.fileName }}</div>
-          <div class="btn-group btn-group-sm w-100">
-            <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage(fileObj)">созд</button>
-            <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide(fileObj)"> доб</button>
-          </div>
-        </div>
-      </div>
+        <app-image-card
+          *ngIf="fileObj.type === 'image'"
+          [imageFile]="fileObj"
+          (createSlideWithImage)="createSlideWithImage($event)"
+          (addImageToSlide)="addImageToSlide($event)">
+        </app-image-card>
 
+        <app-audio-card
+          *ngIf="fileObj.type === 'audio'"
+          [audioFile]="fileObj"
+          (add)="createSlideWithAudio($event)">
+        </app-audio-card>
+      </div>
     </div>
   </div>
 </div>

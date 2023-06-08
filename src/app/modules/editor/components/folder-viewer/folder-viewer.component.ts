@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EditorService, FileListItem } from '../../services/editor.service';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
@@ -14,6 +14,9 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FolderViewerComponent implements OnInit {
+  @ViewChild('audioElement')
+  public audioElement: ElementRef;
+
   public folderPath = this.store.select(selectEditor).pipe(
     map((editor) => {
       return editor?.folderPath;
@@ -85,5 +88,13 @@ export class FolderViewerComponent implements OnInit {
     this.store.dispatch(
       editorActions.addimagetoslide({ imageCoded: fileObj.url }),
     );
+  }
+
+  createSlideWithAudio(fileObj: FileListItem) {
+    console.log(fileObj);
+  }
+
+  public playAudio(event: Event): void {
+    this.audioElement.nativeElement.play();
   }
 }

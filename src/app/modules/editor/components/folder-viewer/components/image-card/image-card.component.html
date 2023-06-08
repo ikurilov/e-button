@@ -1,0 +1,8 @@
+<div class="polaroid border border-primary" [ngClass]="{ 'used': imageFile.isUsed }">
+  <img [src]="imageFile.url" [alt]="imageFile.fileName" width="200" height="200">
+  <div class="caption">{{ imageFile.fileName }}</div>
+  <div class="btn-group btn-group-sm w-100">
+    <button class="btn btn-sm btn-outline-primary" (click)="createSlideWithImage.emit(imageFile)">созд</button>
+    <button class="btn btn-sm btn-outline-primary" (click)="addImageToSlide.emit(imageFile)"> доб</button>
+  </div>
+</div>

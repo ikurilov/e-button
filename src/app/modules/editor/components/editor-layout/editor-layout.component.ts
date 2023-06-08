@@ -20,7 +20,7 @@ export class EditorLayoutComponent implements OnInit {
 
   private editorState: Observable<EditorState> =
     this.store.select(selectEditor);
-  gameFolder: string = 'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\тест';
+  gameFolder: string = '/Users/vlad3k/Desktop/papka';
   public gameName: any;
   public mode: 'file' | 'slide' = 'slide';
 

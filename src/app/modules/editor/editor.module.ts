@@ -16,6 +16,8 @@ import { EditorHeaderPanelComponent } from './components/editor-header-panel/edi
 import { EditorToolbarComponent } from './components/slide-editor/components/editor-toolbar/editor-toolbar.component';
 import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.module';
 import { SharedModule } from '../../shared/shared.module';
+import { AudioCardComponent } from './components/folder-viewer/components/audio-card/audio-card.component';
+import { ImageCardComponent } from './components/folder-viewer/components/image-card/image-card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { SharedModule } from '../../shared/shared.module';
     SlideEditorComponent,
     EditorHeaderPanelComponent,
     EditorToolbarComponent,
+    AudioCardComponent,
+    ImageCardComponent,
   ],
   imports: [
     CommonModule,
