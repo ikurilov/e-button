@@ -33,33 +33,35 @@
     </ng-container>
   </div>
 
-  <div
-    class="patch"
-    *ngFor="let patch of slide.patches; let i = index"
-    [ngClass]="{ 'editing': previewMode === 'edit' }"
-    [style.left.%]="patch.position.left"
-    [style.top.%]="patch.position.top"
-    [style.width.%]="patch.position.width"
-    [style.height.%]="patch.position.height"
-  >
-    <ng-container *ngIf="previewMode === 'edit'">
-      <div
-        class="patch-move bg-warning"
-        (mousedown)="onMoveMouseDownOnPatch($event, patch, i)"
-      >
-        <i class="fa fa-arrows"></i>
-      </div>
-      <div
-        class="patch-change-size bg-warning"
-        (mousedown)="onResizeMouseDownOnPatch($event, patch, i)"
-      >
-        <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
-      </div>
-      <div class="patch-delete bg-danger" (click)="onDeletePatch($event, i)">
-        <i class="fa fa-trash"></i>
-      </div>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="previewMode !=='answer'">
+    <div
+      class="patch"
+      *ngFor="let patch of slide.patches; let i = index"
+      [ngClass]="{ 'editing': previewMode === 'edit' }"
+      [style.left.%]="patch.position.left"
+      [style.top.%]="patch.position.top"
+      [style.width.%]="patch.position.width"
+      [style.height.%]="patch.position.height"
+    >
+      <ng-container *ngIf="previewMode === 'edit'">
+        <div
+          class="patch-move bg-warning"
+          (mousedown)="onMoveMouseDownOnPatch($event, patch, i)"
+        >
+          <i class="fa fa-arrows"></i>
+        </div>
+        <div
+          class="patch-change-size bg-warning"
+          (mousedown)="onResizeMouseDownOnPatch($event, patch, i)"
+        >
+          <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+        </div>
+        <div class="patch-delete bg-danger" (click)="onDeletePatch($event, i)">
+          <i class="fa fa-trash"></i>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
   <div
     class="shadow-patch"
     *ngIf="isPatchResizing || isPatchMoving"
