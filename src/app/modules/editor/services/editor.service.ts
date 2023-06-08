@@ -144,7 +144,7 @@ export class EditorService {
     let file = files.find((f) => f.filename === memeFileName);
     if (file) {
       // todo:  unix path
-      return this.loadFromFile(path + '/' + memeFileName);
+      return this.loadFromFile(path + '\\' + memeFileName);
     }
     let newEditor: EditorState = {
       ...initialEditorState,

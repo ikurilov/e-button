@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } fro
 import { EditorService, FileListItem } from '../../services/editor.service';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
-import { EditorState, QuestionWithImageSlide } from '../../state/editor.state';
+import { EditorState, QuestionWithAudioSlide, QuestionWithImageSlide } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { editorActions } from '../../state/editor.actions';
 import { map } from 'rxjs/operators';
@@ -47,12 +47,19 @@ export class FolderViewerComponent implements OnInit {
 
   public get filteredFiles(): Observable<FileListItem[]> {
     return this.editorState.pipe(map((editorState) => {
-      const slidesImagesPaths = editorState.slides
+
+      const imagesFilesPaths = editorState.slides
+        .filter((slide) => slide.type === 'questionWithImage')
         .map((slide) => (slide as QuestionWithImageSlide).images)
         .flat()
         .map((image) => image.takenFrom);
+
+      const audioFilesPaths = editorState.slides
+        .filter((slide) => slide.type === 'questionWithAudio')
+        .map((slide) => (slide as QuestionWithAudioSlide).takenFrom);
+
       const allFilesPaths = this.listOfFiles
-        .map((fileObj) => ({ ...fileObj, isUsed: slidesImagesPaths.includes(fileObj.path) }));
+        .map((fileObj) => ({ ...fileObj, isUsed: [...imagesFilesPaths, ...audioFilesPaths].includes(fileObj.path) }));
 
       return allFilesPaths
         .sort((a, b) =>
@@ -91,7 +98,9 @@ export class FolderViewerComponent implements OnInit {
   }
 
   createSlideWithAudio(fileObj: FileListItem) {
-    console.log(fileObj);
+    this.store.dispatch(
+      editorActions.addslidewithaudio({ audioCoded: fileObj.url, takenFrom: fileObj.path }),
+    );
   }
 
   public playAudio(event: Event): void {

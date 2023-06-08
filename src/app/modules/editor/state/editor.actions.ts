@@ -10,6 +10,7 @@ export const editorActions = createActionGroup({
     addSlide: props<{ slideType: SlideType }>(),
     addSlideWithImage: props<{ imageCoded: string; takenFrom: string }>(),
     addImageToSlide: props<{ imageCoded: string }>(),
+    addSlideWithAudio: props<{ audioCoded: string; takenFrom: string }>(),
     updateSlide: props<{ slideIndex: number; slide: Slide }>(),
     deleteSlide: props<{ slideIndex: number }>(),
     moveSlide: props<{ slideIndex: number; newIndex: number }>(),
