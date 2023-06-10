@@ -54,6 +54,7 @@ export type QuestionWithImageSlide = QuestionSlide & {
 export type QuestionWithAudioSlide = QuestionSlide & {
   type: SlideType.questionWithAudio;
   audioCoded: string;
+  takenFrom: string;
   question: {
     text: string;
     startS: number;

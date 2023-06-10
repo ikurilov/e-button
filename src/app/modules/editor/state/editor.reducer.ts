@@ -1,6 +1,6 @@
 import { initialEditorState, SlideType } from './editor.state';
 import { editorActions } from './editor.actions';
-import { createReducer, on } from '@ngrx/store';
+import { createReducer, on, State } from '@ngrx/store';
 
 export const editorReducer = createReducer(
   initialEditorState,
@@ -85,6 +85,28 @@ export const editorReducer = createReducer(
       ],
     };
   }),
+
+  on(editorActions.addslidewithaudio, (state, { audioCoded, takenFrom }) => ({
+      ...state,
+      slides: [
+        ...state.slides,
+        {
+          type: SlideType.questionWithAudio,
+          audioCoded,
+          takenFrom,
+          question: {
+            text: 'Текст по умолчанию',
+            startS: 0,
+            endS: 999,
+            loop: false,
+          },
+          points: 10,
+          toxic: false,
+          answers: {},
+          patches: [],
+        },
+      ],
+    })),
 
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];

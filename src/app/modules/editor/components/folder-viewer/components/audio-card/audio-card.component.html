@@ -1,0 +1,13 @@
+<div class="polaroid" [ngClass]="{ 'used': audioFile.isUsed }">
+  <div class="music-preview border-dark border border-primary">
+<!--    <i (click)="playAudio()" class="music-icon fa-regular fa-circle-play"></i>-->
+<!--    <i (click)="stopAudio()" class="music-icon fa-regular fa-circle-pause"></i>-->
+    <audio #audioElement preload="auto" controls>
+      <source [src]="audioFile.url" type="audio/mpeg">
+    </audio>
+  </div>
+  <div class="caption">{{ audioFile.fileName }}</div>
+  <div class="btn-group btn-group-sm w-100">
+    <button class="btn btn-sm btn-outline-primary" (click)="add.emit(audioFile)" type="button">созд</button>
+  </div>
+</div>
