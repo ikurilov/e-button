@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { GamePlayState, PlayPhases, TeamColors } from './game-play.state';
 import { gamePlayActions } from './game-play.actions';
-import { SlideType } from '../../editor/state/editor.state';
+import { SlideType } from '../../../models/models';
 
 const initialState: GamePlayState = {
   allGame: null,
@@ -90,9 +90,7 @@ export const gamePlayReducer = createReducer(
     playPhase: PlayPhases.QUESTION_LISTENING,
     questionAnswerState: {
       date: new Date(),
-      answeringTeam: state.currentFight.pushes.reduce((prev, curr) => {
-        return prev?.date && prev.date < curr.date ? prev : curr;
-      }).player.team,
+      answeringTeam: state.currentFight.pushes.reduce((prev, curr) => prev?.date && prev.date < curr.date ? prev : curr).player.team,
     },
     fightList: [...state.fightList, state.currentFight],
     currentFight: null,

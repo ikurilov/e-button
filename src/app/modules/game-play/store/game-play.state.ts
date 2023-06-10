@@ -1,5 +1,6 @@
-import { EditorState, Slide } from '../../editor/state/editor.state';
+import { EditorState } from '../../editor/state/editor.state';
 import { PlayerEntity } from '../players-store/players.state';
+import { Slide } from '../../../models/models';
 
 export interface GamePlayState {
   allGame: EditorState;

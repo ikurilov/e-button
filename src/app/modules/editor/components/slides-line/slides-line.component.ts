@@ -2,16 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
-  BreakSlide,
   EditorState,
-  InfoSlide,
-  QuestionWithImageSlide,
-  Slide,
-  SlideType,
 } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { map } from 'rxjs/operators';
 import { editorActions } from '../../state/editor.actions';
+import { QuestionWithImageSlide, Slide, SlideType } from '../../../../models/models';
 
 @Component({
   selector: 'app-slides-line',

@@ -9,7 +9,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { QuestionWithImageSlide } from '../../editor/state/editor.state';
+import { QuestionWithImageSlide } from '../../../models/models';
 
 type Patch = QuestionWithImageSlide['patches'][0];
 type Image = QuestionWithImageSlide['images'][0];
@@ -52,7 +52,7 @@ type Image = QuestionWithImageSlide['images'][0];
 })
 export class RatioBoxViewerComponent implements OnInit {
   @Input() slide: QuestionWithImageSlide;
-  @Input() isPreview: boolean = false;
+  @Input() isPreview = false;
   @Input() previewMode: 'question' | 'answer' | 'edit';
   @Output() slideChange: EventEmitter<QuestionWithImageSlide> =
     new EventEmitter<QuestionWithImageSlide>();
@@ -61,8 +61,8 @@ export class RatioBoxViewerComponent implements OnInit {
   @ViewChild('shadowImage', { static: false }) shadowImage: ElementRef;
   @ViewChild('canvas', { read: ElementRef }) canvas: ElementRef;
 
-  selectedPatchIndex: number = -1;
-  selectedImageIndex: number = -1;
+  selectedPatchIndex = -1;
+  selectedImageIndex = -1;
 
   // Variables and methods for moving and resizing elements
   public isPatchMoving = false;
@@ -169,7 +169,7 @@ export class RatioBoxViewerComponent implements OnInit {
     });
   }
 
-  onMouseUp($event: MouseEvent) {
+  onMouseUp() {
     if (
       this.isPatchMoving &&
       this.selectedPatchIndex !== -1 &&

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { EditorState, SlideType } from '../../../../state/editor.state';
+import { EditorState } from '../../../../state/editor.state';
 import { Store } from '@ngrx/store';
 import { editorActions } from '../../../../state/editor.actions';
 import { FormControl, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import {
   selectEditor,
 } from '../../../../state/editor.selectors';
 import { map } from 'rxjs/operators';
+import { SlideType } from '../../../../../../models/models';
 
 @Component({
   selector: 'app-editor-toolbar',
@@ -20,8 +21,6 @@ import { map } from 'rxjs/operators';
 export class EditorToolbarComponent implements OnInit {
   public slideTypes = SlideType;
   public pointControl = new FormControl(10, [Validators.min(0)]);
-
-  private destroy$ = new Subject<void>();
 
   public selectEditor: Observable<EditorState> =
     this.store.select(selectEditor);
@@ -34,6 +33,8 @@ export class EditorToolbarComponent implements OnInit {
     // @ts-ignore
     map((slideWrapper) => slideWrapper.slide?.toxic),
   );
+
+  private destroy$ = new Subject<void>();
 
   constructor(private store: Store) {}
 
@@ -112,12 +113,10 @@ export class EditorToolbarComponent implements OnInit {
 
   isQuestionSlide(): Observable<boolean> {
     return this.selectCurrentSlideStats.pipe(
-      map((stats) => {
-        return (
+      map((stats) => (
           stats?.slide.type === SlideType.questionWithImage ||
           stats?.slide.type === SlideType.questionWithAudio
-        );
-      }),
+        )),
     );
   }
 
@@ -139,7 +138,7 @@ export class EditorToolbarComponent implements OnInit {
   }
 
   addPatch() {
-    let newPatch = {
+    const newPatch = {
       position: {
         top: 25,
         left: 25,

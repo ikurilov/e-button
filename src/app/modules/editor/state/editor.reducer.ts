@@ -1,6 +1,7 @@
-import { initialEditorState, SlideType } from './editor.state';
+import { initialEditorState } from './editor.state';
 import { editorActions } from './editor.actions';
-import { createReducer, on, State } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+import { SlideType } from '../../../models/models';
 
 export const editorReducer = createReducer(
   initialEditorState,
@@ -8,12 +9,10 @@ export const editorReducer = createReducer(
     ...state,
     folderPath: path,
   })),
-  on(editorActions.loadfromfile, (state, { state: newState }) => {
-    return { ...state, ...newState };
-  }),
+  on(editorActions.loadfromfile, (state, { state: newState }) => ({ ...state, ...newState })),
   on(editorActions.settitle, (state, { title }) => ({
     ...state,
-    title: title,
+    title,
   })),
   on(editorActions.addslide, (state, { slideType }) => {
     switch (slideType) {
@@ -63,8 +62,7 @@ export const editorReducer = createReducer(
     }
   }),
 
-  on(editorActions.addslidewithimage, (state, { imageCoded, takenFrom }) => {
-    return {
+  on(editorActions.addslidewithimage, (state, { imageCoded, takenFrom }) => ({
       ...state,
       slides: [
         ...state.slides,
@@ -83,8 +81,7 @@ export const editorReducer = createReducer(
           patches: [],
         },
       ],
-    };
-  }),
+    })),
 
   on(editorActions.addslidewithaudio, (state, { audioCoded, takenFrom }) => ({
       ...state,
@@ -92,7 +89,10 @@ export const editorReducer = createReducer(
         ...state.slides,
         {
           type: SlideType.questionWithAudio,
-          audioCoded,
+          audio: {
+            audioCoded,
+            takenFrom,
+          },
           takenFrom,
           question: {
             text: 'Текст по умолчанию',
@@ -111,19 +111,19 @@ export const editorReducer = createReducer(
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];
     slides[slideIndex] = slide;
-    return { ...state, slides: slides };
+    return { ...state, slides };
   }),
   on(editorActions.deleteslide, (state, { slideIndex }) => {
     const slides = [...state.slides];
     slides.splice(slideIndex, 1);
-    return { ...state, currentSlideIndex: null, slides: slides };
+    return { ...state, currentSlideIndex: null, slides };
   }),
   on(editorActions.moveslide, (state, { slideIndex, newIndex }) => {
     const slides = [...state.slides];
     const slide = slides[slideIndex];
     slides.splice(slideIndex, 1);
     slides.splice(newIndex, 0, slide);
-    return { ...state, slides: slides, currentSlideIndex: newIndex };
+    return { ...state, slides, currentSlideIndex: newIndex };
   }),
   on(editorActions.setcurrentslide, (state, { index }) => {
     return { ...state, currentSlideIndex: index };
