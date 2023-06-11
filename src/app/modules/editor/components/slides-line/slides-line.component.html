@@ -3,7 +3,7 @@
     <div class="slides" *ngIf="getTypedSlides(slides | async) as slides">
       <ng-container *ngFor="let slide of slides; let i = index">
         <div class="slide-container" (click)="setCurrentSlide(i)">
-          <div class="slide-index">{{ i + 1 }}</div>
+          <div class="slide-index bg-warning">{{ i + 1 }}</div>
           <ng-container [ngSwitch]="slide.type">
             <ng-container *ngSwitchCase="slideTypes.questionWithImage">
               <app-ratio-box-viewer
@@ -11,12 +11,22 @@
                 [previewMode]="'question'"
               ></app-ratio-box-viewer>
             </ng-container>
-            <ng-container *ngSwitchCase="slideTypes.break">
-              <h5>Break</h5>
+            <ng-container *ngSwitchCase="slideTypes.questionWithAudio">
+              <i class="slide-icon fas fa-music"></i>
             </ng-container>
             <ng-container *ngSwitchCase="slideTypes.info">
-              <h5>Info</h5>
+              <i class="slide-icon fas fa-info"></i>
             </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.break">
+              <i class="slide-icon fas fa-pause"></i>
+            </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.round">
+              <i class="slide-icon fas fa-exclamation-triangle"></i>
+            </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.result">
+              <i class="slide-icon fas fa-medal"></i>
+            </ng-container>
+
           </ng-container>
         </div>
       </ng-container>
