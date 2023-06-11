@@ -18,6 +18,8 @@ import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.modul
 import { SharedModule } from '../../shared/shared.module';
 import { AudioCardComponent } from './components/folder-viewer/components/audio-card/audio-card.component';
 import { ImageCardComponent } from './components/folder-viewer/components/image-card/image-card.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { InfoEditorComponent } from './components/slide-editor/components/info-editor/info-editor.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { ImageCardComponent } from './components/folder-viewer/components/image-
     EditorToolbarComponent,
     AudioCardComponent,
     ImageCardComponent,
+    InfoEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { ImageCardComponent } from './components/folder-viewer/components/image-
     RatioBoxViewerModule,
     ReactiveFormsModule,
     SharedModule,
+    AngularEditorModule,
   ],
 })
 export class EditorModule {}

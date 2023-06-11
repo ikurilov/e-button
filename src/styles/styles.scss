@@ -64,3 +64,14 @@ body, html {
 .tab-content{
   height: calc(100% - 42px);
 }
+
+.ratio-box{
+  position: relative;
+  width: 100%;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* Set the height equal to 9/16 of the width */
+  }
+}

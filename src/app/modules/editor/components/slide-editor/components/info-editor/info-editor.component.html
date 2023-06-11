@@ -1,0 +1,22 @@
+<div class="card card-body">
+  <div class="ratio-box editor">
+    <div class="ae-wrapper">
+      <ng-container *ngIf="!edit">
+        <div [innerHTML]="contentControl.value"></div>
+      </ng-container>
+      <ng-container *ngIf="edit">
+        <angular-editor
+          [config]="editorConfig"
+          [formControl]="contentControl"
+        ></angular-editor>
+        <button
+          class="btn btn-primary"
+          (click)="onSave()"
+          [disabled]="!contentControl.valid"
+        >
+          Save
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>

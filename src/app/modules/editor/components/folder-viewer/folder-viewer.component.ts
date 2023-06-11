@@ -36,10 +36,7 @@ export class FolderViewerComponent implements OnInit {
   private editorState: Observable<EditorState> =
     this.store.select(selectEditor);
 
-  constructor(
-    private editorService: EditorService,
-    private store: Store,
-  ) {}
+  constructor(private editorService: EditorService, private store: Store) {}
 
   ngOnInit(): void {
     this.refresh();
@@ -87,7 +84,10 @@ export class FolderViewerComponent implements OnInit {
 
   createSlideWithImage(fileObj: FileListItem) {
     this.store.dispatch(
-      editorActions.addslidewithimage({ imageCoded: fileObj.url, takenFrom: fileObj.path }),
+      editorActions.addslidewithimage({
+        imageCoded: fileObj.url,
+        takenFrom: fileObj.path,
+      }),
     );
   }
 
