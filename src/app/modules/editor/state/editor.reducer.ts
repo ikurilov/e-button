@@ -8,10 +8,12 @@ export const editorReducer = createReducer(
     ...state,
     folderPath: path,
   })),
-  on(editorActions.loadfromfile, (state, { state: newState }) => ({ ...state, ...newState })),
-  on(editorActions.settitle, (state, { title }) => ({
+  on(editorActions.loadfromfile, (state, { state: newState }) => {
+    return { ...state, ...newState };
+  }),
+  on(editorActions.setname, (state, { name }) => ({
     ...state,
-    title,
+    name,
   })),
   on(editorActions.addslide, (state, { slideType }) => {
     switch (slideType) {

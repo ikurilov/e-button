@@ -36,9 +36,9 @@
           <div class="title-input">
             <input
               type="text"
-              class="form-control form-control-sm bg-dark border-success text-light"
+              class="form-control form-control-sm bg-dark border-success text-light ms-3"
               Placeholder="Название игры"
-              [(ngModel)]="gameName"
+              [formControl]="gameNameControl"
             />
             <button class="btn btn-sm btn-outline-success" (click)="save()">
               <i class="fa fa-save"></i>
@@ -71,7 +71,7 @@
           </div>
 
           <div class="right-block">
-            <button class="btn btn-sm btn-outline-danger" (click)="start()">
+            <button class="btn btn-sm btn-outline-danger me-3" (click)="start()">
               <i class="fa fa-rocket"></i>
               Старт
             </button>
