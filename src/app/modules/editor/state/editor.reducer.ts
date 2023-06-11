@@ -1,7 +1,6 @@
-import { initialEditorState } from './editor.state';
+import { initialEditorState, SlideType } from './editor.state';
 import { editorActions } from './editor.actions';
 import { createReducer, on } from '@ngrx/store';
-import { SlideType } from '../../../models/models';
 
 export const editorReducer = createReducer(
   initialEditorState,
@@ -125,10 +124,6 @@ export const editorReducer = createReducer(
     slides.splice(newIndex, 0, slide);
     return { ...state, slides, currentSlideIndex: newIndex };
   }),
-  on(editorActions.setcurrentslide, (state, { index }) => {
-    return { ...state, currentSlideIndex: index };
-  }),
-  on(editorActions.setviewmode, (state, { viewMode }) => {
-    return { ...state, viewMode };
-  }),
+  on(editorActions.setcurrentslide, (state, { index }) => ({ ...state, currentSlideIndex: index })),
+  on(editorActions.setviewmode, (state, { viewMode }) => ({ ...state, viewMode })),
 );

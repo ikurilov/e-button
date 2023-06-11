@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { GamePlayState, PlayPhases, TeamColors } from './game-play.state';
 import { gamePlayActions } from './game-play.actions';
-import { SlideType } from '../../../models/models';
+import { SlideType } from '../../editor/state/editor.state';
 
 const initialState: GamePlayState = {
   allGame: null,

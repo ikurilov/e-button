@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SlideType } from '../../models/models';
+import { SlideType } from '../../modules/editor/state/editor.state';
 
 @Pipe({
   name: 'slideTypeTitle',

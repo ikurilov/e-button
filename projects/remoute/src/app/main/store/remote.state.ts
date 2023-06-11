@@ -1,4 +1,4 @@
-import { QuestionWithImageSlide } from '../../../../../../src/app/models/models';
+import { QuestionWithImageSlide } from '../../../../../../src/app/modules/editor/state/editor.state';
 
 export interface RemoteState {
   screen: RemoteScreens;

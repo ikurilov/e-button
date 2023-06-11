@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { EditorState } from '../../../../state/editor.state';
+import { EditorState, SlideType } from '../../../../state/editor.state';
 import { Store } from '@ngrx/store';
 import { editorActions } from '../../../../state/editor.actions';
 import { FormControl, Validators } from '@angular/forms';
@@ -10,7 +10,6 @@ import {
   selectEditor,
 } from '../../../../state/editor.selectors';
 import { map } from 'rxjs/operators';
-import { SlideType } from '../../../../../../models/models';
 
 @Component({
   selector: 'app-editor-toolbar',

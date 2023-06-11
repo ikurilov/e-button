@@ -1,6 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { EditorState } from './editor.state';
-import { Slide, SlideType } from '../../../models/models';
+import { EditorState, Slide, SlideType } from './editor.state';
 
 export const editorActions = createActionGroup({
   source: 'Editor',

@@ -9,7 +9,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { QuestionWithImageSlide } from '../../../models/models';
+import { QuestionWithImageSlide } from '../../editor/state/editor.state';
 
 type Patch = QuestionWithImageSlide['patches'][0];
 type Image = QuestionWithImageSlide['images'][0];
