@@ -25,10 +25,10 @@ export enum GamePhaseType {
 }
 
 export interface IClientGameState {
-  freezeTime?: number,
-  phaseType: GamePhaseType,
-  teamsInGame: Teams[],
-  answeringTeam: Teams,
-  myName: string,
+  freezeTime?: number;
+  phaseType: GamePhaseType;
+  teamsInGame: Teams[];
+  answeringTeam: Teams;
+  myName: string;
   myTeam: Teams;
 }

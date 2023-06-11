@@ -90,9 +90,7 @@ export const gamePlayReducer = createReducer(
     playPhase: PlayPhases.QUESTION_LISTENING,
     questionAnswerState: {
       date: new Date(),
-      answeringTeam: state.currentFight.pushes.reduce((prev, curr) => {
-        return prev?.date && prev.date < curr.date ? prev : curr;
-      }).player.team,
+      answeringTeam: state.currentFight.pushes.reduce((prev, curr) => prev?.date && prev.date < curr.date ? prev : curr).player.team,
     },
     fightList: [...state.fightList, state.currentFight],
     currentFight: null,

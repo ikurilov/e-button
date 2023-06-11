@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
-  BreakSlide,
-  EditorState,
-  InfoSlide,
-  QuestionWithImageSlide,
-  Slide,
-  SlideType,
+  EditorState, QuestionWithImageSlide, Slide, SlideType,
 } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { map } from 'rxjs/operators';
