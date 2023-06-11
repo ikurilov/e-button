@@ -1,21 +1,20 @@
-import {app, BrowserWindow, screen} from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
 
-app.whenReady().then(() => {
-  installExtension(REDUX_DEVTOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
-});
+// app.whenReady().then(() => {
+//   installExtension(REDUX_DEVTOOLS)
+//     .then((name) => console.log(`Added Extension:  ${name}`))
+//     .catch((err) => console.log('An error occurred: ', err));
+// });
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
-  serve = args.some(val => val === '--serve');
+  serve = args.some((val) => val === '--serve');
 
 function createWindow(): BrowserWindow {
-
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
@@ -27,32 +26,35 @@ function createWindow(): BrowserWindow {
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
-      allowRunningInsecureContent: (serve) ? true : false,
-      contextIsolation: false,  // false if you want to run e2e test with Spectron
+      allowRunningInsecureContent: serve ? true : false,
+      contextIsolation: false, // false if you want to run e2e test with Spectron
     },
   });
-
 
   if (serve) {
     win.webContents.openDevTools();
     require('electron-reload')(__dirname, {
-      electron: require(path.join(__dirname, '/../node_modules/electron'))
+      electron: require(path.join(__dirname, '/../node_modules/electron')),
     });
     win.loadURL('http://localhost:4200');
   } else {
     // Path when running electron executable
     let pathIndex = './electron-client/index.html';
 
-    if (fs.existsSync(path.join(__dirname, '../dist/electron-client/index.html'))) {
+    if (
+      fs.existsSync(path.join(__dirname, '../dist/electron-client/index.html'))
+    ) {
       // Path when running electron in local folder
       pathIndex = '../dist/electron-client/index.html';
     }
 
-    win.loadURL(url.format({
-      pathname: path.join(__dirname, pathIndex),
-      protocol: 'file:',
-      slashes: true
-    }));
+    win.loadURL(
+      url.format({
+        pathname: path.join(__dirname, pathIndex),
+        protocol: 'file:',
+        slashes: true,
+      }),
+    );
   }
 
   // Emitted when the window is closed.
@@ -89,9 +91,6 @@ try {
       createWindow();
     }
   });
-
-
-
 } catch (e) {
   // Catch Error
   // throw e;

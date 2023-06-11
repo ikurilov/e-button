@@ -20,15 +20,15 @@ export class EditorLayoutComponent implements OnInit {
 
   private editorState: Observable<EditorState> =
     this.store.select(selectEditor);
-
-  gameFolder: string = '/Users/vlad3k/Desktop/papka';
+  // gameFolder: string = 'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\тест';
+  gameFolder: string = '';
   public gameName: any;
   public mode: 'file' | 'slide' = 'slide';
 
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
-    this.startEditing();
+    // this.startEditing();
   }
 
   start() {

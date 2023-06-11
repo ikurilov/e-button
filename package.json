@@ -12,7 +12,7 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start-client": "ng serve --project=p-client --port=4300 --host=0.0.0.0 --proxy-config=proxy/client-proxy.conf.json",
-    "build-client": "ng build --project=p-client  -c production",
+    "build-client": "ng build --project=p-client  -c production ",
     "start-screen": "ng serve --project=remoute --port=4301 --host=0.0.0.0 --proxy-config=proxy/screen-proxy.conf.json",
     "build-screen": "ng build --project=remoute  -c production",
     "ng": "ng",
