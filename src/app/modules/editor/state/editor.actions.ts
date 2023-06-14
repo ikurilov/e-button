@@ -18,5 +18,7 @@ export const editorActions = createActionGroup({
     loadFromFile: props<{ state: EditorState }>(),
     ok: emptyProps(),
     setCurrentSlide: props<{ index: number }>(),
+    setAudioSlideQuestion: props<{ start: number; end: number; loop: boolean }>(),
+    setAudioSlideAnswer: props<{ start: number; end: number; loop: boolean }>(),
   },
 });

@@ -327,7 +327,9 @@
             "styles": [
               "projects/remoute/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/wavesurfer.js/dist/wavesurfer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -395,7 +397,9 @@
             "styles": [
               "projects/remoute/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/wavesurfer.js/dist/wavesurfer.min.js"
+            ]
           }
         },
         "lint": {
