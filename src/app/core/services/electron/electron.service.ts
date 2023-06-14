@@ -9,6 +9,10 @@ import * as path from 'path';
 import { ServerSocketService } from './server-socket.service';
 import { RemoteSocketService } from './remote-socket.service';
 import { PlayerEntitySocketService } from './player-entity-socket.service';
+import { Store } from '@ngrx/store';
+import { selectCurrentSlide } from '../../../modules/game-play/store/game-play.selectors';
+import { take } from 'rxjs';
+import { QuestionWithImageSlide } from '../../../modules/editor/state/editor.state';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +29,7 @@ export class ElectronService {
     private serverSocketService: ServerSocketService,
     private remoteSocketService: RemoteSocketService,
     private playerEntityService: PlayerEntitySocketService,
+    private store: Store,
   ) {
     // Conditional imports
     if (this.isElectron) {
@@ -135,6 +140,19 @@ export class ElectronService {
     app.get('/hi', function (req, res) {
       console.log('yeah');
       res.send('hi, i am screen!!!');
+    });
+
+    app.get('/api/question-images', async (req, res) => {
+      let sub = this.store
+        .select(selectCurrentSlide)
+        .pipe(take(1))
+        .subscribe((slide) => {
+          const images = (slide as QuestionWithImageSlide).images;
+          res.send(images);
+        });
+      res.on('close', () => {
+        sub.unsubscribe();
+      });
     });
   }
 

@@ -1,44 +1,29 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RemoteScreens, RemoteState } from './remote.state';
+import { RemoteState } from './remote.state';
 
 export const selectRemoteState = createFeatureSelector<RemoteState>('remote');
 
-export const selectRemoteScreen = createSelector(
+export const selectRemotePlayPhases = createSelector(
   selectRemoteState,
-  (state) => state.screen,
+  (state) => state.playPhases,
 );
 
-export const selectIsDefaultScreen = createSelector(
-  selectRemoteScreen,
-  (screen) => screen === RemoteScreens.DEFAULT,
-);
-
-export const selectIsBreakScreen = createSelector(
-  selectRemoteScreen,
-  (screen) => screen === RemoteScreens.BREAK,
-);
-
-export const selectIsConnectScreen = createSelector(
-  selectRemoteScreen,
-  (screen) => screen === RemoteScreens.CONNECT,
-);
-
-export const selectIsQuestionScreen = createSelector(
-  selectRemoteScreen,
-  (screen) => screen === RemoteScreens.QUESTION,
-);
-
-export const selectQuestionWithImageState = createSelector(
-  selectRemoteState,
-  (state) => state.questionWithImageState,
-);
-
-export const selectConnectInfo = createSelector(
+export const selectRemoteConnectInfo = createSelector(
   selectRemoteState,
   (state) => state.connectInfo,
 );
 
-export const selectInfos = createSelector(
+export const selectRemoteFight = createSelector(
   selectRemoteState,
-  (state) => state.infos,
+  (state) => state.fight,
+);
+
+export const selectRemoteSlide = createSelector(
+  selectRemoteState,
+  (state) => state.slide,
+);
+
+export const selectRemoteQuestionAnswerState = createSelector(
+  selectRemoteState,
+  (state) => state.questionAnswerState,
 );

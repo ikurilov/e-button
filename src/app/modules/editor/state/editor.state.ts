@@ -40,7 +40,6 @@ export type QuestionWithImageSlide = QuestionSlide & {
   images: {
     position: AbsolutePosition;
     takenFrom: string;
-    W2HRatio?: number;
     showOnly?: 'question' | 'answer';
     imageSource: string;
   }[];

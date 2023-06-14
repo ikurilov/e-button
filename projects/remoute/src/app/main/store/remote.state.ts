@@ -1,17 +1,16 @@
-import { QuestionWithImageSlide } from '../../../../../../src/app/modules/editor/state/editor.state';
+import { Slide } from '../../../../../../src/app/modules/editor/state/editor.state';
+import {
+  Fight,
+  GamePlayState,
+  PlayPhases,
+} from '../../../../../../src/app/modules/game-play/store/game-play.state';
 
 export interface RemoteState {
-  screen: RemoteScreens;
-  questionWithImageState?: QuestionWithImageState;
+  playPhases?: PlayPhases;
   connectInfo?: ConnectInfo;
-  infos?: string[];
-}
-
-export interface QuestionWithImageState extends QuestionWithImageSlide {
-  number: number;
-  phase: QuestionPhases;
-  answerResult?: 'CORRECT' | 'WRONG';
-  answeringTeam?: string;
+  fight?: Fight;
+  slide?: Slide;
+  questionAnswerState?: GamePlayState['questionAnswerState'];
 }
 
 export interface ConnectInfo {
@@ -19,21 +18,4 @@ export interface ConnectInfo {
   teams: { name: string; players: string[] }[];
 }
 
-export enum QuestionPhases {
-  'TITLE' = 'TITLE',
-  'ASK' = 'ASK',
-  'ANSWER' = 'ANSWER',
-  'RESULTS' = 'RESULTS',
-}
-
-export enum RemoteScreens {
-  DEFAULT = 'DEFAULT',
-  QUESTION = 'QUESTION',
-  BREAK = 'BREAK',
-  CONNECT = 'CONNECT',
-  INFO = 'INFO',
-}
-
-export const initialRemoteState: RemoteState = {
-  screen: RemoteScreens.DEFAULT,
-};
+export const initialRemoteState: RemoteState = {};

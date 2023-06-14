@@ -4,11 +4,11 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
 
-// app.whenReady().then(() => {
-//   installExtension(REDUX_DEVTOOLS)
-//     .then((name) => console.log(`Added Extension:  ${name}`))
-//     .catch((err) => console.log('An error occurred: ', err));
-// });
+app.whenReady().then(() => {
+  installExtension(REDUX_DEVTOOLS)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
+});
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),

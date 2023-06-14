@@ -9,11 +9,7 @@ import { PlayPhases } from './game-play.state';
 
 @Injectable()
 export class GamePlayEffects {
-  constructor(
-    private screen: RemoteSocketService,
-    private actions: Actions,
-    private store: Store,
-  ) {}
+  constructor(private actions: Actions, private store: Store) {}
 
   startCountdownAndAskQuestion = createEffect(() =>
     this.actions.pipe(

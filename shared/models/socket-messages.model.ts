@@ -1,34 +1,84 @@
+import { SyncPatch } from '../../projects/p-client/src/app/state/p-client.state';
 import {
-  PClientState,
-  SyncPatch,
-} from '../../projects/p-client/src/app/state/p-client.state';
-import {
+  Fight,
+  GamePlayState,
   PlayPhases,
   TeamColors,
 } from '../../src/app/modules/game-play/store/game-play.state';
 import {
-  QuestionWithImageState,
-  RemoteScreens,
-} from '../../projects/remoute/src/app/main/store/remote.state';
+  EditorState,
+  QuestionWithImageSlide,
+} from '../../src/app/modules/editor/state/editor.state';
+import { ConnectInfo } from '../../projects/remoute/src/app/main/store/remote.state';
+
+export enum HostToScreenMessageType {
+  INFO = 'INFO',
+  BREAK = 'BREAK',
+  ROUND = 'ROUND',
+  RESULT = 'RESET',
+  CONNECT_INFO = 'CONNECT_INFO',
+  IMAGE_QUESTION = 'IMAGE_QUESTION',
+  COUNTDOWN = 'COUNTDOWN',
+  ASK = 'ASK',
+  START_FIGHT = 'START_FIGHT',
+  ADD_PLAYER_TO_FIGHT = 'ADD_PLAYER_TO_FIGHT',
+  QUESTION_LISTENING = 'QUESTION_LISTENING',
+  QUESTION_VERDICT = 'QUESTION_VERDICT',
+  QUESTION_ANSWER = 'QUESTION_ANSWER',
+}
 
 export type HostToScreenMessage =
   | {
-      type: RemoteScreens.BREAK;
-    }
-  | {
-      type: RemoteScreens.CONNECT;
+      type: HostToScreenMessageType.INFO;
       payload: {
-        qrCode: string;
-        teams: { name: string; players: string[] }[];
+        content: string;
       };
     }
   | {
-      type: RemoteScreens.INFO;
-      payload: string[];
+      type: HostToScreenMessageType.BREAK;
     }
   | {
-      type: RemoteScreens.QUESTION;
-      payload: QuestionWithImageState;
+      type: HostToScreenMessageType.ROUND;
+      payload: {
+        number: number;
+      };
+    }
+  | {
+      type: HostToScreenMessageType.RESULT;
+      payload: GamePlayState['score'];
+    }
+  | {
+      type: HostToScreenMessageType.CONNECT_INFO;
+      payload: ConnectInfo;
+    }
+  | {
+      type: HostToScreenMessageType.IMAGE_QUESTION;
+      payload: Omit<QuestionWithImageSlide, 'images'>;
+    }
+  | {
+      type: HostToScreenMessageType.COUNTDOWN;
+    }
+  | {
+      type: HostToScreenMessageType.ASK;
+    }
+  | {
+      type: HostToScreenMessageType.START_FIGHT;
+      payload: Fight;
+    }
+  | {
+      type: HostToScreenMessageType.ADD_PLAYER_TO_FIGHT;
+      payload: Fight['pushes'][0];
+    }
+  | {
+      type: HostToScreenMessageType.QUESTION_LISTENING;
+      payload: GamePlayState['questionAnswerState'];
+    }
+  | {
+      type: HostToScreenMessageType.QUESTION_VERDICT;
+      payload: GamePlayState['questionAnswerState'];
+    }
+  | {
+      type: HostToScreenMessageType.QUESTION_ANSWER;
     };
 
 export enum HostToPlayerMessageType {

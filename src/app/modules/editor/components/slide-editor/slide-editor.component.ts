@@ -15,7 +15,10 @@ import {
   Slide,
   SlideType,
 } from '../../state/editor.state';
-import { selectEditor } from '../../state/editor.selectors';
+import {
+  selectCurrentSlideStats,
+  selectEditor,
+} from '../../state/editor.selectors';
 
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
@@ -48,6 +51,8 @@ export class SlideEditorComponent implements OnInit {
       ];
     }),
   );
+
+  slideStats = this.store.select(selectCurrentSlideStats);
 
   @ViewChild('shadowPatch', { static: false }) shadowPatch: ElementRef;
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import {
-  QuestionWithImageState,
-  RemoteScreens,
-} from '../main/store/remote.state';
+import {} from '../main/store/remote.state';
 import { Store } from '@ngrx/store';
 import { remoteActions } from '../main/store/remote.actions';
-import { HostToScreenMessage } from '../../../../../shared/models/socket-messages.model';
+import {
+  HostToScreenMessage,
+  PlayerToHostMessageType,
+} from '../../../../../shared/models/socket-messages.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,23 +17,61 @@ export class RemoteSocketServiceService {
       .fromEvent('message')
       .subscribe((message: HostToScreenMessage) => {
         switch (message.type) {
-          case RemoteScreens.BREAK:
-            this.store.dispatch(remoteActions.setBreak());
-            break;
-          case RemoteScreens.CONNECT:
+          case PlayerToHostMessageType.INFO:
             this.store.dispatch(
-              remoteActions.setConnect({ data: message.payload }),
+              remoteActions.infoSlideMessage({
+                content: message.payload.content,
+              }),
             );
             break;
-          case RemoteScreens.INFO:
+          case PlayerToHostMessageType.BREAK:
+            this.store.dispatch(remoteActions.breakSlideMessage());
+            break;
+          case PlayerToHostMessageType.RESULT:
             this.store.dispatch(
-              remoteActions.setInfo({ data: message.payload }),
+              remoteActions.resultSlideMessage({ score: message.payload }),
             );
             break;
-          case RemoteScreens.QUESTION:
+          case PlayerToHostMessageType.CONNECT_INFO:
             this.store.dispatch(
-              remoteActions.setImageQuestion({ data: message.payload }),
+              remoteActions.connectInfoMessage({ data: message.payload }),
             );
+            break;
+          case PlayerToHostMessageType.IMAGE_QUESTION:
+            this.store.dispatch(
+              remoteActions.imageQuestionMessage({ data: message.payload }),
+            );
+            break;
+          case PlayerToHostMessageType.COUNTDOWN:
+            this.store.dispatch(remoteActions.countdownMessage());
+            break;
+          case PlayerToHostMessageType.ASK:
+            this.store.dispatch(remoteActions.askMessage());
+            break;
+          case PlayerToHostMessageType.START_FIGHT:
+            this.store.dispatch(
+              remoteActions.startFightMessage({ data: message.payload }),
+            );
+            break;
+          case PlayerToHostMessageType.ADD_PLAYER_TO_FIGHT:
+            this.store.dispatch(
+              remoteActions.addPlayerToFightMessage({ data: message.payload }),
+            );
+            break;
+          case PlayerToHostMessageType.QUESTION_LISTENING:
+            this.store.dispatch(
+              remoteActions.questionListeningMessage({ data: message.payload }),
+            );
+            break;
+          case PlayerToHostMessageType.QUESTION_VERDICT:
+            this.store.dispatch(
+              remoteActions.questionVerdictMessage({ data: message.payload }),
+            );
+            break;
+          case PlayerToHostMessageType.QUESTION_ANSWER:
+            this.store.dispatch(remoteActions.questionAnswerMessage());
+            break;
+          default:
             break;
         }
       });

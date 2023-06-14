@@ -1,46 +1,80 @@
 import { remoteActions } from './remote.actions';
 import { createReducer, on } from '@ngrx/store';
-import { RemoteScreens, RemoteState } from './remote.state';
+import { RemoteState } from './remote.state';
+import { SlideType } from '../../../../../../src/app/modules/editor/state/editor.state';
+import { PlayPhases } from '../../../../../../src/app/modules/game-play/store/game-play.state';
 
-export const initialState: RemoteState = {
-  screen: RemoteScreens.DEFAULT,
-};
+export const initialState: RemoteState = {};
 
 export const remoteReducer = createReducer(
   initialState,
-  on(remoteActions.setDefault, (state) => ({
+  on(remoteActions.infoSlideMessage, (state, { content }) => ({
     ...state,
-    screen: RemoteScreens.DEFAULT,
-    questionWithImageState: undefined,
-    connectInfo: undefined,
-    infos: undefined,
+    playPhases: PlayPhases.SIMPLE,
+    slide: {
+      type: SlideType.info,
+      content,
+    },
   })),
-  on(remoteActions.setBreak, (state) => ({
+  on(remoteActions.breakSlideMessage, (state) => ({
     ...state,
-    screen: RemoteScreens.BREAK,
-    questionWithImageState: undefined,
-    connectInfo: undefined,
-    infos: undefined,
+    playPhases: PlayPhases.SIMPLE,
+    slide: {
+      type: SlideType.break,
+    },
   })),
-  on(remoteActions.setInfo, (state, { data }) => ({
+  on(remoteActions.resultSlideMessage, (state, { score }) => ({
     ...state,
-    screen: RemoteScreens.INFO,
-    questionWithImageState: undefined,
-    connectInfo: undefined,
-    infos: data,
+    playPhases: PlayPhases.SIMPLE,
+    // TODO: add score
+    slide: {
+      type: SlideType.result,
+    },
   })),
-  on(remoteActions.setConnect, (state, { data }) => ({
+  on(remoteActions.connectInfoMessage, (state, { data }) => ({
     ...state,
-    screen: RemoteScreens.CONNECT,
     connectInfo: data,
-    questionWithImageState: undefined,
-    infos: undefined,
   })),
-  on(remoteActions.setImageQuestion, (state, { data }) => ({
+  on(remoteActions.questionImagesLoaded, (state, { slide }) => ({
     ...state,
-    screen: RemoteScreens.QUESTION,
-    questionWithImageState: data,
-    connectInfo: undefined,
-    infos: undefined,
+    playPhases: PlayPhases.QUESTION_TITLE,
+    slide,
+  })),
+  on(remoteActions.countdownMessage, (state) => ({
+    ...state,
+    playPhases: PlayPhases.QUESTION_COUNTDOWN,
+    questionAnswerState: null,
+  })),
+  on(remoteActions.askMessage, (state) => ({
+    ...state,
+    playPhases: PlayPhases.QUESTION_ASK,
+    questionAnswerState: null,
+  })),
+  on(remoteActions.startFightMessage, (state, { data }) => ({
+    ...state,
+    playPhases: PlayPhases.QUESTION_FIGHT,
+    fight: data,
+    questionAnswerState: null,
+  })),
+  on(remoteActions.addPlayerToFightMessage, (state, { data }) => ({
+    ...state,
+    fight: {
+      ...state.fight,
+      pushes: [...state.fight.pushes, data],
+    },
+  })),
+  on(remoteActions.questionListeningMessage, (state, { data }) => ({
+    ...state,
+    questionAnswerState: data,
+    playPhases: PlayPhases.QUESTION_LISTENING,
+  })),
+  on(remoteActions.questionVerdictMessage, (state, { data }) => ({
+    ...state,
+    questionAnswerState: data,
+    playPhases: PlayPhases.QUESTION_VERDICT,
+  })),
+  on(remoteActions.questionAnswerMessage, (state) => ({
+    ...state,
+    playPhases: PlayPhases.QUESTION_ANSWER_SHOW,
   })),
 );

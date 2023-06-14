@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectConnectInfo } from '../../store/remote.selectors';
+import { selectRemoteConnectInfo } from '../../store/remote.selectors';
 
 @Component({
   selector: 'app-connect-screen',
@@ -8,7 +8,7 @@ import { selectConnectInfo } from '../../store/remote.selectors';
   styleUrls: ['./connect-screen.component.scss'],
 })
 export class ConnectScreenComponent implements OnInit {
-  selectConnectInfo = this.store.select(selectConnectInfo);
+  selectConnectInfo = this.store.select(selectRemoteConnectInfo);
 
   constructor(private store: Store) {}
 
