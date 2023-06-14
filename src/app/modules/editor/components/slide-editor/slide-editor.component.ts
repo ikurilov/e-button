@@ -10,6 +10,7 @@ import { Observable, take } from 'rxjs';
 import {
   EditorState,
   InfoSlide,
+  QuestionWithAudioSlide,
   QuestionWithImageSlide,
   Slide,
   SlideType,
@@ -51,9 +52,7 @@ export class SlideEditorComponent implements OnInit {
   @ViewChild('shadowPatch', { static: false }) shadowPatch: ElementRef;
 
   currentSlideIndex = this.editorState.pipe(
-    map((editor) => {
-      return editor.currentSlideIndex;
-    }),
+    map((editor) => editor.currentSlideIndex),
   );
   slideTypes = SlideType;
 
@@ -85,7 +84,13 @@ export class SlideEditorComponent implements OnInit {
     return slide as InfoSlide;
   }
 
-  saveSlide($event: QuestionWithImageSlide | InfoSlide) {
+  getCastedAudioSlide(slide: Slide) {
+    return slide as QuestionWithAudioSlide;
+  }
+
+  saveSlide(
+    $event: QuestionWithImageSlide | QuestionWithAudioSlide | InfoSlide,
+  ) {
     this.currentSlideIndex.pipe(take(1)).subscribe((index) => {
       if (index !== null) {
         this.updateSlide(index, $event);

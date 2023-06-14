@@ -58,18 +58,14 @@ export type QuestionWithAudioSlide = QuestionSlide & {
     takenFrom: string;
   };
   question: {
-    text: string;
-    startS: number;
-    endS: number;
+    start: number;
+    end: number;
     loop: boolean;
   };
-  answers: {
-    image?: {
-      position: AbsolutePosition;
-      W2HRatio: number;
-      coded: string;
-    };
-    text?: string;
+  answer: {
+    start: number;
+    end: number;
+    loop: boolean;
   };
 };
 

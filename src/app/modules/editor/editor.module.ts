@@ -20,6 +20,7 @@ import { AudioCardComponent } from './components/folder-viewer/components/audio-
 import { ImageCardComponent } from './components/folder-viewer/components/image-card/image-card.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { InfoEditorComponent } from './components/slide-editor/components/info-editor/info-editor.component';
+import { AudioEditorComponent } from './components/slide-editor/components/audio-editor/audio-editor.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { InfoEditorComponent } from './components/slide-editor/components/info-e
     AudioCardComponent,
     ImageCardComponent,
     InfoEditorComponent,
+    AudioEditorComponent,
   ],
   imports: [
     CommonModule,

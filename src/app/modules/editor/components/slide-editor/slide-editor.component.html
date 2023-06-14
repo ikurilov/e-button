@@ -3,6 +3,7 @@
     <div class="editor">
       <div class="canvas">
         <ng-container *ngIf="currentSlide | async as slide">
+          {{ slide.type === slideTypes.questionWithAudio | json }}
           <ng-container [ngSwitch]="slide.type">
             <ng-container *ngSwitchCase="slideTypes.questionWithImage">
               <app-ratio-box-viewer
@@ -17,6 +18,12 @@
                 [slide]="getCastedInfoSlide(slide)"
                 (slideChange)="saveSlide($event)"
               ></app-info-editor>
+            </ng-container>
+            <ng-container *ngSwitchCase="slideTypes.questionWithAudio">
+              <app-audio-editor
+                [slide]="getCastedAudioSlide(slide)"
+                (slideChange)="saveSlide($event)"
+              ></app-audio-editor>
             </ng-container>
           </ng-container>
         </ng-container>
