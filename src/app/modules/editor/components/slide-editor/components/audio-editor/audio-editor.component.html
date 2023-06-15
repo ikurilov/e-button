@@ -1,19 +1,55 @@
-<div #waveform></div>
-
-<label for="customRange1" class="form-label">Zoom</label>
-<input type="range" class="form-range" id="customRange1" max="100" value="0" (input)="zoomChange($event)">
-
-<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-  <button type="button" class="btn btn-secondary" (click)="backward()">Backward 5s</button>
-  <button type="button" class="btn btn-primary" (click)="play()">Play/Pause</button>
-  <button type="button" class="btn btn-secondary" (click)="forward()">Forward 5s</button>
+<div class="wrapper">
+  <div class="audio-player">
+    <button class="play-button" (click)="play()">
+      <i
+        class="play-button-icon fa-solid"
+        [ngClass]="{
+          'fa-circle-play': !waveSurfer.isPlaying(),
+          'fa-circle-pause': waveSurfer.isPlaying()
+        }"
+      ></i>
+    </button>
+    <div class="player-body">
+      <p class="title">{{ slide.audio.name | json }}</p>
+      <div #waveform class="waveform"></div>
+      <div class="controls">
+        <div class="volume">
+          <i class="volume-icon fa-solid fa-volume-high"></i>
+          <input
+            class="volume-slider"
+            type="range"
+            name="volume-slider"
+            min="0"
+            max="100"
+            value="50"
+            (input)="handleVolumeChange($event)"
+          />
+        </div>
+        <div class="timecode">
+          <span>{{ currentTime | async }}</span>
+          <span>/</span>
+          <span>{{ duration | async }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" [(ngModel)]="isLoop" id="loop">
-  <label class="form-check-label" for="loop">
-    Loop
-  </label>
-</div>
+<!--<div class="wave-form" #waveform></div>-->
 
+<!--<label for="customRange1" class="form-label">Zoom</label>-->
+<!--<input type="range" class="form-range" id="customRange1" max="100" min="20" value="1" (input)="zoomChange($event)">-->
 
+<!--<div class="btn-group" role="group" aria-label="Basic mixed styles example">-->
+<!--  <button type="button" class="btn btn-secondary" (click)="backward()">Backward 5s</button>-->
+<!--  <button type="button" class="btn btn-primary" (click)="play()">Play/Pause</button>-->
+<!--  <button type="button" class="btn btn-secondary" (click)="forward()">Forward 5s</button>-->
+<!--</div>-->
+
+<!--<div class="form-check">-->
+<!--  <input class="form-check-input" type="checkbox" [(ngModel)]="isLoop" id="loop">-->
+<!--  <label class="form-check-label" for="loop">-->
+<!--    Loop-->
+<!--  </label>-->
+<!--</div>-->
+<!--</div>-->

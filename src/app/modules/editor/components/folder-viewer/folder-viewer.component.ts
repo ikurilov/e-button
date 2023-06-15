@@ -80,7 +80,7 @@ export class FolderViewerComponent implements OnInit {
 
   public createSlideWithAudio(fileObj: FileListItem) {
     this.store.dispatch(
-      editorActions.addslidewithaudio({ audioCoded: fileObj.url, takenFrom: fileObj.path }),
+      editorActions.addslidewithaudio({ audioCoded: fileObj.url, takenFrom: fileObj.path, name: fileObj.fileName }),
     );
   }
 }

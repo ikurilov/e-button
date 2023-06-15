@@ -31,7 +31,7 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
   private gameName: Observable<string> = this.editorState.pipe(
     map((editor) => editor.name),
   );
-  gameFolder: string = 'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\тест';
+  gameFolder: string = '/Users/vlad3k/Desktop/papka';
   // gameFolder: string = '';
   public mode: 'file' | 'slide' = 'slide';
 

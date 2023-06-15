@@ -84,15 +84,18 @@ export const editorReducer = createReducer(
       ],
     })),
 
-  on(editorActions.addslidewithaudio, (state, { audioCoded, takenFrom }) => ({
+  on(editorActions.addslidewithaudio, (state, { audioCoded, takenFrom, name }) => {
+    console.log(audioCoded, name);
+    return {
       ...state,
       slides: [
         ...state.slides,
         {
           type: SlideType.questionWithAudio,
           audio: {
+            name,
             audioCoded,
-            takenFrom,
+            takenFrom
           },
           question: {
             start: 0,
@@ -109,7 +112,7 @@ export const editorReducer = createReducer(
           patches: [],
         },
       ],
-    })),
+    };}),
 
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];
