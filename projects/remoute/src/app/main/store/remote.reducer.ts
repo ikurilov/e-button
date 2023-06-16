@@ -23,6 +23,15 @@ export const remoteReducer = createReducer(
       type: SlideType.break,
     },
   })),
+  on(remoteActions.roundSlideMessage, (state, { number }) => ({
+    ...state,
+    playPhases: PlayPhases.SIMPLE,
+    slide: {
+      type: SlideType.round,
+      number,
+    },
+  })),
+
   on(remoteActions.resultSlideMessage, (state, { score }) => ({
     ...state,
     playPhases: PlayPhases.SIMPLE,

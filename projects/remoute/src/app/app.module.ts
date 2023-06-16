@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CommonModule } from '@angular/common';
 import { MainModule } from './main/main.module';
+import { HttpClientModule } from '@angular/common/http';
 
 const config: SocketIoConfig = { url: window.location.origin, options: {} };
 
@@ -21,6 +22,7 @@ const config: SocketIoConfig = { url: window.location.origin, options: {} };
     SocketIoModule.forRoot(config),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
+    HttpClientModule,
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MainModule,
   ],

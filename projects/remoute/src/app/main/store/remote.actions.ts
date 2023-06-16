@@ -12,6 +12,7 @@ export const remoteActions = createActionGroup({
     'Info Slide Message': props<{ content: string }>(),
     'Break Slide Message': emptyProps(),
     'Result Slide Message': props<{ score: GamePlayState['score'] }>(),
+    'Round Slide Message': props<{ number: number }>(),
     'Connect Info Message': props<{ data: ConnectInfo }>(),
     'Image Question Message': props<{
       data: Omit<QuestionWithImageSlide, 'images'>;

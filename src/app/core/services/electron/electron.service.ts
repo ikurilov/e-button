@@ -150,9 +150,8 @@ export class ElectronService {
           const images = (slide as QuestionWithImageSlide).images;
           res.send(images);
         });
-      res.on('close', () => {
-        sub.unsubscribe();
-      });
+
+      res.send(['sosi pisos']);
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { remoteActions } from './remote.actions';
-import { switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuestionWithImageSlide } from '../../../../../../src/app/modules/editor/state/editor.state';
 
@@ -23,6 +23,14 @@ export class RemoteEffects {
               return remoteActions.questionImagesLoaded({
                 slide: { ...data, images },
               });
+            }),
+            catchError((err) => {
+              console.error(err);
+              return of(
+                remoteActions.questionImagesLoaded({
+                  slide: { ...data, images: [] },
+                }),
+              );
             }),
           );
       }),

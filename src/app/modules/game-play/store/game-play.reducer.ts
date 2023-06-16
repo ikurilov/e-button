@@ -46,7 +46,7 @@ export const gamePlayReducer = createReducer(
   on(gamePlayActions.changeSlide, (state, { slideIndex }) => {
     const slide = state.allGame.slides[slideIndex];
     const newPlayPhase =
-      slide.type === SlideType.questionWithImage
+      slide?.type === SlideType.questionWithImage
         ? PlayPhases.QUESTION_TITLE
         : PlayPhases.SIMPLE;
     return {
@@ -90,7 +90,9 @@ export const gamePlayReducer = createReducer(
     playPhase: PlayPhases.QUESTION_LISTENING,
     questionAnswerState: {
       date: new Date(),
-      answeringTeam: state.currentFight.pushes.reduce((prev, curr) => prev?.date && prev.date < curr.date ? prev : curr).player.team,
+      answeringTeam: state.currentFight.pushes.reduce((prev, curr) =>
+        prev?.date && prev.date < curr.date ? prev : curr,
+      ).player.team,
     },
     fightList: [...state.fightList, state.currentFight],
     currentFight: null,

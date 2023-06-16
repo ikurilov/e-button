@@ -16,6 +16,7 @@ import { gamePlayReducer } from './store/game-play.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { GamePlayEffects } from './store/game-play.effects';
 import { FightListComponent } from './components/fight-list/fight-list.component';
+import { ScreenMessagesEffects } from './store/screen-messages.effects';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,11 @@ import { FightListComponent } from './components/fight-list/fight-list.component
     ReactiveFormsModule,
     StoreModule.forFeature('gamePlay', gamePlayReducer),
     StoreModule.forFeature('players', playersReducer),
-    EffectsModule.forFeature([GamePlayEffects, PlayersEffects]),
+    EffectsModule.forFeature([
+      GamePlayEffects,
+      PlayersEffects,
+      ScreenMessagesEffects,
+    ]),
   ],
 })
 export class GamePlayModule {}

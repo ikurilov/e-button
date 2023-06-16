@@ -1,19 +1,26 @@
-<!--<ng-container *ngIf="remoteScreen | async as remoteScreen">-->
-<!--  <ng-container [ngSwitch]="remoteScreen">-->
-<!--    <ng-container *ngSwitchCase="screenType.DEFAULT">-->
-<!--      <app-default-screen></app-default-screen>-->
-<!--    </ng-container>-->
-<!--    <ng-container *ngSwitchCase="screenType.BREAK">-->
-<!--      <app-break-screen></app-break-screen>-->
-<!--    </ng-container>-->
-<!--    <ng-container *ngSwitchCase="screenType.CONNECT">-->
-<!--      <app-connect-screen></app-connect-screen>-->
-<!--    </ng-container>-->
-<!--    <ng-container *ngSwitchCase="screenType.INFO">-->
-<!--      <app-info-list></app-info-list>-->
-<!--    </ng-container>-->
-<!--    <ng-container *ngSwitchCase="screenType.QUESTION">-->
-<!--      <app-image-question></app-image-question>-->
-<!--    </ng-container>-->
-<!--  </ng-container>-->
-<!--</ng-container>-->
+<ng-container *ngIf="!(connectInfo | async); else connectTem">
+  <ng-container *ngIf="slide | async as slide">
+    <ng-container [ngSwitch]="slide.type">
+      <ng-template [ngSwitchCase]="slideType.break">
+        <app-break-screen></app-break-screen>
+      </ng-template>
+      <ng-template [ngSwitchCase]="slideType.info">
+        <app-info-screen></app-info-screen>
+      </ng-template>
+      <ng-template [ngSwitchCase]="slideType.round">
+        <app-round-screen></app-round-screen>
+      </ng-template>
+      <ng-template [ngSwitchCase]="slideType.questionWithImage">
+        <app-image-question></app-image-question>
+      </ng-template>
+      <ng-template [ngSwitchCase]="slideType.questionWithAudio">
+        <!--        TODO-->
+      </ng-template>
+      <ng-template [ngSwitchCase]="slideType.result">
+        <app-result-screen></app-result-screen>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #connectTem> Connect to the server </ng-template>
