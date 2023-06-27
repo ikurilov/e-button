@@ -32,7 +32,9 @@ export class GamePlayEffects {
           return of(gamePlayActions.startFight({ player, date }));
         } else if (state.playPhase === PlayPhases.QUESTION_FIGHT) {
           if (
-            state.currentFight.pushes.some((p) => p.player.id === player.id)
+            (state.currentFight?.pushes || []).some(
+              (p) => p.player.id === player.id,
+            )
           ) {
             return of(gamePlayActions.playerPushedButtonIgnore());
           }

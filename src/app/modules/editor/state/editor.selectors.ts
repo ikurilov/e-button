@@ -43,3 +43,8 @@ export const selectCurrentSlideStats = createSelector(
     };
   },
 );
+
+export const selectIsGameEmpty = createSelector(
+  editorSelector,
+  (editor) => editor?.slides?.length === 0 || editor?.slides === null,
+);

@@ -88,6 +88,18 @@ export class ScreenMessagesEffects {
     ),
   );
 
+  onAskQuestion = createEffect(() =>
+    this.actions.pipe(
+      ofType(gamePlayActions.askQuestion),
+      mergeMap(() => {
+        this.screen.sendMessage({
+          type: HostToScreenMessageType.ASK,
+        });
+        return of(gamePlayActions.ok());
+      }),
+    ),
+  );
+
   onStartFight = createEffect(() =>
     this.actions.pipe(
       ofType(gamePlayActions.startFight),

@@ -1,5 +1,38 @@
-<div class="card">
-  <div class="card-body">
-    {{ (selectCurrentSlide | async)?.type }}
+<div class="slide-container card bg-dark border-warning" *ngIf="selectCurrentSlide | async as slide">
+  <div>
+    <ng-container [ngSwitch]="slide.type">
+      <ng-container *ngSwitchCase="slideTypes.questionWithImage">
+        <div class="secret">
+          <app-ratio-box-viewer
+          [slide]="getCastedSlide(slide)"
+          [previewMode]="'question'"
+          ></app-ratio-box-viewer>
+        </div>
+        <div class="hide-question"></div>
+      </ng-container>
+      <ng-container *ngSwitchCase="slideTypes.questionWithAudio">
+        <i class="slide-icon fas fa-music"></i>
+      </ng-container>
+      <ng-container *ngSwitchCase="slideTypes.info">
+        <i class="slide-icon fas fa-info"></i>
+      </ng-container>
+      <ng-container *ngSwitchCase="slideTypes.break">
+        <i class="slide-icon fas fa-pause"></i>
+      </ng-container>
+      <ng-container *ngSwitchCase="slideTypes.round">
+        <i class="slide-icon fa-regular fa-flag"></i>
+      </ng-container>
+      <ng-container *ngSwitchCase="slideTypes.result">
+        <i class="slide-icon fas fa-medal"></i>
+      </ng-container>
+
+    </ng-container>
   </div>
 </div>
+<div class="btn-group w-100">
+  <button class="btn btn-outline-warning w-50" (click)="prevSlide()"><i class="fa fa-arrow-left"></i></button>
+  <button class="btn btn-outline-warning w-50" (click)="nextSlide()">
+    <i class="fa fa-arrow-right"></i>
+  </button>
+</div>
+

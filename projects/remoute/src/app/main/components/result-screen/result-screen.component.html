@@ -1,1 +1,6 @@
-<h1>Результаты {{ slide | async | json }}</h1>
+<div class="result-label">
+  Конец!
+</div>
+<div class="result-line" *ngFor="let line of (lines | async)">
+  {{line.team}} - {{line.score}}
+</div>

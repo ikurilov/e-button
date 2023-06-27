@@ -162,6 +162,7 @@ export type PlayerToHostMessage =
           payload: {
             name: string;
             icon?: string;
+            team?: TeamColors;
           };
         }
       | {

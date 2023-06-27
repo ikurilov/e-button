@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectConfig } from '../../store/game-play.selectors';
+import { selectConfig, selectGameName } from '../../store/game-play.selectors';
 
 @Component({
   selector: 'app-game-play-layout',
@@ -9,6 +9,7 @@ import { selectConfig } from '../../store/game-play.selectors';
 })
 export class GamePlayLayoutComponent implements OnInit {
   public selectConfig = this.store.select(selectConfig);
+  public selectGameName = this.store.select(selectGameName);
   constructor(private store: Store) {}
 
   ngOnInit(): void {}

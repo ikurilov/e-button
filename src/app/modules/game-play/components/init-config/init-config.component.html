@@ -1,19 +1,82 @@
-<form [formGroup]="form">
-<div [formArrayName]="'teams'">
-  <div *ngFor="let team of allTeams; let i = index" class="team-option">
-    <input type="checkbox" [formControlName]="i" class="form-check-input" id="team-{{i}}}"
-           aria-describedby="freeze-help">
-    <label for="team-{{i}}" class="form-check-label teams-label">
-      <div [ngClass]="{
-                    purple: team === teamColors.PURPLE,
-                    yellow: team === teamColors.YELLOW,
-                    cyan: team === teamColors.CYAN,
-                    amber: team === teamColors.AMBER
-                            }" class="circle"></div>
-      <div class="name">{{ team }}</div>
-    </label>
+<div class="card bg-dark border-warning text-light m-3 w-50">
+  <div class="card-body">
+    <h5 class="card-title">Настройки игры</h5>
+    <form [formGroup]="form">
+      <div [formArrayName]="'teams'" class="mt-3">
+        <div *ngFor="let team of allTeams; let i = index" class="team-option">
+          <input
+            type="checkbox"
+            [formControlName]="i"
+            class="form-check-input bg-dark text-warning border-warning"
+            id="team-{{ i }}}"
+            aria-describedby="freeze-help"
+          />
+          <label for="team-{{ i }}" class="form-check-label teams-label">
+            <div
+              [ngClass]="{
+                purple: team === teamColors.PURPLE,
+                yellow: team === teamColors.YELLOW,
+                cyan: team === teamColors.CYAN,
+                amber: team === teamColors.AMBER
+              }"
+              class="circle"
+            ></div>
+            <div class="name">{{ team }}</div>
+          </label>
+        </div>
+      </div>
+      <div class="w-50 mt-3">
+        <label for="throttle" class="form-label"
+          >Тротл кнопки игрока {{ throttle / 1000 | number : '.1-1' }} мс
+        </label>
+        <input
+          formControlName="buttonThrottleMS"
+          type="range"
+          class="form-range"
+          [min]="configOfConfig.throttle.min"
+          [max]="configOfConfig.throttle.max"
+          [step]="configOfConfig.throttle.step"
+          id="throttle"
+        />
+      </div>
+      <div class="w-50 mt-2">
+        <label for="freeze" class="form-label"
+          >Нельзя отвечать после неправильного ответа
+          {{ freeze / 1000 | number : '.1-1' }} сек</label
+        >
+        <input
+          formControlName="freezeTimeMS"
+          type="range"
+          class="form-range"
+          [min]="configOfConfig.freeze.min"
+          [max]="configOfConfig.freeze.max"
+          [step]="configOfConfig.freeze.step"
+          id="freeze"
+        />
+      </div>
+      <div class="w-50 mt-2">
+        <label for="listeningDuration" class="form-label"
+          >Время на ответ
+          {{ listeningDuration / 1000 | number : '.0' }} сек</label
+        >
+        <input
+          formControlName="listeningDurationMS"
+          type="range"
+          class="form-range"
+          [min]="configOfConfig.listeningDuration.min"
+          [max]="configOfConfig.listeningDuration.max"
+          [step]="configOfConfig.listeningDuration.step"
+          id="listeningDuration"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="card-footer mb-3">
+    <button class="btn btn-sm btn-warning me-1" (click)="submit()">
+      Начать Игру
+    </button>
+    <button class="btn btn-sm btn-secondary me-1" (click)="back()">
+      Назад
+    </button>
   </div>
 </div>
-</form>
-<button class="btn btn-success" (click)="submit()">Го</button>
-<button class="btn btn-secondary" (click)="back()">Назад</button>

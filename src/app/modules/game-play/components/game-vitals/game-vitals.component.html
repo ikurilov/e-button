@@ -1,0 +1,5 @@
+<div class="p-1 text-secondary" *ngIf="selectVitals | async as vitals">
+  <i class="fa-solid fa-gear fa-spin ms-2"></i> {{ vitals.phase }}
+  <i class="fa-solid fa-hashtag ms-3"></i> {{ vitals.slideIndex.current }} /
+  {{ vitals.slideIndex.total }}
+</div>

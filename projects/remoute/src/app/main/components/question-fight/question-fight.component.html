@@ -1,0 +1,11 @@
+<div class="fight-wrapper">
+  <div class="push-wrapper">
+    <div
+      *ngFor="let p of pushes; let i = index"
+      class="push"
+      [ngClass]="{ first: !i }"
+    >
+      {{ p.player?.name }} <span *ngIf="i"> + {{ p.time }}</span>
+    </div>
+  </div>
+</div>

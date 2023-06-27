@@ -27,3 +27,8 @@ export const selectRemoteQuestionAnswerState = createSelector(
   selectRemoteState,
   (state) => state.questionAnswerState,
 );
+
+export const selectRemoteScore = createSelector(
+  selectRemoteState,
+  (state) => state.score,
+);

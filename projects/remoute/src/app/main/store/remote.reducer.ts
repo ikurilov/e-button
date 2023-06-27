@@ -35,7 +35,7 @@ export const remoteReducer = createReducer(
   on(remoteActions.resultSlideMessage, (state, { score }) => ({
     ...state,
     playPhases: PlayPhases.SIMPLE,
-    // TODO: add score
+    score,
     slide: {
       type: SlideType.result,
     },

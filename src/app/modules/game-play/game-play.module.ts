@@ -17,6 +17,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { GamePlayEffects } from './store/game-play.effects';
 import { FightListComponent } from './components/fight-list/fight-list.component';
 import { ScreenMessagesEffects } from './store/screen-messages.effects';
+import { GamePlayAudioEffects } from './store/game-play-audio.effects';
+import { GameVitalsComponent } from './components/game-vitals/game-vitals.component';
+import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { ScreenMessagesEffects } from './store/screen-messages.effects';
     InitConfigComponent,
     GamePlayLayoutComponent,
     FightListComponent,
+    GameVitalsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +42,9 @@ import { ScreenMessagesEffects } from './store/screen-messages.effects';
       GamePlayEffects,
       PlayersEffects,
       ScreenMessagesEffects,
+      GamePlayAudioEffects,
     ]),
+    RatioBoxViewerModule,
   ],
 })
 export class GamePlayModule {}

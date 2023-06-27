@@ -53,6 +53,7 @@ type Image = QuestionWithImageSlide['images'][0];
 export class RatioBoxViewerComponent implements OnInit {
   @Input() slide: QuestionWithImageSlide;
   @Input() isPreview = false;
+  // TODO: add type for previewMode
   @Input() previewMode: 'question' | 'answer' | 'edit';
   @Output() slideChange: EventEmitter<QuestionWithImageSlide> =
     new EventEmitter<QuestionWithImageSlide>();

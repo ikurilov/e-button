@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
+import { EmptyGameGuard } from './guards/empty-game.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'game',
+    canLoad: [EmptyGameGuard],
     loadChildren: () =>
       import('./modules/game-play/game-play.module').then(
         (m) => m.GamePlayModule,
@@ -22,7 +24,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];
 

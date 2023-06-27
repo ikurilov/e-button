@@ -1,0 +1,48 @@
+.slide-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* Set the height equal to 9/16 of the width */
+  }
+  >:first-child {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+  }
+}
+
+.slide-icon {
+  position: absolute;
+  font-size: 3rem;
+  color: #ffca3f;
+}
+
+.secret{
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  &:hover{
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+
+.iframe-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.8); /* Adjust the scale factor as needed */
+  transform-origin: 0 0; /* Set the origin point of the scaling */
+}

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalEnterNameComponent } from '../components/modal-enter-name/modal-enter-name.component';
+import { TeamColors } from '../../../../../src/app/modules/game-play/store/game-play.state';
 
 const CLIENT_ID_KEY = '_uid';
 const CLIENT_NAME_KEY = '_name';
-const CLIENT_ICON_KEY = '_name';
+const CLIENT_ICON_KEY = '_icon';
+const CLIENT_TEAM_KEY = '_team;';
 @Injectable({
   providedIn: 'root',
 })

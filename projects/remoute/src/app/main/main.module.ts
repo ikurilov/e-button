@@ -13,6 +13,11 @@ import { RemoteEffects } from './store/remote.effects';
 import { InfoScreenComponent } from './components/info-screen/info-screen.component';
 import { RoundScreenComponent } from './components/round-screen/round-screen.component';
 import { ResultScreenComponent } from './components/result-screen/result-screen.component';
+import { QuestionTitleComponent } from './components/question-title/question-title.component';
+import { QuesrionCountdownComponent } from './components/quesrion-countdown/quesrion-countdown.component';
+import { RatioBoxViewerModule } from '../../../../../src/app/modules/ratio-box-viewer/ratio-box-viewer.module';
+import { QuestionFightComponent } from './components/question-fight/question-fight.component';
+import { QuestionVerdictComponent } from './components/question-verdict/question-verdict.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +29,10 @@ import { ResultScreenComponent } from './components/result-screen/result-screen.
     InfoScreenComponent,
     RoundScreenComponent,
     ResultScreenComponent,
+    QuestionTitleComponent,
+    QuesrionCountdownComponent,
+    QuestionFightComponent,
+    QuestionVerdictComponent,
   ],
   exports: [RemoteMainLayoutComponent],
   imports: [
@@ -31,6 +40,7 @@ import { ResultScreenComponent } from './components/result-screen/result-screen.
     StoreModule.forFeature('remote', remoteReducer),
     EffectsModule.forFeature([RemoteEffects]),
     QRCodeModule,
+    RatioBoxViewerModule,
   ],
 })
 export class MainModule {}

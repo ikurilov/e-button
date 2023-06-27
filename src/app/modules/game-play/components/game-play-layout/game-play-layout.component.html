@@ -1,23 +1,27 @@
-<div class="card">
-  <div class="card-body">
-    <ng-container *ngIf="!(selectConfig | async)">
-      <app-init-config></app-init-config>
-    </ng-container>
-    <ng-container>
-      <div class="row h-100" *ngIf="(selectConfig | async)">
-        <div class="col-6">
-          <app-curent-slide></app-curent-slide>
-          <br>
-          <app-lead-buttons></app-lead-buttons>
-        </div>
-        <div class="col-6">
-          <app-score-control></app-score-control>
-          <br>
-          <app-team-board></app-team-board>
-          <br>
-          <app-fight-list></app-fight-list>
+<div class="game-play-block bg-secondary">
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="p-1 bg-dark navbar-brand text-warning ms-2">{{
+      selectGameName | async
+    }}</span>
+  </nav>
+  <ng-container *ngIf="!(selectConfig | async)">
+    <app-init-config></app-init-config>
+  </ng-container>
+  <ng-container>
+    <div class="row h-100 m-3" *ngIf="selectConfig | async">
+      <div class="col-4">
+        <div class="card bg-dark text-light">
+          <app-game-vitals class="px-2"></app-game-vitals>
+          <app-curent-slide class="px-2"> </app-curent-slide>
+          <app-lead-buttons class="px-2 mb-1"></app-lead-buttons>
         </div>
       </div>
-    </ng-container>
-  </div>
+      <div class="col-3">
+        <app-team-board></app-team-board>
+      </div>
+      <div class="col-3">
+        <app-fight-list></app-fight-list>
+      </div>
+    </div>
+  </ng-container>
 </div>

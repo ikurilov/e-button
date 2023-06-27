@@ -47,3 +47,8 @@ export const selectFightList = createSelector(
   selectGamePlayState,
   (state) => state.fightList,
 );
+
+export const selectGameName = createSelector(
+  selectGamePlayState,
+  (state) => state.allGame?.name,
+);

@@ -12,6 +12,7 @@ import { pClientToServerMessage } from '../../../../../models/message-models';
 
 const CLIENT_ID_KEY = '_uid';
 const CLIENT_NAME_KEY = '_name';
+// const CLIENT_TEAM_KEY = '_team';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +78,7 @@ export class PClientService {
     });
     // mdl.componentInstance.gameStateSub = this.gameStateSub;
     let newTeam: TeamColors = await mdl.result;
+    // localStorage.setItem(CLIENT_TEAM_KEY, newTeam);
     return newTeam;
     // this.socketService.sendMessage({
     //   date: new Date(),

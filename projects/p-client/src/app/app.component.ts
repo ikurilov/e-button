@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { pClientActions } from './state/p-client.actions';
 import { selectPClient } from './state/p-client.selectors';
 import { SocketClientService } from './services/socket-client.service';
+import { PClientService } from './state/p-client.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   // GamePhaseType = GamePhaseType;
   Teams = Teams;
   selectPlayerState = this.store.select(selectPClient);
-  constructor(private store: Store) {
+  constructor(private store: Store, private pClientService: PClientService) {
     this.store.dispatch(pClientActions.startInitSequence());
   }
 
@@ -28,7 +29,8 @@ export class AppComponent {
   }
 
   public changeTeam(): void {
-    // this.store.dispatch(pClientActions.changeTeam());
-    // this.ps.changeTeam().then()
+    this.pClientService.changeTeam().then((team) => {
+      this.store.dispatch(pClientActions.changeTeam({ team }));
+    });
   }
 }

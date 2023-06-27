@@ -31,7 +31,7 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
   private gameName: Observable<string> = this.editorState.pipe(
     map((editor) => editor.name),
   );
-  gameFolder: string = '/Users/vlad3k/Desktop/papka';
+  gameFolder: string = 'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\тест';
   // gameFolder: string = '';
   public mode: 'file' | 'slide' = 'slide';
 
@@ -50,6 +50,9 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
         this.store.dispatch(editorActions.setname({ name }));
       });
     this.startEditing();
+    setTimeout(() => {
+      this.router.navigate(['/game']);
+    }, 2000);
   }
 
   ngOnDestroy(): void {

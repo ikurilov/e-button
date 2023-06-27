@@ -1,25 +1,68 @@
-<div class="card">
-  <div class="card-header">
+<div class="card bg-dark border-primary text-white">
+  <div class="card-header border-primary text-primary">
     <div class="card-title">
-      <h6>Teams</h6>
+      <h4>Teams</h4>
     </div>
   </div>
-  <div class="card-body">
-    <div *ngFor="let teamObj of teams | async">
-      <div
-        [ngClass]="{
-      purple: teamObj.team === teamColors.PURPLE,
-      yellow: teamObj.team === teamColors.YELLOW,
-      cyan: teamObj.team === teamColors.CYAN,
-      amber: teamObj.team === teamColors.AMBER
-    }"
-        class="circle"
-      >
-
+  <div class="card-body dfg" *ngIf="teamsData | async as data">
+    <div *ngFor="let teamData of data">
+      <div class="team-row">
+        <div
+          [ngClass]="{
+            purple: teamData.team === teamColors.PURPLE,
+            yellow: teamData.team === teamColors.YELLOW,
+            cyan: teamData.team === teamColors.CYAN,
+            amber: teamData.team === teamColors.AMBER,
+            lobby: teamData.team === 'Lobby'
+          }"
+          class="circle team-circle"
+        ></div>
+        <div class="team-name">{{ teamData.team }}</div>
+        <div class="team-players">
+          <i class="fa-solid fa-user"></i> {{ teamData.players.length }}
+        </div>
+        <div class="team-score" *ngIf="isTeam(teamData.team)">
+          <i class="fa-solid fa-star"></i> {{ teamData.score }}
+        </div>
       </div>
-      <div>{{ teamObj.team }}</div>
-      <div *ngFor="let player of teamObj.players">{{player.name}}</div>
+
+      <table class="table table-sm table-dark">
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th scope="col"></th>-->
+<!--            <th scope="col">Name</th>-->
+<!--            <th scope="col">Ping</th>-->
+<!--            <th scope="col">actions</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+        <tbody>
+          <tr *ngFor="let player of teamData.players">
+            <td></td>
+            <td>{{ player.name }}</td>
+            <td>{{ player.pingMS }}</td>
+            <td><div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-danger" (click)="deletePlayer(player)">
+                <i class="fa-solid fa-user-slash"></i>
+              </button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <!--    <div *ngFor="let teamObj of teams | async">-->
+    <!--      <div-->
+    <!--        [ngClass]="{-->
+    <!--      purple: teamObj.team === teamColors.PURPLE,-->
+    <!--      yellow: teamObj.team === teamColors.YELLOW,-->
+    <!--      cyan: teamObj.team === teamColors.CYAN,-->
+    <!--      amber: teamObj.team === teamColors.AMBER-->
+    <!--    }"-->
+    <!--        class="circle"-->
+    <!--      >-->
+
+    <!--      </div>-->
+    <!--      <div>{{ teamObj.team }}</div>-->
+    <!--      <div *ngFor="let player of teamObj.players">{{player.name}}</div>-->
+    <!--    </div>-->
   </div>
 </div>
-

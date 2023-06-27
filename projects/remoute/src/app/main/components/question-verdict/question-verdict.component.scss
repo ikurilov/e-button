@@ -1,0 +1,35 @@
+:host{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.label{
+  font-size: 200px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: beat 1.2s infinite;
+  font-weight: bold;
+}
+
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.green{
+  color: #0bd50b;
+}
+
+.red{
+  color: #d50b0b;
+}

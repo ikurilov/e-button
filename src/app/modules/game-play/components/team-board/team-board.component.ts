@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable, withLatestFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { selectPlayers } from '../../players-store/players.selectors';
 import { PlayerEntity } from '../../players-store/players.state';
 import { TeamColors } from '../../store/game-play.state';
+import { selectConfig, selectTeamScore } from '../../store/game-play.selectors';
 
 @Component({
   selector: 'app-team-board',
@@ -12,7 +13,20 @@ import { TeamColors } from '../../store/game-play.state';
   styleUrls: ['./team-board.component.scss'],
 })
 export class TeamBoardComponent {
-  teamColors = TeamColors;
+  public teamColors = TeamColors;
+
+  public score = this.store.select(selectTeamScore);
+  public config = this.store.select(selectConfig);
+
+  public displayScore = this.score.pipe(
+    withLatestFrom(this.config),
+    map(([score, config]) => {
+      return config.availableTeams.map((team: TeamColors) => ({
+        team,
+        score: score[team],
+      }));
+    }),
+  );
 
   public players = this.store.select(selectPlayers);
 
@@ -33,5 +47,31 @@ export class TeamBoardComponent {
       }),
     );
 
+  public teamsData = combineLatest([
+    this.config,
+    this.players,
+    this.score,
+  ]).pipe(
+    map(([config, players, score]) => {
+      return [
+        ...config.availableTeams.map((team: TeamColors) => ({
+          team,
+          score: score[team],
+          players: players.filter((player) => player.team === team),
+        })),
+        {
+          team: 'Lobby',
+          players: players.filter((player) => !player.team),
+        },
+      ];
+    }),
+  );
+
   constructor(private store: Store) {}
+
+  isTeam(team: any): boolean {
+    return !!TeamColors[team];
+  }
+
+  deletePlayer(player: PlayerEntity) {}
 }

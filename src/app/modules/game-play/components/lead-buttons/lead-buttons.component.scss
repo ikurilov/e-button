@@ -1,0 +1,11 @@
+.lead-button-wrapper {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: space-between;
+
+  .btn {
+    height: 4rem;
+    font-size: 2rem;
+    width: 100%;
+  }
+}

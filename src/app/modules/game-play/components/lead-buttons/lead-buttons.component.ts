@@ -31,26 +31,8 @@ export class LeadButtonsComponent implements OnInit {
     );
   }
 
-  prevSlide() {
-    this.selectCurrentSlideIndex.pipe(take(1)).subscribe((index) => {
-      if (index > 0) {
-        this.store.dispatch(
-          gamePlayActions.changeSlide({ slideIndex: index - 1 }),
-        );
-      }
-    });
-  }
-
-  nextSlide() {
-    this.selectCurrentSlideIndex.pipe(take(1)).subscribe((index) => {
-      this.store.dispatch(
-        gamePlayActions.changeSlide({ slideIndex: index + 1 }),
-      );
-    });
-  }
-
-  askQ() {
-    this.store.dispatch(gamePlayActions.startCountdown());
+  askQ(duration: number) {
+    this.store.dispatch(gamePlayActions.startCountdown({ duration }));
   }
 
   showAnswer() {

@@ -1,0 +1,7 @@
+<div *ngIf="questionAnswerState.answerResult.type === 'CORRECT'" class="label green">
+ Верно {{ questionAnswerState.answerResult.delta || 0 }}
+</div>
+
+<div *ngIf="questionAnswerState.answerResult.type === 'WRONG'" class="label red">
+ Неверно {{ questionAnswerState.answerResult.delta || 0 }}
+</div>

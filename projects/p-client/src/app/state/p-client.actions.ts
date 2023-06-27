@@ -14,6 +14,7 @@ export const pClientActions = createActionGroup({
       name: string;
       id: string;
       icon?: string;
+      // team?: TeamColors;
     }>(),
     'Set State': props<{ data: PClientState }>(),
     'Patch State': props<Partial<PClientState>>(),

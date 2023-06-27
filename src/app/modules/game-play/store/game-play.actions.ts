@@ -7,11 +7,16 @@ export const gamePlayActions = createActionGroup({
   source: 'GamePlay',
   events: {
     'Init Game From Editor': props<{ game: EditorState }>(),
-    'Set Game Config': props<{ availableTeams: TeamColors[] }>(),
+    'Set Game Config': props<{
+      availableTeams: TeamColors[];
+      listeningDurationMS: number;
+      fightDurationMS: number;
+      freezeTimeMS: number;
+    }>(),
 
     'Change Slide': props<{ slideIndex: number }>(),
 
-    'Start Countdown': emptyProps(),
+    'Start Countdown': props<{ duration?: number }>(),
     'Ask Question': emptyProps(),
     'Player Pushed Button': props<{ player: PlayerEntity; date: Date }>(),
     'Player Pushed Button Ignore': emptyProps(),

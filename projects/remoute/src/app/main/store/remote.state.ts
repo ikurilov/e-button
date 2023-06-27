@@ -3,6 +3,7 @@ import {
   Fight,
   GamePlayState,
   PlayPhases,
+  TeamColors,
 } from '../../../../../../src/app/modules/game-play/store/game-play.state';
 
 export interface RemoteState {
@@ -11,6 +12,7 @@ export interface RemoteState {
   fight?: Fight;
   slide?: Slide;
   questionAnswerState?: GamePlayState['questionAnswerState'];
+  score?: { [team in TeamColors]: number };
 }
 
 export interface ConnectInfo {

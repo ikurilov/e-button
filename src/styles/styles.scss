@@ -34,7 +34,7 @@ body, html {
   background-color: #747474;
 }
 
-.purple, .cyan, .yellow, .amber{
+.purple, .cyan, .yellow, .amber, .lobby{
   width: 1.0rem;
   height: 1.0rem;
   border-radius: 50%;
@@ -56,6 +56,11 @@ body, html {
 
 .amber {
   background-color: $amber-team;
+  border: 1px #353535 solid;
+}
+
+.lobby {
+  background-color: #F5F5F5;
   border: 1px #353535 solid;
 }
 .tab-pane{
