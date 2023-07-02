@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 
 const assetPath = 'assets/sa/';
-const sa = {
+export const sa = {
   roundPhonk: assetPath + 'round.mp3',
   timer: assetPath + 'timer.mp3',
   fight: assetPath + 'fight.mp3',

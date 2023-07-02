@@ -58,6 +58,7 @@
     "express": "4.17.3",
     "fs": "0.0.1-security",
     "initialize-css": "1.4.0",
+    "ngrx-store-localstorage": "15.0.0",
     "ngx-socket-io": "4.2.0",
     "os": "0.1.2",
     "rxjs": "7.5.5",

@@ -19,6 +19,7 @@ import { ScreenMessagesEffects } from './store/screen-messages.effects';
 import { GamePlayAudioEffects } from './store/game-play-audio.effects';
 import { GameVitalsComponent } from './components/game-vitals/game-vitals.component';
 import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.module';
+import { SoundBoardComponent } from './components/sound-board/sound-board.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.modul
     GamePlayLayoutComponent,
     FightListComponent,
     GameVitalsComponent,
+    SoundBoardComponent,
   ],
   imports: [
     CommonModule,

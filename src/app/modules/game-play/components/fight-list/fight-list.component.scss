@@ -1,0 +1,23 @@
+@use "shared/styles/shared-style.scss" as *;
+.push{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  .purple-color {
+    color: $purple-team;
+  }
+
+  .yellow-color {
+    color: $yellow-team;
+  }
+
+  .cyan-color {
+    color: $cyan-team;
+  }
+
+  .amber-color {
+    color: $amber-team;
+  }
+}
+

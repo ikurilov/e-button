@@ -1,13 +1,19 @@
-<div class="card bg-dark border-danger text-white">
+<div class="card h-100 bg-dark border-danger text-white">
   <div class="card-header text-danger border-danger">
     <div class="card-title">
       <h4>Fights</h4>
     </div>
   </div>
-  <div class="card-body">
-    <div class="card" *ngFor="let f of (fightList | async)">
-     <div>{{f.questionNumber}}</div>
-      <div *ngFor="let p of f.pushes">{{p.player.name }} {{p.date | date: "ss:ms"}}</div>
-    </div>
-  </div>
+  <ul class="list-group list-group-flush ">
+    <li class="list-group-item bg-dark border-danger text-white" *ngFor="let f of (fightList | async)">
+      <div class="card-title">Question {{f.questionNumber}}</div>
+      <div class="push" *ngFor="let push of f.pushes; let i = index">
+        <i class="{{push.player.icon}} {{push.player.team?.toLowerCase()}}-color"></i>
+        <div>{{push.player.name}}</div>
+        <div *ngIf="i">+ {{push.time}}</div>
+        <div *ngIf="!i">0.000</div>
+      </div>
+
+    </li>
+  </ul>
 </div>

@@ -73,5 +73,7 @@ export class TeamBoardComponent {
     return !!TeamColors[team];
   }
 
-  deletePlayer(player: PlayerEntity) {}
+  deletePlayer(player: PlayerEntity) {
+    // todo: implement
+  }
 }

@@ -133,7 +133,6 @@ export class ElectronService {
     app.use(express.static(path.join(path.dirname(__dirname), 'remoute/')));
 
     app.get('/', function (req, res) {
-      console.log(path.join(path.dirname(__dirname), 'remoute/index.html'));
       res.sendFile(path.join(path.dirname(__dirname), 'remoute/index.html'));
     });
 

@@ -1,8 +1,12 @@
-<div class="card bg-dark border-primary text-white">
-  <div class="card-header border-primary text-primary">
-    <div class="card-title">
+<div class="card h-100 bg-dark border-primary text-white">
+  <div class="card-header border-primary text-primary d-flex justify-content-between">
+    <div>
       <h4>Teams</h4>
     </div>
+    <button class="btn btn-sm btn-outline-primary shuffle-btn">
+<!--      TODO: (click)-->
+      <i class="fa-solid fa-shuffle"></i>
+    </button>
   </div>
   <div class="card-body dfg" *ngIf="teamsData | async as data">
     <div *ngFor="let teamData of data">
@@ -49,6 +53,7 @@
                 <i class="fa-solid fa-user-slash"></i>
               </button>
               <button class="btn btn-outline-warning">
+                <!--      TODO: (click) change team-->
                 CT
               </button>
             </div>

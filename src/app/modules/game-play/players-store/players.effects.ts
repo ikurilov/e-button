@@ -93,6 +93,7 @@ export class PlayersEffects {
       mergeMap(({ message, id }) => {
         if (id) {
           this.playersSocketService.sendMessageToPlayer(message, id);
+          return of(playersActions.sendMessageOk());
         }
         this.playersSocketService.sendMessageToAllPlayers(message);
         return of(playersActions.sendMessageOk());
@@ -104,7 +105,6 @@ export class PlayersEffects {
     return this.actions.pipe(
       ofType(playersActions.playerMessage),
       mergeMap(({ message }) => {
-        console.log(message);
         switch (message.type) {
           case PlayerToHostMessageType.PONG:
             return of(playersActions.ok);

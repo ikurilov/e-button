@@ -2,6 +2,14 @@
 @use "shared/styles/shared-style.scss" as *;
 
 
+.shuffle-btn{
+  height: 2rem;
+  width: 3rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .team-row {
   display: flex;
@@ -40,7 +48,6 @@
 }
 
 .player-row{
-  font-size: 1.3rem;
   display: flex;
   .p-icon{
     width: 4rem;

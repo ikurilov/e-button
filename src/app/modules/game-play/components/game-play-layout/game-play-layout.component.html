@@ -9,18 +9,21 @@
   </ng-container>
   <ng-container>
     <div class="row h-100 m-3" *ngIf="selectConfig | async">
-      <div class="col-4">
-        <div class="card bg-dark text-light">
+      <div class="col-3 h-100">
+        <app-sound-board></app-sound-board>
+      </div>
+      <div class="col-4 h-100">
+        <div class="card border-warning h-100 bg-dark text-light">
           <app-game-vitals class="px-2"></app-game-vitals>
           <app-curent-slide class="px-2"> </app-curent-slide>
           <app-lead-buttons class="px-2 mb-1"></app-lead-buttons>
         </div>
       </div>
-      <div class="col-3">
-        <app-team-board></app-team-board>
-      </div>
-      <div class="col-3">
+      <div class="col-2 h-100">
         <app-fight-list></app-fight-list>
+      </div>
+      <div class="col-3 h-100">
+        <app-team-board></app-team-board>
       </div>
     </div>
   </ng-container>

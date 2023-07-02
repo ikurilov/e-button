@@ -32,7 +32,6 @@ export class PlayerEntitySocketService {
         this.playerSockets.push(playerSocket);
       });
       socketInstance.on('message', async (message: PlayerToHostMessage) => {
-        console.log('message', message);
         let onPong: (date: Date) => void = null;
         this.zone.run(() => {
           if (!playerSocket.playerId) {
