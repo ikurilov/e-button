@@ -1,13 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PlayManagerService } from './services/play-manager.service';
-import { GamePhaseType } from '../../../../src/app/models/models';
 import { Teams } from '../../../../models/shared-models';
-import { PlayerAudioService } from './services/player-audio.service';
 import { Store } from '@ngrx/store';
 import { pClientActions } from './state/p-client.actions';
 import { selectPClient } from './state/p-client.selectors';
-import { SocketClientService } from './services/socket-client.service';
-import { PClientService } from './state/p-client.service';
+import { PClientUtilsService } from './services/p-client-utils.service';
 
 @Component({
   selector: 'app-root',
@@ -19,18 +15,17 @@ export class AppComponent {
   // GamePhaseType = GamePhaseType;
   Teams = Teams;
   selectPlayerState = this.store.select(selectPClient);
-  constructor(private store: Store, private pClientService: PClientService) {
+  constructor(private store: Store, private utils: PClientUtilsService) {
     this.store.dispatch(pClientActions.startInitSequence());
   }
 
-  public changeName(name: string): void {
-    this.store.dispatch(pClientActions.changeName({ name }));
-    // this.ps.changeName(name).then();
+  openMenu(): void {
+    this.utils.openMenu();
   }
 
-  public changeTeam(): void {
-    this.pClientService.changeTeam().then((team) => {
-      this.store.dispatch(pClientActions.changeTeam({ team }));
-    });
-  }
+  // public changeTeam(): void {
+  //   this.pClientService.changeTeam().then((team) => {
+  //     this.store.dispatch(pClientActions.changeTeam({ team }));
+  //   });
+  // }
 }

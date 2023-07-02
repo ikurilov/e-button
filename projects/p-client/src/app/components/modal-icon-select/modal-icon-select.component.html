@@ -1,0 +1,36 @@
+<div class="card bg-dark text-light">
+  <div class="card-body">
+    <ng-container *ngIf="scanning">
+      <div class="scan-box">
+        <div class="scan-icon"><i class="fa-solid fa-camera"></i></div>
+        <div class="scan-text">Scanning and analyzing your face</div>
+        <div class="scan-loader">
+          <i class="fa-solid fa-spin fa-spinner"></i>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!scanning">
+      <div class="icon-box">
+        <button
+          *ngFor="let ic of displayList"
+          class="btn btn-outline-warning icon-button"
+          (click)="selectIcon(ic)"
+        >
+          <i class="{{ ic }}"></i>
+        </button>
+      </div>
+      <button
+        class="btn btn-warning w-100 mt-3"
+        (click)="roll()"
+        [disabled]="coolDown"
+      >
+        <i class="fa-solid fa-dice"></i>
+        <span *ngIf="!coolDown">Scan again</span>
+        <span *ngIf="coolDown">Recharging scanner ({{ coolDown / 1000 }})</span>
+      </button>
+    </ng-container>
+  </div>
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-secondary w-100" (click)="close()">Close</button>
+  </div>
+</div>

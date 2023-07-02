@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
-import { selectMyTeam } from '../../state/p-client.selectors';
+import { selectMyIcon, selectMyTeam } from '../../state/p-client.selectors';
 
 @Component({
   selector: 'app-my-team',
@@ -13,6 +13,7 @@ export class MyTeamComponent implements OnInit {
   Teams = TeamColors;
 
   public team = this.store.select(selectMyTeam);
+  public icon = this.store.select(selectMyIcon);
 
   constructor(private store: Store) {}
 

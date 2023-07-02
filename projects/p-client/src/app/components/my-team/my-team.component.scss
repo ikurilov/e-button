@@ -1,6 +1,6 @@
 @import 'shared/styles/shared-style.scss';
 
-.wrapper{
+.wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,8 +8,10 @@
   padding: 1rem;
 }
 
-
-.purple, .cyan, .yellow, .amber{
+.purple-ball,
+.cyan-ball,
+.yellow-ball,
+.amber-ball {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -17,26 +19,47 @@
   margin-right: 0.5rem;
 }
 
-.purple{
- background-color: $purple-team;
+.purple-ball {
+  background-color: $purple-team;
 }
 
-.yellow{
+.yellow-ball {
   background-color: $yellow-team;
   border: 1px #353535 solid;
 }
 
-.cyan{
+.cyan-ball {
   background-color: $cyan-team;
   border: 1px #353535 solid;
 }
 
-.amber {
+.amber-ball {
   background-color: $amber-team;
   border: 1px #353535 solid;
 }
 
-.title{
+.purple-color {
+  color: $purple-team;
+}
+
+.yellow-color {
+  color: $yellow-team;
+}
+
+.cyan-color {
+  color: $cyan-team;
+}
+
+.amber-color {
+  color: $amber-team;
+}
+
+.stroked{
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.16);
+}
+
+.title {
   display: flex;
   align-items: center;
   justify-content: center;

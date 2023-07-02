@@ -114,6 +114,7 @@ export class PlayersEffects {
                 id: message.id,
                 name: message.payload.name,
                 icon: message.payload.icon,
+                team: message.payload.team,
               }),
             );
           case PlayerToHostMessageType.UPDATE_NAME:
@@ -159,7 +160,7 @@ export class PlayersEffects {
     return this.actions.pipe(
       ofType(playersActions.joinPlayer),
       withLatestFrom(this.store.select(selectPlayers)),
-      mergeMap(([{ id, name, icon }, players]) => {
+      mergeMap(([{ id, name, icon, team }, players]) => {
         const player = players.find((p) => p.id === id);
         if (player) {
           return of(playersActions.updatePlayerOnline({ id, online: true }));
@@ -169,6 +170,7 @@ export class PlayersEffects {
               id,
               name,
               icon,
+              team,
             }),
           );
         }

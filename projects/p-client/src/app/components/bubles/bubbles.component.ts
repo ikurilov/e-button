@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayManagerService } from '../../services/play-manager.service';
 
 export const ANIMATION_DURATION = 5000;
 

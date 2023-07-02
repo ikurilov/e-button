@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { GamePlayRoutingModule } from './game-play-routing.module';
 import { CurentSlideComponent } from './components/curent-slide/curent-slide.component';
 import { LeadButtonsComponent } from './components/lead-buttons/lead-buttons.component';
-import { ScoreControlComponent } from './components/score-control/score-control.component';
 import { TeamBoardComponent } from './components/team-board/team-board.component';
 import { InitConfigComponent } from './components/init-config/init-config.component';
 import { GamePlayLayoutComponent } from './components/game-play-layout/game-play-layout.component';
@@ -25,7 +24,6 @@ import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.modul
   declarations: [
     CurentSlideComponent,
     LeadButtonsComponent,
-    ScoreControlComponent,
     TeamBoardComponent,
     InitConfigComponent,
     GamePlayLayoutComponent,

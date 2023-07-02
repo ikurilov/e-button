@@ -35,10 +35,41 @@ export class pClientEffects {
     ),
   );
 
+  public openChangeNameModal = createEffect(() =>
+    this.actions.pipe(
+      ofType(pClientActions.openChangeNameModal),
+      withLatestFrom(this.store.select(selectPClient)),
+      mergeMap(([_, state]) => {
+        this.clientUtils.changeName(state.myName);
+        return of(pClientActions.ok());
+      }),
+    ),
+  );
+
+  public openChangeIconModal = createEffect(() =>
+    this.actions.pipe(
+      ofType(pClientActions.openChangeIconModal),
+      mergeMap(() => {
+        this.clientUtils.changeIcon();
+        return of(pClientActions.ok());
+      }),
+    ),
+  );
+
+  public openChangeTeamModal = createEffect(() =>
+    this.actions.pipe(
+      ofType(pClientActions.openChangeTeamModal),
+      mergeMap(() => {
+        this.clientUtils.changeTeam();
+        return of(pClientActions.ok());
+      }),
+    ),
+  );
+
   public joinHost = createEffect(() =>
     this.actions.pipe(
       ofType(pClientActions.initSequenceCompleted),
-      mergeMap(({ id, name, icon }) => {
+      mergeMap(({ id, name, icon, team }) => {
         return of(
           pClientActions.sendMessage({
             message: {
@@ -47,6 +78,7 @@ export class pClientEffects {
               payload: {
                 name,
                 icon,
+                team,
               },
             },
           }),
@@ -161,31 +193,6 @@ export class pClientEffects {
     }
   }
 
-  // public changeName = createEffect(() =>
-  //   this.actions.pipe(
-  //     ofType(pClientActions.changeName),
-  //     mergeMap(({ name }) => {
-  //       return from(this.pClientService.changeName(name)).pipe(
-  //         map(() => pClientActions.changeNameOk({ name })),
-  //       );
-  //     }),
-  //   ),
-  // );
-  //
-  // public changeNameOK = createEffect(() =>
-  //   this.actions.pipe(
-  //     ofType(pClientActions.changeNameOk),
-  //     mergeMap(({ name }) => {
-  //       return this.store.select(selectPClient).pipe(
-  //         take(1),
-  //         map((state) => {
-  //           return pClientActions.sendMe({ data: state });
-  //         }),
-  //       );
-  //     }),
-  //   ),
-  // );
-  //
   public changeTeam = createEffect(() =>
     this.actions.pipe(
       ofType(pClientActions.changeTeam),
@@ -206,20 +213,46 @@ export class pClientEffects {
     ),
   );
 
-  // public sendState = createEffect(() =>
-  //   this.actions.pipe(
-  //     ofType(pClientActions.sendMe),
-  //     mergeMap(() => {
-  //       return this.store.select(selectPClient).pipe(
-  //         take(1),
-  //         map((state) => {
-  //           return pClientActions.sendMe({ data: state });
-  //         }),
-  //       );
-  //     }),
-  //   ),
-  // );
-  //
+  public changeName = createEffect(() =>
+    this.actions.pipe(
+      ofType(pClientActions.changeName),
+      withLatestFrom(this.store.select(selectPClient)),
+      mergeMap(([{ name }, state]) => {
+        return of(
+          pClientActions.sendMessage({
+            message: {
+              type: PlayerToHostMessageType.UPDATE_NAME,
+              id: state.id,
+              payload: {
+                name,
+              },
+            },
+          }),
+        );
+      }),
+    ),
+  );
+
+  public changeIcon = createEffect(() =>
+    this.actions.pipe(
+      ofType(pClientActions.changeIcon),
+      withLatestFrom(this.store.select(selectPClient)),
+      mergeMap(([{ icon }, state]) => {
+        return of(
+          pClientActions.sendMessage({
+            message: {
+              type: PlayerToHostMessageType.UPDATE_ICON,
+              id: state.id,
+              payload: {
+                icon,
+              },
+            },
+          }),
+        );
+      }),
+    ),
+  );
+
   public pushAnswer = createEffect(() =>
     this.actions.pipe(
       ofType(pClientActions.pushAnswer),
@@ -239,22 +272,4 @@ export class pClientEffects {
       }),
     ),
   );
-  //
-  // public sendMeToServer = createEffect(() =>
-  //   this.actions.pipe(
-  //     ofType(pClientActions.sendMe),
-  //     mergeMap(() => {
-  //       return this.store.select(selectPClient).pipe(
-  //         take(1),
-  //         map((state) => {
-  //           this.pClientService.sendMessage({
-  //             type: 'UPDATE_ME',
-  //             data: { name: state.myName, team: state.myTeam, id: state.id },
-  //           });
-  //           return pClientActions.ok();
-  //         }),
-  //       );
-  //     }),
-  //   ),
-  // );
 }

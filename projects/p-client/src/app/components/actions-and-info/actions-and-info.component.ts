@@ -15,7 +15,6 @@ import {
   selectPClientPhase,
   selectThrottle,
 } from '../../state/p-client.selectors';
-import { PClientService } from '../../state/p-client.service';
 import { PClientPhase } from '../../state/p-client.state';
 import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
 
@@ -45,11 +44,7 @@ export class ActionsAndInfoComponent implements OnInit {
 
   public phases = PClientPhase;
 
-  constructor(
-    private store: Store,
-    private cdr: ChangeDetectorRef,
-    private pClientService: PClientService,
-  ) {
+  constructor(private store: Store, private cdr: ChangeDetectorRef) {
     // todo: freeze time
     this.throttle.subscribe((throttleMS) => {
       if (this.pushSubscription) {
@@ -70,8 +65,8 @@ export class ActionsAndInfoComponent implements OnInit {
   }
 
   public changeTeam(): void {
-    this.pClientService.changeTeam().then((team) => {
-      this.store.dispatch(pClientActions.changeTeam({ team }));
-    });
+    // this.pClientService.changeTeam().then((team) => {
+    //   this.store.dispatch(pClientActions.changeTeam({ team }));
+    // });
   }
 }

@@ -12,11 +12,11 @@ export const playersReducer = createReducer(
   //   ...state,
   //   list: [...state.list, player],
   // })),
-  on(playersActions.createPlayer, (state, { id, name, icon }) => ({
+  on(playersActions.createPlayer, (state, { id, name, icon, team }) => ({
     ...state,
     list: [
       ...state.list,
-      { id, name, icon, online: true, pingMS: 0, pingRecords: [] },
+      { id, name, icon, online: true, pingMS: 0, pingRecords: [], team },
     ],
   })),
   on(playersActions.deletePlayer, (state, { id }) => ({

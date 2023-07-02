@@ -1,8 +1,9 @@
 <ng-container *ngIf="(selectPlayerState | async) as gameState else loading">
   <div class="main-container">
     <div class="header">
-      <div class="name-wrapper" (click)="changeName(gameState.myName)">{{gameState.myName || 'E-button'}}</div>
-      <div class="icon-wrapper" (click)="changeTeam()"><img alt="Team" src="assets/icons/user-group-solid.svg" width="20"></div>
+      <div class="name-wrapper">{{gameState.myName || 'E-button'}}</div>
+      <div class="icon-wrapper" (click)="openMenu()"><i class="fa fa-cog"></i></div>
+
     </div>
     <div class="body-container">
       <app-bubbles></app-bubbles>

@@ -25,44 +25,36 @@
           <i class="fa-solid fa-star"></i> {{ teamData.score }}
         </div>
       </div>
-
-      <table class="table table-sm table-dark">
-<!--        <thead>-->
-<!--          <tr>-->
-<!--            <th scope="col"></th>-->
-<!--            <th scope="col">Name</th>-->
-<!--            <th scope="col">Ping</th>-->
-<!--            <th scope="col">actions</th>-->
-<!--          </tr>-->
-<!--        </thead>-->
-        <tbody>
-          <tr *ngFor="let player of teamData.players">
-            <td></td>
-            <td>{{ player.name }}</td>
-            <td>{{ player.pingMS }}</td>
-            <td><div class="btn-group btn-group-sm">
-              <button class="btn btn-outline-danger" (click)="deletePlayer(player)">
+      <div class="player-list">
+        <div *ngFor="let player of teamData.players" class="player-row">
+          <div class="p-icon">
+            <i
+              class="{{ player.icon }} {{
+                player.team?.toLowerCase()
+              }}-color stroked"
+            ></i>
+          </div>
+          <div class="p-name">
+            {{ player.name }}
+          </div>
+          <div class="p-ping">
+            {{ player.pingMS }}
+          </div>
+          <div class="p-actions">
+            <div class="btn-group btn-group-sm">
+              <button
+                class="btn btn-outline-danger"
+                (click)="deletePlayer(player)"
+              >
                 <i class="fa-solid fa-user-slash"></i>
               </button>
-            </div></td>
-          </tr>
-        </tbody>
-      </table>
+              <button class="btn btn-outline-warning">
+                CT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!--    <div *ngFor="let teamObj of teams | async">-->
-    <!--      <div-->
-    <!--        [ngClass]="{-->
-    <!--      purple: teamObj.team === teamColors.PURPLE,-->
-    <!--      yellow: teamObj.team === teamColors.YELLOW,-->
-    <!--      cyan: teamObj.team === teamColors.CYAN,-->
-    <!--      amber: teamObj.team === teamColors.AMBER-->
-    <!--    }"-->
-    <!--        class="circle"-->
-    <!--      >-->
-
-    <!--      </div>-->
-    <!--      <div>{{ teamObj.team }}</div>-->
-    <!--      <div *ngFor="let player of teamObj.players">{{player.name}}</div>-->
-    <!--    </div>-->
   </div>
 </div>

@@ -14,8 +14,12 @@ export const pClientActions = createActionGroup({
       name: string;
       id: string;
       icon?: string;
-      // team?: TeamColors;
+      team?: TeamColors;
     }>(),
+    'open change name modal': emptyProps(),
+    'open change team modal': emptyProps(),
+    'open change icon modal': emptyProps(),
+
     'Set State': props<{ data: PClientState }>(),
     'Patch State': props<Partial<PClientState>>(),
     'Send Message': props<{ message: PlayerToHostMessage }>(),
@@ -24,6 +28,7 @@ export const pClientActions = createActionGroup({
     'Send me': props<{ data: PClientState }>(),
     Pong: emptyProps(),
     'Change Name': props<{ name: string }>(),
+    'Change Icon': props<{ icon: string }>(),
     // 'Change Name OK': props<{ name: string }>(),
     'Change Team': props<{ team: TeamColors }>(),
     'Change Throttle': props<{ throttle: number }>(),

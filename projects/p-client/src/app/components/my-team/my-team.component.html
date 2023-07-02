@@ -1,12 +1,13 @@
 <div class="wrapper" *ngIf="team | async as team">
   <div
+    *ngIf="!(icon | async)"
     [ngClass]="{
-     purple: team === Teams.PURPLE,
-     yellow: team === Teams.YELLOW,
-     cyan: team === Teams.CYAN,
-     amber: team === Teams.AMBER
-     }">
-
-  </div>
-  <div>{{team || 'Lobby'}}</div>
+      'purple-ball': team === Teams.PURPLE,
+      'yellow-ball': team === Teams.YELLOW,
+      'cyan-ball': team === Teams.CYAN,
+      'amber-ball': team === Teams.AMBER
+    }"
+  ></div>
+  <i *ngIf="(icon | async)" class="{{team.toLowerCase()}}-color {{ icon | async }} stroked"></i>
+  <div class="ms-2">{{ team || 'Lobby' }}</div>
 </div>

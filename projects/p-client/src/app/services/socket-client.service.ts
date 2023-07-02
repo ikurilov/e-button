@@ -1,14 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import {
-  ClientMessage,
-  ServerMessages,
-  SOCKET_EVENT_NAME,
-} from '../../../../../models/shared-models';
-import {
-  pClientToServerMessage,
-  serverToPClientMessage,
-} from '../../../../../models/message-models';
+import { SOCKET_EVENT_NAME } from '../../../../../models/shared-models';
+
 import { Store } from '@ngrx/store';
 import { pClientActions } from '../state/p-client.actions';
 import {
@@ -20,10 +13,7 @@ import {
   providedIn: 'root',
 })
 export class SocketClientService {
-  // public onMessage: EventEmitter<ServerMessages> = new EventEmitter<ServerMessages>();
-
   constructor(private socket: Socket, private store: Store) {
-    console.log('123');
     this.socket
       .fromEvent(SOCKET_EVENT_NAME)
       .subscribe((message: HostToPlayerMessage) => {

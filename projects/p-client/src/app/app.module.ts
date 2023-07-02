@@ -15,6 +15,8 @@ import { ActionsAndInfoComponent } from './components/actions-and-info/actions-a
 import { Store, StoreModule } from '@ngrx/store';
 import { pClientEffects } from './state/p-client.effects';
 import { pClientReducer } from './state/p-client.reducer';
+import { ModalOptionMenuComponent } from './components/modal-option-menu/modal-option-menu.component';
+import { ModalIconSelectComponent } from './components/modal-icon-select/modal-icon-select.component';
 
 const config: SocketIoConfig = { url: window.location.origin, options: {} };
 
@@ -26,6 +28,8 @@ const config: SocketIoConfig = { url: window.location.origin, options: {} };
     BubblesComponent,
     MyTeamComponent,
     ActionsAndInfoComponent,
+    ModalOptionMenuComponent,
+    ModalIconSelectComponent,
   ],
   imports: [
     BrowserModule,

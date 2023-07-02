@@ -1,4 +1,5 @@
 @use "bootstrap/scss/functions";
+@use "shared/styles/shared-style.scss" as *;
 
 
 
@@ -11,6 +12,15 @@
   margin-top: 2rem;
   gap: 0.5rem;
   border-bottom: 1px solid #353535;
+  .team-score{
+    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-items: center;
+    gap: 1rem;
+
+  }
 }
 
 .team-circle{
@@ -31,4 +41,38 @@
 
 .player-row{
   font-size: 1.3rem;
+  display: flex;
+  .p-icon{
+    width: 4rem;
+  }
+  .p-name{
+    width: 100%;
+  }
+  .p-ping{
+    width: 5rem;
+  }
+  .p-actions{
+    width: 7rem;
+  }
+}
+
+.purple-color {
+  color: $purple-team;
+}
+
+.yellow-color {
+  color: $yellow-team;
+}
+
+.cyan-color {
+  color: $cyan-team;
+}
+
+.amber-color {
+  color: $amber-team;
+}
+
+.stroked{
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.16);
 }

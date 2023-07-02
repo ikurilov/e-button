@@ -8,6 +8,7 @@ export interface PClientState {
   answeringResult: boolean | null;
   myName: string;
   myTeam?: TeamColors;
+  myIcon?: string;
   id: string;
   throttle: number;
 }

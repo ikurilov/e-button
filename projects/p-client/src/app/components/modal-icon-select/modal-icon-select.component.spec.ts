@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhaseControlComponent } from './phase-control.component';
+import { ModalIconSelectComponent } from './modal-icon-select.component';
 
-describe('PhaseControlComponent', () => {
-  let component: PhaseControlComponent;
-  let fixture: ComponentFixture<PhaseControlComponent>;
+describe('ModalIconSelectComponent', () => {
+  let component: ModalIconSelectComponent;
+  let fixture: ComponentFixture<ModalIconSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhaseControlComponent ]
+      declarations: [ ModalIconSelectComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhaseControlComponent);
+    fixture = TestBed.createComponent(ModalIconSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

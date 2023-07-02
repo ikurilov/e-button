@@ -19,6 +19,11 @@ export const selectMyTeam = createSelector(
   (state) => state.myTeam,
 );
 
+export const selectMyIcon = createSelector(
+  selectPClientState,
+  (state) => state.myIcon,
+);
+
 export const selectIsMyTeamAnswering = createSelector(
   selectPClientState,
   (state) => state.answeringTeam && state.answeringTeam === state.myTeam,

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameOptionsComponent } from './game-options.component';
+import { ModalOptionMenuComponent } from './modal-option-menu.component';
 
-describe('GameOptionsComponent', () => {
-  let component: GameOptionsComponent;
-  let fixture: ComponentFixture<GameOptionsComponent>;
+describe('ModalOptionMenuComponent', () => {
+  let component: ModalOptionMenuComponent;
+  let fixture: ComponentFixture<ModalOptionMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameOptionsComponent ]
+      declarations: [ ModalOptionMenuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameOptionsComponent);
+    fixture = TestBed.createComponent(ModalOptionMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

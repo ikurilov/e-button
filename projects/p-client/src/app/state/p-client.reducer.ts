@@ -15,12 +15,16 @@ export const initialState: PClientState = {
 };
 export const pClientReducer = createReducer(
   initialState,
-  on(pClientActions.initSequenceCompleted, (state, { name, id, icon }) => ({
-    ...state,
-    myName: name,
-    id,
-    icon,
-  })),
+  on(
+    pClientActions.initSequenceCompleted,
+    (state, { name, id, icon, team }) => ({
+      ...state,
+      myName: name,
+      id,
+      myIcon: icon,
+      myTeam: team,
+    }),
+  ),
   on(pClientActions.syncFromHost, (state, patch) => ({
     ...state,
     ...patch,
@@ -48,6 +52,10 @@ export const pClientReducer = createReducer(
   on(pClientActions.changeTeam, (state, { team }) => ({
     ...state,
     myTeam: team,
+  })),
+  on(pClientActions.changeIcon, (state, { icon }) => ({
+    ...state,
+    myIcon: icon,
   })),
 
   // Обработчик для события 'Change Throttle'

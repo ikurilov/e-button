@@ -11,8 +11,18 @@ import { TeamColors } from '../store/game-play.state';
 export const playersActions = createActionGroup({
   source: 'Player Entity',
   events: {
-    'Join Player': props<{ id: string; name: string; icon?: string }>(),
-    'Create Player': props<{ id: string; name: string; icon?: string }>(),
+    'Join Player': props<{
+      id: string;
+      name: string;
+      icon?: string;
+      team?: TeamColors;
+    }>(),
+    'Create Player': props<{
+      id: string;
+      name: string;
+      icon?: string;
+      team?: TeamColors;
+    }>(),
     'Sync Player': props<{ id: string }>(),
     'Player Message': props<{ message: PlayerToHostMessage }>(),
     'Send Message': props<{ message: HostToPlayerMessage; id?: string }>(),

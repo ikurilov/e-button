@@ -4,6 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TeamColors } from '../../../../../../src/app/modules/game-play/store/game-play.state';
 import { selectTeamsInGame } from '../../state/p-client.selectors';
+import { CLIENT_TEAM_KEY } from '../../services/p-client-utils.service';
+import { pClientActions } from '../../state/p-client.actions';
 
 @Component({
   selector: 'app-modal-change-team',
@@ -17,6 +19,8 @@ export class ModalChangeTeamComponent implements OnInit {
   ngOnInit(): void {}
 
   selectTeam(team: TeamColors) {
-    this.modalInstance.close(team);
+    localStorage.setItem(CLIENT_TEAM_KEY, team);
+    this.store.dispatch(pClientActions.changeTeam({ team }));
+    this.modalInstance.close();
   }
 }
