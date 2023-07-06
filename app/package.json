@@ -8,10 +8,11 @@
     "email": "yaroslawkapsha@gmail.com"
   },
   "dependencies": {
+    "electron-devtools-installer": "3.2.0",
     "express": "4.17.3",
     "fs": "0.0.1-security",
     "os": "^0.1.2",
-    "socket.io": "^4.5.0",
-    "electron-devtools-installer": "3.2.0"
+    "sharp": "^0.32.1",
+    "socket.io": "^4.5.0"
   }
 }

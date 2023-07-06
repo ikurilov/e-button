@@ -13,7 +13,15 @@
     [style.width.%]="img.position.width"
     [style.height.%]="img.position.height"
   >
-    <img class="image-q" [src]="img.imageSource" alt="img" />
+    <img
+      class="image-q"
+      [ngClass]="{
+        fh: img.w2hRatio < ( img.position.width / img.position.height) * (16/9),
+        fw: img.w2hRatio > ( img.position.width / img.position.height) * (16/9)
+      }"
+      [src]="img.imageSource"
+      alt="img"
+    />
     <ng-container *ngIf="previewMode === 'edit'">
       <div
         class="image-move bg-warning"
@@ -33,11 +41,11 @@
     </ng-container>
   </div>
 
-  <ng-container *ngIf="previewMode !=='answer'">
+  <ng-container *ngIf="previewMode !== 'answer'">
     <div
       class="patch"
       *ngFor="let patch of slide.patches; let i = index"
-      [ngClass]="{ 'editing': previewMode === 'edit' }"
+      [ngClass]="{ editing: previewMode === 'edit' }"
       [style.left.%]="patch.position.left"
       [style.top.%]="patch.position.top"
       [style.width.%]="patch.position.width"

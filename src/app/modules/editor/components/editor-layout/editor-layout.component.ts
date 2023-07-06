@@ -49,10 +49,10 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
       .subscribe((name) => {
         this.store.dispatch(editorActions.setname({ name }));
       });
-    this.startEditing();
-    setTimeout(() => {
-      this.router.navigate(['/game']);
-    }, 2000);
+    // this.startEditing();
+    // setTimeout(() => {
+    //   this.router.navigate(['/game']);
+    // }, 2000);
   }
 
   ngOnDestroy(): void {

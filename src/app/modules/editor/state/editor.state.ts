@@ -42,6 +42,7 @@ export type QuestionWithImageSlide = QuestionSlide & {
     takenFrom: string;
     showOnly?: 'question' | 'answer';
     imageSource: string;
+    w2hRatio: number;
   }[];
   text?: string;
   patches: {

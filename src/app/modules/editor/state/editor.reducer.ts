@@ -63,7 +63,9 @@ export const editorReducer = createReducer(
     }
   }),
 
-  on(editorActions.addslidewithimage, (state, { imageCoded, takenFrom }) => ({
+  on(
+    editorActions.addslidewithimage,
+    (state, { imageCoded, takenFrom, w2hRatio }) => ({
       ...state,
       slides: [
         ...state.slides,
@@ -73,7 +75,7 @@ export const editorReducer = createReducer(
             {
               position: { left: 5, top: 5, width: 50, height: 50 },
               takenFrom,
-              W2HRatio: 1,
+              w2hRatio,
               imageSource: imageCoded,
             },
           ],
@@ -82,37 +84,42 @@ export const editorReducer = createReducer(
           patches: [],
         },
       ],
-    })),
+    }),
+  ),
 
-  on(editorActions.addslidewithaudio, (state, { audioCoded, takenFrom, name }) => {
-    console.log(audioCoded, name);
-    return {
-      ...state,
-      slides: [
-        ...state.slides,
-        {
-          type: SlideType.questionWithAudio,
-          audio: {
-            name,
-            audioCoded,
-            takenFrom
+  on(
+    editorActions.addslidewithaudio,
+    (state, { audioCoded, takenFrom, name }) => {
+      console.log(audioCoded, name);
+      return {
+        ...state,
+        slides: [
+          ...state.slides,
+          {
+            type: SlideType.questionWithAudio,
+            audio: {
+              name,
+              audioCoded,
+              takenFrom,
+            },
+            question: {
+              start: 0,
+              end: 999,
+              loop: false,
+            },
+            answer: {
+              start: 2,
+              end: 5,
+              loop: false,
+            },
+            points: 10,
+            toxic: false,
+            patches: [],
           },
-          question: {
-            start: 0,
-            end: 999,
-            loop: false,
-          },
-          answer: {
-            start: 2,
-            end: 5,
-            loop: false,
-          },
-          points: 10,
-          toxic: false,
-          patches: [],
-        },
-      ],
-    };}),
+        ],
+      };
+    },
+  ),
 
   on(editorActions.updateslide, (state, { slideIndex, slide }) => {
     const slides = [...state.slides];
@@ -131,6 +138,12 @@ export const editorReducer = createReducer(
     slides.splice(newIndex, 0, slide);
     return { ...state, slides, currentSlideIndex: newIndex };
   }),
-  on(editorActions.setcurrentslide, (state, { index }) => ({ ...state, currentSlideIndex: index })),
-  on(editorActions.setviewmode, (state, { viewMode }) => ({ ...state, viewMode })),
+  on(editorActions.setcurrentslide, (state, { index }) => ({
+    ...state,
+    currentSlideIndex: index,
+  })),
+  on(editorActions.setviewmode, (state, { viewMode }) => ({
+    ...state,
+    viewMode,
+  })),
 );

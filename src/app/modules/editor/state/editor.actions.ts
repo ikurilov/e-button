@@ -8,9 +8,21 @@ export const editorActions = createActionGroup({
     setName: props<{ name: string }>(),
     setViewMode: props<{ viewMode: 'question' | 'answer' | 'edit' }>(),
     addSlide: props<{ slideType: SlideType }>(),
-    addSlideWithImage: props<{ imageCoded: string; takenFrom: string }>(),
-    addImageToSlide: props<{ imageCoded: string }>(),
-    addSlideWithAudio: props<{ audioCoded: string; takenFrom: string; name: string }>(),
+    addSlideWithImage: props<{
+      imageCoded: string;
+      takenFrom: string;
+      w2hRatio: number;
+    }>(),
+    addImageToSlide: props<{
+      imageCoded: string;
+      takenFrom: string;
+      w2hRatio: number;
+    }>(),
+    addSlideWithAudio: props<{
+      audioCoded: string;
+      takenFrom: string;
+      name: string;
+    }>(),
     updateSlide: props<{ slideIndex: number; slide: Slide }>(),
     deleteSlide: props<{ slideIndex: number }>(),
     moveSlide: props<{ slideIndex: number; newIndex: number }>(),
@@ -18,7 +30,11 @@ export const editorActions = createActionGroup({
     loadFromFile: props<{ state: EditorState }>(),
     ok: emptyProps(),
     setCurrentSlide: props<{ index: number }>(),
-    setAudioSlideQuestion: props<{ start: number; end: number; loop: boolean }>(),
+    setAudioSlideQuestion: props<{
+      start: number;
+      end: number;
+      loop: boolean;
+    }>(),
     setAudioSlideAnswer: props<{ start: number; end: number; loop: boolean }>(),
   },
 });

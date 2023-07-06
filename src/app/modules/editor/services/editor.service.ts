@@ -10,6 +10,7 @@ export interface FileListItem {
   type: 'audio' | 'image';
   path: string;
   isUsed?: boolean;
+  w2hRatio?: number;
 }
 
 @Injectable({
@@ -20,9 +21,7 @@ export class EditorService {
   private imageFileTypes = ['jpg', 'jpeg', 'png'];
   constructor(private electronService: ElectronService) {}
 
-  getFilesFromDir(
-    directoryPath: string,
-  ): FileListItem[] {
+  async getFilesFromDir(directoryPath: string): Promise<FileListItem[]> {
     const fs = this.electronService.fs;
     const path = this.electronService.path;
 
@@ -55,32 +54,43 @@ export class EditorService {
     const filesList: { path: string; type: 'image' | 'audio' }[] =
       readFilesRecursively(directoryPath);
 
-    return filesList.map((fileObj) => {
-      const fileName = path.basename(fileObj.path);
-      const fileExtension = path.extname(fileName).slice(1);
+    const result = await Promise.all(
+      filesList.map(async (fileObj) => {
+        const fileName = path.basename(fileObj.path);
+        const fileExtension = path.extname(fileName).slice(1);
 
-      if (fileObj.type === 'audio') {
-        return {
-          type: 'audio',
-          fileName,
-          path: fileObj.path,
-          url: `data:audio/${fileExtension};base64,${fs
-            .readFileSync(fileObj.path)
-            .toString('base64')}`,
-        };
-      }
+        if (fileObj.type === 'audio') {
+          const fileData = await fs.promises.readFile(fileObj.path);
+          return {
+            type: 'audio' as const,
+            fileName,
+            path: fileObj.path,
+            url: `data:audio/${fileExtension};base64,${fileData.toString(
+              'base64',
+            )}`,
+          };
+        }
 
-      if (fileObj.type === 'image') {
-        return {
-          type: 'image',
-          fileName,
-          path: fileObj.path,
-          url: `data:image/${fileExtension};base64,${fs
-            .readFileSync(fileObj.path)
-            .toString('base64')}`,
-        };
-      }
-    });
+        if (fileObj.type === 'image') {
+          const metadata = await this.electronService
+            .sharp(fileObj.path)
+            .metadata();
+          const { height, width } = metadata;
+          const fileData = await fs.promises.readFile(fileObj.path);
+          return {
+            type: 'image' as const,
+            w2hRatio: width / height,
+            fileName,
+            path: fileObj.path,
+            url: `data:image/${fileExtension};base64,${fileData.toString(
+              'base64',
+            )}`,
+          };
+        }
+      }),
+    );
+
+    return result;
   }
 
   saveToFile(editor: EditorState): void {

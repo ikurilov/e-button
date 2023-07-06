@@ -50,7 +50,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
       },
     }),
     NgbModule,
-    StoreModule.forRoot({}, { metaReducers }),
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
   ],

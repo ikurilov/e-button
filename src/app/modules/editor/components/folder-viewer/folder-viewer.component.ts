@@ -6,7 +6,10 @@ import { EditorState } from '../../state/editor.state';
 import { selectEditor } from '../../state/editor.selectors';
 import { editorActions } from '../../state/editor.actions';
 import { map } from 'rxjs/operators';
-import { isQuestionWithAudioSlide, isQuestionWithImageSlide } from '../../../../shared/utils/type-guards';
+import {
+  isQuestionWithAudioSlide,
+  isQuestionWithImageSlide,
+} from '../../../../shared/utils/type-guards';
 
 @Component({
   selector: 'app-folder-viewer',
@@ -15,9 +18,9 @@ import { isQuestionWithAudioSlide, isQuestionWithImageSlide } from '../../../../
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FolderViewerComponent implements OnInit {
-  public folderPath = this.store.select(selectEditor).pipe(
-    map((editor) => editor?.folderPath),
-  );
+  public folderPath = this.store
+    .select(selectEditor)
+    .pipe(map((editor) => editor?.folderPath));
 
   public currentSlide = this.store.select(selectEditor).pipe(
     map((editor) => {
@@ -35,22 +38,29 @@ export class FolderViewerComponent implements OnInit {
   constructor(private editorService: EditorService, private store: Store) {}
 
   public get filteredFiles(): Observable<FileListItem[]> {
-    return this.editorState.pipe(map((editorState) => {
-      const slideFilePaths = editorState.slides.reduce((paths: string[], slide) => {
-        if (isQuestionWithImageSlide(slide)) {
-          slide.images.forEach((image) => paths.push(image.takenFrom));
-        }
-        if (isQuestionWithAudioSlide(slide)) {
-          paths.push(slide.audio.takenFrom);
-        }
-        return paths;
-      }, []);
+    return this.editorState.pipe(
+      map((editorState) => {
+        const slideFilePaths = editorState.slides.reduce(
+          (paths: string[], slide) => {
+            if (isQuestionWithImageSlide(slide)) {
+              slide.images.forEach((image) => paths.push(image.takenFrom));
+            }
+            if (isQuestionWithAudioSlide(slide)) {
+              paths.push(slide.audio.takenFrom);
+            }
+            return paths;
+          },
+          [],
+        );
 
-      return this.listOfFiles
-        .map((fileObj) => ({ ...fileObj, isUsed: slideFilePaths.includes(fileObj.path) }))
-        .sort((a, b) =>
-          (a.isUsed === b.isUsed ? 0 : a.isUsed ? 1 : -1));
-    }));
+        return this.listOfFiles
+          .map((fileObj) => ({
+            ...fileObj,
+            isUsed: slideFilePaths.includes(fileObj.path),
+          }))
+          .sort((a, b) => (a.isUsed === b.isUsed ? 0 : a.isUsed ? 1 : -1));
+      }),
+    );
   }
 
   ngOnInit(): void {
@@ -58,8 +68,10 @@ export class FolderViewerComponent implements OnInit {
   }
 
   public refresh() {
-    this.editorState.pipe(take(1)).subscribe((editor) => {
-      this.listOfFiles = this.editorService.getFilesFromDir(editor.folderPath);
+    this.editorState.pipe(take(1)).subscribe(async (editor) => {
+      this.listOfFiles = await this.editorService.getFilesFromDir(
+        editor.folderPath,
+      );
     });
   }
 
@@ -68,19 +80,28 @@ export class FolderViewerComponent implements OnInit {
       editorActions.addslidewithimage({
         imageCoded: fileObj.url,
         takenFrom: fileObj.path,
+        w2hRatio: fileObj.w2hRatio,
       }),
     );
   }
 
   public addImageToSlide(fileObj: FileListItem) {
     this.store.dispatch(
-      editorActions.addimagetoslide({ imageCoded: fileObj.url }),
+      editorActions.addimagetoslide({
+        imageCoded: fileObj.url,
+        takenFrom: fileObj.path,
+        w2hRatio: fileObj.w2hRatio,
+      }),
     );
   }
 
   public createSlideWithAudio(fileObj: FileListItem) {
     this.store.dispatch(
-      editorActions.addslidewithaudio({ audioCoded: fileObj.url, takenFrom: fileObj.path, name: fileObj.fileName }),
+      editorActions.addslidewithaudio({
+        audioCoded: fileObj.url,
+        takenFrom: fileObj.path,
+        name: fileObj.fileName,
+      }),
     );
   }
 }

@@ -5,8 +5,27 @@
     </div>
   </div>
   <div class="card-body">
-    <!--      TODO: (click)-->
-    <button *ngFor="let s of sounds" class=" m-1 btn btn-outline-warning">{{s}}</button>
+    <div class="card-title"><h4>System</h4></div>
+    <div class="button-grid">
+      <button
+        *ngFor="let s of systemSounds"
+        class="btn sound-button"
+        [ngClass]="{ 'btn-success': !s.audio.paused , 'btn-primary': s.audio.paused }"
+        (click)="playOrPause(s.audio)"
+      >
+        {{ s.name }}
+      </button>
+    </div>
+    <div class="card-title"><h4>Memes</h4></div>
+    <div class="button-grid">
+      <button
+        *ngFor="let s of memeSounds"
+        class="btn sound-button"
+        [ngClass]="{ 'btn-success': !s.audio.paused , 'btn-primary': s.audio.paused }"
+        (click)="playOrPause(s.audio)"
+      >
+        {{ s.name }}
+      </button>
+    </div>
   </div>
 </div>
-

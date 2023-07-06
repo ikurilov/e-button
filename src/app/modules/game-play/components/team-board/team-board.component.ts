@@ -6,6 +6,8 @@ import { selectPlayers } from '../../players-store/players.selectors';
 import { PlayerEntity } from '../../players-store/players.state';
 import { TeamColors } from '../../store/game-play.state';
 import { selectConfig, selectTeamScore } from '../../store/game-play.selectors';
+import { gamePlayActions } from '../../store/game-play.actions';
+import { playersActions } from '../../players-store/players.actions';
 
 @Component({
   selector: 'app-team-board',
@@ -74,6 +76,6 @@ export class TeamBoardComponent {
   }
 
   deletePlayer(player: PlayerEntity) {
-    // todo: implement
+    this.store.dispatch(playersActions.deletePlayer({ id: player.id }));
   }
 }
