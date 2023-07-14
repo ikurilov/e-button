@@ -6,7 +6,7 @@ import * as childProcess from 'child_process';
 import { ipcRenderer, webFrame } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as sharp from 'sharp';
+import * as sizeOf from 'image-size';
 import { ServerSocketService } from './server-socket.service';
 import { RemoteSocketService } from './remote-socket.service';
 import { PlayerEntitySocketService } from './player-entity-socket.service';
@@ -25,7 +25,7 @@ export class ElectronService {
   networkInterfaces;
   fs: typeof fs;
   path: typeof path;
-  sharp: typeof sharp;
+  sizeOf: typeof sizeOf;
 
   constructor(
     private serverSocketService: ServerSocketService,
@@ -42,7 +42,7 @@ export class ElectronService {
       this.fs = window.require('fs');
       this.networkInterfaces = window.require('os').networkInterfaces;
       this.path = window.require('path');
-      this.sharp = window.require('sharp');
+      this.sizeOf = window.require('image-size');
 
       // Notes :
       // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`

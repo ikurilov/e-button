@@ -8,6 +8,8 @@ import { TeamColors } from '../../store/game-play.state';
 import { selectConfig, selectTeamScore } from '../../store/game-play.selectors';
 import { gamePlayActions } from '../../store/game-play.actions';
 import { playersActions } from '../../players-store/players.actions';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalChangeScoreComponent } from '../modal-change-score/modal-change-score.component';
 
 @Component({
   selector: 'app-team-board',
@@ -69,7 +71,7 @@ export class TeamBoardComponent {
     }),
   );
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private modal: NgbModal) {}
 
   isTeam(team: any): boolean {
     return !!TeamColors[team];
@@ -77,5 +79,21 @@ export class TeamBoardComponent {
 
   deletePlayer(player: PlayerEntity) {
     this.store.dispatch(playersActions.deletePlayer({ id: player.id }));
+  }
+
+  openScoreModal(team: TeamColors, score: number) {
+    const modalRef = this.modal.open(ModalChangeScoreComponent);
+    modalRef.componentInstance.team = team;
+    modalRef.componentInstance.score = score;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.store.dispatch(
+          gamePlayActions.editScore({
+            team,
+            score: result,
+          }),
+        );
+      }
+    });
   }
 }

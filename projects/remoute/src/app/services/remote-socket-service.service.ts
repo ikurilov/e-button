@@ -44,6 +44,9 @@ export class RemoteSocketServiceService {
               remoteActions.connectInfoMessage({ data: message.payload }),
             );
             break;
+          case HostToScreenMessageType.CLEAR_CONNECT_INFO:
+            this.store.dispatch(remoteActions.clearConnectInfoMessage());
+            break;
           case HostToScreenMessageType.IMAGE_QUESTION:
             this.store.dispatch(
               remoteActions.imageQuestionMessage({ data: message.payload }),

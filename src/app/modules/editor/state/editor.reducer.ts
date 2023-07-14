@@ -1,4 +1,8 @@
-import { initialEditorState, SlideType } from './editor.state';
+import {
+  initialEditorState,
+  QuestionWithImageSlide,
+  SlideType,
+} from './editor.state';
 import { editorActions } from './editor.actions';
 import { createReducer, on } from '@ngrx/store';
 
@@ -65,26 +69,55 @@ export const editorReducer = createReducer(
 
   on(
     editorActions.addslidewithimage,
-    (state, { imageCoded, takenFrom, w2hRatio }) => ({
-      ...state,
-      slides: [
-        ...state.slides,
-        {
-          type: SlideType.questionWithImage,
-          images: [
-            {
-              position: { left: 5, top: 5, width: 50, height: 50 },
-              takenFrom,
-              w2hRatio,
-              imageSource: imageCoded,
-            },
-          ],
-          points: 10,
-          toxic: false,
-          patches: [],
-        },
-      ],
-    }),
+    (state, { imageCoded, takenFrom, w2hRatio }) => {
+      let slides = [];
+      let newIndex = -1;
+      let previousImageSlideIndex = -1;
+
+      if (state.currentSlideIndex !== null) {
+        newIndex = state.currentSlideIndex + 1;
+      } else {
+        newIndex = state.slides.length;
+      }
+      previousImageSlideIndex = state.slides.reduce((prev, curr, index) => {
+        if (curr.type === SlideType.questionWithImage && index < newIndex) {
+          return index;
+        }
+        return prev;
+      }, -1);
+
+      let newSlide = {
+        type: SlideType.questionWithImage,
+        images: [
+          {
+            position: { left: 0, top: 0, width: 100, height: 100 },
+            takenFrom,
+            w2hRatio,
+            imageSource: imageCoded,
+          },
+        ],
+        points: 10,
+        toxic: false,
+        patches: [],
+      };
+
+      if (previousImageSlideIndex !== -1) {
+        newSlide.points = (
+          state.slides[previousImageSlideIndex] as QuestionWithImageSlide
+        ).points;
+      }
+
+      slides = [
+        ...state.slides.slice(0, newIndex),
+        newSlide,
+        ...state.slides.slice(newIndex),
+      ];
+
+      return {
+        ...state,
+        slides,
+      };
+    },
   ),
 
   on(

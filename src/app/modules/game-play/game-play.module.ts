@@ -7,7 +7,7 @@ import { LeadButtonsComponent } from './components/lead-buttons/lead-buttons.com
 import { TeamBoardComponent } from './components/team-board/team-board.component';
 import { InitConfigComponent } from './components/init-config/init-config.component';
 import { GamePlayLayoutComponent } from './components/game-play-layout/game-play-layout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { PlayersEffects } from './players-store/players.effects';
 import { playersReducer } from './players-store/players.reducer';
@@ -20,6 +20,8 @@ import { GamePlayAudioEffects } from './store/game-play-audio.effects';
 import { GameVitalsComponent } from './components/game-vitals/game-vitals.component';
 import { RatioBoxViewerModule } from '../ratio-box-viewer/ratio-box-viewer.module';
 import { SoundBoardComponent } from './components/sound-board/sound-board.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalChangeScoreComponent } from './components/modal-change-score/modal-change-score.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { SoundBoardComponent } from './components/sound-board/sound-board.compon
     FightListComponent,
     GameVitalsComponent,
     SoundBoardComponent,
+    ModalChangeScoreComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,8 @@ import { SoundBoardComponent } from './components/sound-board/sound-board.compon
       GamePlayAudioEffects,
     ]),
     RatioBoxViewerModule,
+    NgbDropdownModule,
+    FormsModule,
   ],
 })
 export class GamePlayModule {}

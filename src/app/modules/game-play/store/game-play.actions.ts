@@ -29,6 +29,9 @@ export const gamePlayActions = createActionGroup({
       delta: number;
     }>(),
     'Show Answer': emptyProps(),
+    'Show Connect Info': props<{ href: string }>(),
+    'Clear Connect Info': emptyProps(),
+    'Edit Score': props<{ team: TeamColors; score: number }>(),
 
     Ok: emptyProps(),
   },

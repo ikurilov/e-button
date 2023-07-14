@@ -1,3 +1,5 @@
-
-  <h1 class="title">Вопрос</h1>
+<div class="question-block meme-bg-1" *ngIf="questionNumber | async as qn">
+  <div class="title">Вопрос <i class="fa fa-hashtag"></i>{{qn}}</div>
+  <div class="points">{{(slide | async).points}} <i class="fa fa-star fa-flip"></i></div>
+</div>
 

@@ -326,7 +326,8 @@
               "projects/remoute/src/assets"
             ],
             "styles": [
-              "projects/remoute/src/styles.scss"
+              "projects/remoute/src/styles.scss",
+              "shared/styles/fa/css/all.css"
             ],
             "scripts": [
               "node_modules/wavesurfer.js/dist/wavesurfer.min.js"

@@ -13,6 +13,8 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
+const LAST_GAME_FOLDER_KEY = 'lastGameFolder';
+
 @Component({
   selector: 'app-editor-layout',
   templateUrl: './editor-layout.component.html',
@@ -31,8 +33,8 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
   private gameName: Observable<string> = this.editorState.pipe(
     map((editor) => editor.name),
   );
-  gameFolder: string = 'C:\\Users\\ctbg-computer\\Desktop\\мемные игры\\тест';
-  // gameFolder: string = '';
+
+  gameFolder: string = '';
   public mode: 'file' | 'slide' = 'slide';
 
   gameNameControl: FormControl = new FormControl();
@@ -40,6 +42,10 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem(LAST_GAME_FOLDER_KEY)) {
+      this.gameFolder = localStorage.getItem(LAST_GAME_FOLDER_KEY);
+    }
+
     this.gameName.pipe(takeUntil(this.destroy$)).subscribe((name) => {
       this.gameNameControl.setValue(name, { emitEvent: false });
     });
@@ -72,6 +78,7 @@ export class EditorLayoutComponent implements OnInit, OnDestroy {
   }
 
   startEditing() {
+    localStorage.setItem(LAST_GAME_FOLDER_KEY, this.gameFolder);
     this.initFolder(this.gameFolder);
   }
 

@@ -1,3 +1,6 @@
+@use "shared/styles/shared-style.scss" as *;
+
+
 :host {
   width: 100%;
   height: 100%;
@@ -46,3 +49,19 @@
   }
 }
 
+
+.purple-color {
+  color: $purple-team;
+}
+
+.yellow-color {
+  color: $yellow-team;
+}
+
+.cyan-color {
+  color: $cyan-team;
+}
+
+.amber-color {
+  color: $amber-team;
+}

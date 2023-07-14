@@ -17,6 +17,7 @@ export enum HostToScreenMessageType {
   ROUND = 'ROUND',
   RESULT = 'RESET',
   CONNECT_INFO = 'CONNECT_INFO',
+  CLEAR_CONNECT_INFO = 'CLEAR_CONNECT_INFO',
   IMAGE_QUESTION = 'IMAGE_QUESTION',
   COUNTDOWN = 'COUNTDOWN',
   ASK = 'ASK',
@@ -52,8 +53,14 @@ export type HostToScreenMessage =
       payload: ConnectInfo;
     }
   | {
+      type: HostToScreenMessageType.CLEAR_CONNECT_INFO;
+    }
+  | {
       type: HostToScreenMessageType.IMAGE_QUESTION;
-      payload: Omit<QuestionWithImageSlide, 'images'>;
+      payload: {
+        slide: Omit<QuestionWithImageSlide, 'images'>;
+        questionNumber: number;
+      };
     }
   | {
       type: HostToScreenMessageType.COUNTDOWN;

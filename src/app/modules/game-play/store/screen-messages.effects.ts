@@ -10,6 +10,7 @@ import {
   SlideType,
 } from '../../editor/state/editor.state';
 import { HostToScreenMessageType } from '../../../../../shared/models/socket-messages.model';
+import { selectPlayers } from '../players-store/players.selectors';
 
 @Injectable()
 export class ScreenMessagesEffects {
@@ -42,12 +43,14 @@ export class ScreenMessagesEffects {
             this.screen.sendMessage({
               type: HostToScreenMessageType.ROUND,
               payload: {
-                number: state.allGame.slides.reduce((acc, curr) => {
-                  if (curr.type === SlideType.round) {
-                    acc++;
-                  }
-                  return acc;
-                }, 0),
+                number: state.allGame.slides
+                  .slice(0, slideIndex + 1)
+                  .reduce((acc, curr) => {
+                    if (curr.type === SlideType.round) {
+                      acc++;
+                    }
+                    return acc;
+                  }, 0),
               },
             });
             break;
@@ -61,9 +64,19 @@ export class ScreenMessagesEffects {
             this.screen.sendMessage({
               type: HostToScreenMessageType.IMAGE_QUESTION,
               payload: {
-                ...state.currentSlide,
-                images: void 0,
-              } as Omit<QuestionWithImageSlide, 'images'>,
+                slide: {
+                  ...state.currentSlide,
+                  images: void 0,
+                } as Omit<QuestionWithImageSlide, 'images'>,
+                questionNumber: state.allGame.slides
+                  .slice(0, slideIndex)
+                  .reduce((acc, curr) => {
+                    if (curr.type === SlideType.questionWithImage) {
+                      acc++;
+                    }
+                    return acc;
+                  }, 1),
+              },
             });
             break;
           case SlideType.questionWithAudio:
@@ -163,6 +176,47 @@ export class ScreenMessagesEffects {
       mergeMap(([v, state]) => {
         this.screen.sendMessage({
           type: HostToScreenMessageType.QUESTION_ANSWER,
+        });
+        return of(gamePlayActions.ok());
+      }),
+    ),
+  );
+
+  onSendConnectInfo = createEffect(() =>
+    this.actions.pipe(
+      ofType(gamePlayActions.showConnectInfo),
+      withLatestFrom(this.store.select(selectPlayers)),
+      mergeMap(([{ href }, players]) => {
+        this.screen.sendMessage({
+          type: HostToScreenMessageType.CONNECT_INFO,
+          payload: {
+            qrCode: href,
+            teams: players.reduce((acc, player) => {
+              const existingItem = acc.find(
+                (item) => item.name === player.team,
+              );
+
+              if (existingItem) {
+                existingItem.players.push(player);
+              } else {
+                acc.push({ name: player.team, players: [player.name] });
+              }
+
+              return acc;
+            }, []),
+          },
+        });
+        return of(gamePlayActions.ok());
+      }),
+    ),
+  );
+
+  onClearConnectInfo = createEffect(() =>
+    this.actions.pipe(
+      ofType(gamePlayActions.clearConnectInfo),
+      mergeMap(() => {
+        this.screen.sendMessage({
+          type: HostToScreenMessageType.CLEAR_CONNECT_INFO,
         });
         return of(gamePlayActions.ok());
       }),

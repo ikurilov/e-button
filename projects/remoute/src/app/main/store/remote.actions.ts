@@ -14,11 +14,16 @@ export const remoteActions = createActionGroup({
     'Result Slide Message': props<{ score: GamePlayState['score'] }>(),
     'Round Slide Message': props<{ number: number }>(),
     'Connect Info Message': props<{ data: ConnectInfo }>(),
+    'Clear Connect Info Message': emptyProps(),
     'Image Question Message': props<{
-      data: Omit<QuestionWithImageSlide, 'images'>;
+      data: {
+        slide: Omit<QuestionWithImageSlide, 'images'>;
+        questionNumber: number;
+      };
     }>(),
     'Question Images loaded': props<{
       slide: QuestionWithImageSlide;
+      questionNumber: number;
     }>(),
     'Countdown Message': emptyProps(),
     'Ask Message': emptyProps(),

@@ -29,9 +29,9 @@
 .secret{
   width: 100%;
   height: 100%;
-  opacity: 0.03;
+  opacity: 0.015;
   &:hover{
-    opacity: 1;
+    opacity: 0.3;
     transition: opacity 0.3s ease-in-out;
   }
 }

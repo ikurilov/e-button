@@ -15,10 +15,8 @@ export class GamePlayEffects {
     this.actions.pipe(
       ofType(gamePlayActions.startCountdown),
       withLatestFrom(this.store.select(selectConfig)),
-      switchMap(([_, config]) => {
-        return of(gamePlayActions.askQuestion()).pipe(
-          delay(config.countdownDurationMS),
-        );
+      switchMap(([{ duration }, config]) => {
+        return of(gamePlayActions.askQuestion()).pipe(delay(duration));
       }),
     ),
   );

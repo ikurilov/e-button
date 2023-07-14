@@ -116,4 +116,8 @@ export const gamePlayReducer = createReducer(
     ...state,
     playPhase: PlayPhases.QUESTION_ANSWER_SHOW,
   })),
+  on(gamePlayActions.editScore, (state, { team, score }) => ({
+    ...state,
+    score: { ...state.score, [team]: score },
+  })),
 );

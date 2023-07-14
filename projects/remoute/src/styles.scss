@@ -1,1 +1,20 @@
-@import "shared/styles/shared-style.scss";
+@import 'shared/styles/shared-style.scss';
+
+.meme-bg-1 {
+  background: linear-gradient(
+      rgba(234, 234, 234, 0.13),
+      rgba(234, 234, 234, 0.13)
+    ),
+    url(/assets/img/memebg1.jpg);
+  background-size: cover;
+}
+
+.meme-bg-2 {
+  background-image: url(/assets/img/memebg2.jpg);
+  background-size: cover;
+}
+
+.meme-bg-3 {
+  background-image: url(/assets/img/memebg3.jpg);
+  background-size: cover;
+}
