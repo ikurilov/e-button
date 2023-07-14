@@ -3,7 +3,7 @@
 }
 .file-container{
   display: flex;
-  height: 100%;
+  height: 90%;
   overflow-y: auto;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -54,7 +54,7 @@
 
 .polaroid {
   background: #fff;
-  padding: 1rem;
+  padding: 0.3rem;
   box-shadow: 0 0.2rem 1.2rem rgba(0,0,0,0.2);
 
   &.used {
@@ -67,9 +67,8 @@
 }
 
 .polaroid > img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  object-fit: contain;
+  //object-fit: cover;
 }
 
 .caption {
@@ -82,7 +81,7 @@
 }
 
 .item {
-  width: 12.5rem;
+  width: 20rem;
   display: inline-block;
 }
 

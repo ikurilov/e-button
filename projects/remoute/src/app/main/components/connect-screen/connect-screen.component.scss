@@ -1,0 +1,32 @@
+:host{
+  height: 100%;
+}
+
+.connect-screen {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.connected{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 70%;
+  .team{
+    display: flex;
+    flex-direction: column;
+
+    .team-name{
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .team-players {
+      font-size: 2rem;
+    }
+  }
+}

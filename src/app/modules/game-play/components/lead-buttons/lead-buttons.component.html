@@ -1,40 +1,86 @@
-
-    <ng-container *ngIf="selectPhase | async as phase">
-      <ng-container *ngIf="phase === phases.QUESTION_TITLE || phase === phases.QUESTION_VERDICT || phase === phases.QUESTION_ASK" >
-        <div class="w-100 my-4">
-          <div class="lead-button-wrapper">
-            <button class="btn btn-outline-primary ask-button" (click)="askQ(3000)">
-              3 <i class="fa-regular fa-clock"></i>
-            </button>
-            <button class="btn btn-outline-primary ask-button" (click)="askQ(3000)">
-              2 <i class="fa-regular fa-clock"></i>
-            </button>
-            <button class="btn btn-outline-primary ask-button" (click)="askQ(3000)">
-              1 <i class="fa-regular fa-clock"></i>
-            </button>
-            <button class="btn btn-outline-light ask-button" (click)="showAnswer()">
-              <i class="fa-solid fa-eye"></i>
-            </button>
-          </div>
+<ng-container *ngIf="selectPhase | async as phase">
+  <ng-container
+    *ngIf="
+      phase === phases.QUESTION_TITLE ||
+      phase === phases.QUESTION_VERDICT ||
+      phase === phases.QUESTION_ASK
+    "
+  >
+    <div class="w-100 my-4">
+      <div class="lead-button-wrapper">
+        <button class="btn btn-outline-primary ask-button" (click)="askQ(3000)">
+          3 <i class="fa-regular fa-clock"></i>
+        </button>
+        <button class="btn btn-outline-primary ask-button" (click)="askQ(2000)">
+          2 <i class="fa-regular fa-clock"></i>
+        </button>
+        <button class="btn btn-outline-primary ask-button" (click)="askQ(1000)">
+          1 <i class="fa-regular fa-clock"></i>
+        </button>
+        <button class="btn btn-outline-light ask-button" (click)="showAnswer()">
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="phase === phases.QUESTION_LISTENING">
+    <ng-container *ngIf="selectCurrentSlidePoints | async as p">
+      <div class="w-100 my-4">
+        <div class="lead-button-wrapper">
+          <button
+            class="btn btn-outline-success w-50"
+            (click)="answerResult(true, p)"
+          >
+            {{ p }}
+          </button>
+          <button
+            class="btn btn-outline-danger w-50"
+            (click)="answerResult(false, 0)"
+          >
+            0
+          </button>
         </div>
-      </ng-container>
-      <ng-container *ngIf="phase === phases.QUESTION_LISTENING">
-
-        <div class="w-100 my-4">
-          <div class="lead-button-wrapper">
-            <button class="btn btn-outline-success w-50" (click)="answerResult(true, 10)">10</button>
-            <button class="btn btn-outline-danger w-50" (click)="answerResult(false, 0)">0</button>
-          </div>
+      </div>
+      <div class="w-100 my-4">
+        <div class="lead-button-wrapper">
+          <button
+            class="btn btn-outline-success"
+            (click)="answerResult(true, p * 0.5)"
+          >
+            {{ p * 0.5 }}
+          </button>
+          <button
+            class="btn btn-outline-success"
+            (click)="answerResult(true, p * 0.2)"
+          >
+            {{ p * 0.2 }}
+          </button>
+          <button
+            class="btn btn-outline-success"
+            (click)="answerResult(true, p * 0.1)"
+          >
+            {{ p * 0.1 }}
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            (click)="answerResult(false, p * 0.1)"
+          >
+            {{ p * 0.1 }}
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            (click)="answerResult(false, p * 0.2)"
+          >
+            {{ p * 0.2 }}
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            (click)="answerResult(false, p)"
+          >
+            {{ p }}
+          </button>
         </div>
-        <div class="w-100 my-4">
-          <div class="lead-button-wrapper">
-            <button class="btn btn-outline-success" (click)="answerResult(true, 5)">5</button>
-            <button class="btn btn-outline-success" (click)="answerResult(true, 2)">2</button>
-            <button class="btn btn-outline-success" (click)="answerResult(true, 1)">1</button>
-            <button class="btn btn-outline-danger" (click)="answerResult(false, 1)">1</button>
-            <button class="btn btn-outline-danger" (click)="answerResult(false, 2)">2</button>
-            <button class="btn btn-outline-danger" (click)="answerResult(false, 10)">10</button>
-          </div>
-        </div>
-      </ng-container>
+      </div>
     </ng-container>
+  </ng-container>
+</ng-container>

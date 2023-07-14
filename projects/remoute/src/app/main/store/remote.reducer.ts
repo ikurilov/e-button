@@ -44,11 +44,19 @@ export const remoteReducer = createReducer(
     ...state,
     connectInfo: data,
   })),
-  on(remoteActions.questionImagesLoaded, (state, { slide }) => ({
+  on(remoteActions.clearConnectInfoMessage, (state) => ({
     ...state,
-    playPhases: PlayPhases.QUESTION_TITLE,
-    slide,
+    connectInfo: null,
   })),
+  on(
+    remoteActions.questionImagesLoaded,
+    (state, { slide, questionNumber }) => ({
+      ...state,
+      playPhases: PlayPhases.QUESTION_TITLE,
+      slide,
+      questionNumber,
+    }),
+  ),
   on(remoteActions.countdownMessage, (state) => ({
     ...state,
     playPhases: PlayPhases.QUESTION_COUNTDOWN,

@@ -11,6 +11,7 @@ export interface RemoteState {
   connectInfo?: ConnectInfo;
   fight?: Fight;
   slide?: Slide;
+  questionNumber?: number;
   questionAnswerState?: GamePlayState['questionAnswerState'];
   score?: { [team in TeamColors]: number };
 }

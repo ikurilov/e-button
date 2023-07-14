@@ -72,10 +72,9 @@ export class EditorService {
         }
 
         if (fileObj.type === 'image') {
-          const metadata = await this.electronService
-            .sharp(fileObj.path)
-            .metadata();
-          const { height, width } = metadata;
+          const { height, width } = this.electronService.sizeOf.imageSize(
+            fileObj.path,
+          );
           const fileData = await fs.promises.readFile(fileObj.path);
           return {
             type: 'image' as const,

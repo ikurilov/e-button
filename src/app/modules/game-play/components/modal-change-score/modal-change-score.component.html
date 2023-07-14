@@ -1,0 +1,31 @@
+<div class="card bg-dark text-light">
+  <div class="card-header">
+    <h4 class="card-title" id="modal-basic-title">{{ team }}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="input-group m">
+      <input
+        type="text"
+        class="form-control bg-secondary text-white"
+        [(ngModel)]="newScore"
+      />
+
+      <span class="input-group-text bg-dark text-warning"
+        ><i class="fa fa-star"></i>
+      </span>
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-outline-success me-1" (click)="add(10)">10</button>
+      <button class="btn btn-outline-success me-1" (click)="add(5)">5</button>
+      <button class="btn btn-outline-success me-1" (click)="add(1)">1</button>
+      <button class="btn btn-outline-danger me-1" (click)="add(-1)">1</button>
+      <button class="btn btn-outline-danger me-1" (click)="add(-5)">5</button>
+      <button class="btn btn-outline-danger me-1" (click)="add(-10)">10</button>
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-warning me-1" (click)="save()">save</button>
+      <button class="btn btn-secondary me-1" (click)="close()">close</button>
+    </div>
+
+  </div>
+</div>

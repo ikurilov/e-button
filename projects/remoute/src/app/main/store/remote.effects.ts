@@ -15,20 +15,22 @@ export class RemoteEffects {
   public loadQuestionImages = createEffect(() =>
     this.actions.pipe(
       ofType(remoteActions.imageQuestionMessage),
-      switchMap(({ data }) => {
+      switchMap(({ data: { slide, questionNumber } }) => {
         return this.http
           .get<QuestionWithImageSlide['images']>(`${API_URL}/question-images`)
           .pipe(
             map((images) => {
               return remoteActions.questionImagesLoaded({
-                slide: { ...data, images },
+                slide: { ...slide, images },
+                questionNumber,
               });
             }),
             catchError((err) => {
               console.error(err);
               return of(
                 remoteActions.questionImagesLoaded({
-                  slide: { ...data, images: [] },
+                  slide: { ...slide, images: [] },
+                  questionNumber,
                 }),
               );
             }),

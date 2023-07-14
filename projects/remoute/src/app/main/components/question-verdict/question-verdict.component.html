@@ -1,7 +1,27 @@
-<div *ngIf="questionAnswerState.answerResult.type === 'CORRECT'" class="label green">
- Верно {{ questionAnswerState.answerResult.delta || 0 }}
-</div>
-
-<div *ngIf="questionAnswerState.answerResult.type === 'WRONG'" class="label red">
- Неверно {{ questionAnswerState.answerResult.delta || 0 }}
+<div class="wrapper meme-bg-2">
+  <div
+    *ngIf="questionAnswerState.answerResult.type === 'CORRECT'"
+    class="correct"
+  >
+    <div class="icons">
+      <i class="fa-solid fa-trophy fa-beat"></i>
+      <i class="fa-regular fa-thumbs-up fa-bounce"></i>
+      <i class="fa-regular fa-face-grin-tongue-wink fa-spin"></i>
+    </div>
+    <div class="points">
+      {{ questionAnswerState.answerResult.delta || 0 }}
+      <i class="fa fa-star fa-flip"></i>
+    </div>
+  </div>
+  <div *ngIf="questionAnswerState.answerResult.type === 'WRONG'" class="wrong">
+    <div class="icons">
+      <i class="fa-solid fa-poop fa-beat"></i>
+      <i class="fa-regular fa-thumbs-down fa-bounce"></i>
+      <i class="fa-regular fa-face-dizzy fa-spin"></i>
+    </div>
+    <div class="points">
+      {{ questionAnswerState.answerResult.delta || 0 }}
+      <i class="fa fa-star fa-flip"></i>
+    </div>
+  </div>
 </div>

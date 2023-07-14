@@ -1,4 +1,10 @@
 @use "shared/styles/shared-style.scss" as *;
+
+.scrollable{
+  height: 100%;
+  overflow-y: auto;
+}
+
 .push{
   display: flex;
   justify-content: flex-start;

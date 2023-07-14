@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  selectCurrentSlide,
   selectCurrentSlideIndex,
   selectPlayPhase,
 } from '../../store/game-play.selectors';
 import { PlayPhases } from '../../store/game-play.state';
 import { take } from 'rxjs';
 import { gamePlayActions } from '../../store/game-play.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lead-buttons',
@@ -16,6 +18,9 @@ import { gamePlayActions } from '../../store/game-play.actions';
 export class LeadButtonsComponent implements OnInit {
   selectPhase = this.store.select(selectPlayPhase);
   selectCurrentSlideIndex = this.store.select(selectCurrentSlideIndex);
+  selectCurrentSlidePoints = this.store
+    .select(selectCurrentSlide)
+    .pipe(map((slide) => slide['points'] || 10));
 
   phases = PlayPhases;
   constructor(private store: Store) {}

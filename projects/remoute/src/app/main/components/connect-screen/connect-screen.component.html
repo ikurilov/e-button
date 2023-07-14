@@ -1,26 +1,16 @@
-<div class="card h-100">
-  <div class="card-body">
-    <h3 class="card-title">Подключаемся!</h3>
-    <div class="row" *ngIf="selectConnectInfo | async as info">
-      <div class="col-6">
-        {{
-        <qrcode
-          [qrdata]="info.qrCode"
-          [width]="400"
-          [errorCorrectionLevel]="'M'"
-        ></qrcode>
-        }}
-      </div>
-      <div class="col-6">
-        <div class="h3">
-          Не тупят и уже подключились:
-        </div>
-        <div class="card mb-2" *ngFor="let team of info.teams">
-          <div class="card-body">
-            <h5 class="card-title">{{ team.name }}</h5>
-            <div *ngFor="let p of team.players">{{ p }}</div>
-          </div>
-        </div>
+<div class="connect-screen" *ngIf="selectConnectInfo | async as info">
+  <div class="qr-wrapper">
+    <qrcode
+      [qrdata]="info.qrCode + ':3000'"
+      [width]="600"
+      [errorCorrectionLevel]="'M'"
+    ></qrcode>
+  </div>
+  <div class="connected">
+    <div class="team" *ngFor="let team of info.teams">
+      <div class="team-name">{{team.name}}</div>
+      <div class="team-players">
+        <div *ngFor="let p of team.players">{{ p }}</div>
       </div>
     </div>
   </div>
