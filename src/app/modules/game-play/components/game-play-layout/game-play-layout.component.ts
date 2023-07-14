@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectConfig, selectGameName } from '../../store/game-play.selectors';
 import { ElectronService } from '../../../../core/services';
+import { remoteActions } from '../../../../../../projects/remoute/src/app/main/store/remote.actions';
 import { gamePlayActions } from '../../store/game-play.actions';
 
 @Component({
