@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectConfig, selectGameName } from '../../store/game-play.selectors';
 import { ElectronService } from '../../../../core/services';
-import { remoteActions } from '../../../../../../projects/remoute/src/app/main/store/remote.actions';
 import { gamePlayActions } from '../../store/game-play.actions';
 
 @Component({
@@ -28,7 +27,7 @@ export class GamePlayLayoutComponent implements OnInit {
 
   sendConnectInfo() {
     this.store.dispatch(
-      gamePlayActions.showConnectInfo({ href: this.selectedNet }),
+      gamePlayActions.showConnectInfo({ href: 'http://' + this.selectedNet }),
     );
   }
 
@@ -37,12 +36,12 @@ export class GamePlayLayoutComponent implements OnInit {
   }
 
   copyRemoutScreen() {
-    let stringForBuffer = this.selectedNet + ':3001';
+    const stringForBuffer = 'http://' + this.selectedNet + ':3001';
     navigator.clipboard.writeText(stringForBuffer);
   }
 
   copyLocalScreen() {
-    let stringForBuffer = 'localhost:3001';
+    const stringForBuffer = 'http://localhost:3001';
     navigator.clipboard.writeText(stringForBuffer);
   }
 }
