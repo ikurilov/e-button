@@ -100,7 +100,7 @@ export const gamePlayReducer = createReducer(
 
   on(gamePlayActions.answerVerdict, (state, { result, delta }) => {
     const newScore = { ...state.score };
-    newScore[state.questionAnswerState.answeringTeam] += delta;
+    newScore[state.questionAnswerState.answeringTeam] += result === 'CORRECT' ? delta : -delta;
     return {
       ...state,
       playPhase: PlayPhases.QUESTION_VERDICT,
