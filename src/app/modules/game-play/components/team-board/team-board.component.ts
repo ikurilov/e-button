@@ -85,8 +85,8 @@ export class TeamBoardComponent {
     const modalRef = this.modal.open(ModalChangeScoreComponent);
     modalRef.componentInstance.team = team;
     modalRef.componentInstance.score = score;
-    modalRef.result.then((result) => {
-      if (result) {
+    modalRef.result.then((result: number | undefined) => {
+      if (result !== undefined) {
         this.store.dispatch(
           gamePlayActions.editScore({
             team,

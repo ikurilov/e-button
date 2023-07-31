@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TeamColors } from '../../store/game-play.state';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-modal-change-score',
@@ -10,12 +11,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalChangeScoreComponent implements OnInit {
   @Input() score: number;
   @Input() team: TeamColors;
-  newScore: number;
+
+  public control = new FormControl();
 
   constructor(private mi: NgbActiveModal) {}
 
   ngOnInit(): void {
-    this.newScore = this.score;
+    this.control.setValue(this.score);
   }
 
   public close(): void {
@@ -23,10 +25,12 @@ export class ModalChangeScoreComponent implements OnInit {
   }
 
   public add(number: number) {
-    this.newScore += number;
+    const currentValue = parseFloat(this.control.value) || 0;
+
+    this.control.setValue(currentValue + number);
   }
 
   public save() {
-    this.mi.close(this.newScore);
+    this.mi.close(parseFloat(this.control.value) || undefined);
   }
 }

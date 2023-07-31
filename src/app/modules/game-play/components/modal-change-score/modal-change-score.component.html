@@ -5,9 +5,9 @@
   <div class="modal-body">
     <div class="input-group m">
       <input
-        type="text"
+        type="number"
         class="form-control bg-secondary text-white"
-        [(ngModel)]="newScore"
+        [formControl]="control"
       />
 
       <span class="input-group-text bg-dark text-warning"
